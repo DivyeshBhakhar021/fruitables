@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 function Shop_detail(props) {
 
+  const [fruidetlis, setFruidetlis] = useState({});
+
+
   const { id } = useParams();
 
-  console.log(id);
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/fruit");
+      const data = await response.json();
+     
+      console.log(data,id);
+      
+
+      const fruidetlisdData = data.find((v) => v.id === id);
+      setFruidetlis(fruidetlisdData);
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
 
 
   return (
@@ -47,14 +70,14 @@ function Shop_detail(props) {
                 <div className="col-lg-6">
                   <div className="border rounded">
                     <a href="#">
-                      <img src="img/single-item.jpg" className="img-fluid rounded" alt="Image" />
+                      <img src={`../${fruidetlis?.img}`} className="img-fluid rounded" alt="Image" />
                     </a>
                   </div>
                 </div>
                 <div className="col-lg-6">
-                  <h4 className="fw-bold mb-3">Brocoli</h4>
-                  <p className="mb-3">Category: Vegetables</p>
-                  <h5 className="fw-bold mb-3">3,35 $</h5>
+                  <h4 className="fw-bold mb-3">{fruidetlis?.name}</h4>
+                  <p className="mb-3">{fruidetlis?.details}</p>
+                  <h5 className="fw-bold mb-3">{fruidetlis?.price} $</h5>
                   <div className="d-flex mb-4">
                     <i className="fa fa-star text-secondary" />
                     <i className="fa fa-star text-secondary" />

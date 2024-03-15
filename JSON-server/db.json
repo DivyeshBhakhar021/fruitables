@@ -1,0 +1,68 @@
+{
+    "fruit": [
+      {
+        "id": "1",
+        "img": "img/fruite-item-5.jpg",
+        "name": "Grapes",
+        "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+        "price":"4.99"
+        
+      },
+      {
+        "id": "2",
+        "img": "img/fruite-item-5.jpg",
+        "name": "Grapes",
+        "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+        "price":"4.99"
+      },
+      {
+        "id": "3",
+        "img": "img/fruite-item-2.jpg",
+        "name": "Raspberries",
+        "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+        "price":"3.99"
+      },
+      {
+        "id": "4",
+        "img": "img/fruite-item-4.jpg",
+        "name": "Apricots",
+        "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+        "price":"2.99"
+      },
+      {
+        "id": "5",
+        "img": "img/fruite-item-3.jpg",
+        "name": "Banana",
+        "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+        "price":"7.99"
+      },
+      {
+        "id": "6",
+        "img": "img/fruite-item-1.jpg",
+        "name": "Oranges",
+        "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+        "price":"5.99"
+      },
+      {
+        "id": "7",
+        "img": "img/fruite-item-2.jpg",
+        "name": "Raspberries",
+        "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+        "price":"4.99"
+      },
+      {
+        "id": "8",
+        "img": "img/fruite-item-5.jpg",
+        "name": "Grapes",
+        "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+        "price":"8.99"
+      },
+      {
+        "id": "9",
+        "img": "img/fruite-item-1.jpg",
+        "name": "Oranges",
+        "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
+        "price":"1.99"
+      }
+    ]
+}
