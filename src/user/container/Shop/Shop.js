@@ -1,52 +1,63 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function Shop(props) {
+
   const [productData, setProductData] = useState([]);
-  const [catgery, setcatgery] = useState([]);
-  const fetchData = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/fruit");
-      const data = await response.json();
-      setProductData(data);
-      console.log(data);
-
-
-      let uniq = [ ...new Set(data.map(v => v.name)) ]
-
-      setcatgery(uniq);
-
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const [catagory, setCatagory] = useState([]);
+  const [type, setType] = useState([]);
+  const [protype, setProType] = useState('');
+  const [search, setSearchData] = useState('');
+  const [sorting, setSortBy] = useState('');
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(500);
 
   useEffect(() => {
-    fetchData();
+    getData();
   }, []);
+
+
+  const getData = async () => {
+    const response = await fetch("http://localhost:8001/fruit");
+    const data = await response.json();
+
+    let uniqueCategories = [...new Set(data.map(item => item.name))];
+
+    let uniqtype = [...new Set(data.map(v => v.type))]
+
+
+    setType(uniqtype)
+    setCatagory(uniqueCategories)
+    setProductData(data);
+  };
+
+  const Filterdata = () => {
+
+    let fineldata = productData.filter(item => item.name.toLowerCase().includes(search));
+
+    if (sorting) {
+      return fineldata.filter(v => v.name === sorting)
+    }
+
+    if (protype) {
+      return fineldata.filter(v => v.type === protype)
+    } else {
+      return fineldata;
+    }
+
+    fineldata = productData
+
+    return fineldata;
+  }
+
+  const zdata = Filterdata()
+
+  let { id } = useParams();
+
 
 
   return (
     <div>
-      {/* Modal Search Start */}
-      <div className="modal fade" id="searchModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-fullscreen">
-          <div className="modal-content rounded-0">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Search by keyword</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-            </div>
-            <div className="modal-body d-flex align-items-center">
-              <div className="input-group w-75 mx-auto d-flex">
-                <input type="search" className="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1" />
-                <span id="search-icon-1" className="input-group-text p-3"><i className="fa fa-search" /></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Modal Search End */}
-
       {/* Single Page Header start */}
       <div className="container-fluid page-header py-5">
         <h1 className="text-center text-white display-6">Shop</h1>
@@ -58,8 +69,6 @@ function Shop(props) {
       </div>
       {/* Single Page Header End */}
 
-
-      <br></br>
       {/* Fruits Shop Start*/}
       <div className="container-fluid fruite py-5">
         <div className="container py-5">
@@ -69,7 +78,12 @@ function Shop(props) {
               <div className="row g-4">
                 <div className="col-xl-3">
                   <div className="input-group w-100 mx-auto d-flex">
-                    <input type="search" className="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1" />
+                    <input
+                      type="search"
+                      className="form-control p-3"
+                      placeholder="keywords"
+                      aria-describedby="search-icon-1"
+                      onChange={(event) => setSearchData(event.target.value)} />
                     <span id="search-icon-1" className="input-group-text p-3"><i className="fa fa-search" /></span>
                   </div>
                 </div>
@@ -92,51 +106,74 @@ function Shop(props) {
                     <div className="col-lg-12">
                       <div className="mb-3">
                         <h4>Categories</h4>
+                        <h4>Categories</h4>
                         <ul className="list-unstyled fruite-categorie">
-                          {
-                            catgery.map((catgery) => {
-                              return <li>
-                                <div className="d-flex justify-content-between fruite-name">
-                                  <a href="#"><i className="fas fa-apple-alt me-2" />{catgery}</a>
-                                  <span>{productData.filter((v) => v.name == catgery).length}</span>
+                          <li>
+                            <div className="d-flex justify-content-between fruite-name" >
+                              <a href="#" onClick={() => setSortBy('')} ><i className="fas fa-apple-alt me-2" />ALL</a>
+                              <span>({productData.length})</span>
+                            </div>
+                          </li>
+                        </ul>
+                        {
+                          catagory.map((n) => (
+                            <ul className="list-unstyled fruite-categorie">
+                              <li>
+                                {console.log(n)}
+                                <div className="d-flex justify-content-between fruite-name" >
+                                  <a href="#" onClick={() => setSortBy(n)} ><i className="fas fa-apple-alt me-2" />{n}</a>
+                                  <span>({productData.filter(v => v.name === n).length})</span>
                                 </div>
                               </li>
-                            })
-                          }
-                          
-                        </ul>
+                            </ul>
+                          ))
+                        }
+
+
                       </div>
                     </div>
                     <div className="col-lg-12">
-                      <div className="mb-3">
-                        <h4 className="mb-2">Price</h4>
-                        <input type="range" className="form-range w-100" id="rangeInput" name="rangeInput" min={0} max={500} defaultValue={0} oninput="amount.value=rangeInput.value" />
-                        <output id="amount" name="amount" min-velue={0} max-value={500} htmlFor="rangeInput">0</output>
+                      <div className="col-lg-12">
+                        <div className="mb-3">
+                          <h4 className="mb-2">Price</h4>
+                          <input
+                            type="range"
+                            className="form-range w-100"
+                            id="rangeInput"
+                            name="rangeInput"
+                            min={0}
+                            max={500}
+                            value={minPrice}
+                            onChange={e => setMinPrice(e.target.value)}
+                          />
+                          <input
+                            type="range"
+                            className="form-range w-100"
+                            id="rangeInput"
+                            name="rangeInput"
+                            min={0}
+                            max={500}
+                            value={maxPrice}
+                            onChange={e => setMaxPrice(e.target.value)}
+                          />
+                          <output id="amount" name="amount" htmlFor="rangeInput">
+                            {minPrice} - {maxPrice}
+                          </output>
+                        </div>
                       </div>
+
                     </div>
                     <div className="col-lg-12">
                       <div className="mb-3">
                         <h4>Additional</h4>
-                        <div className="mb-2">
-                          <input type="radio" className="me-2" id="Categories-1" name="Categories-1" defaultValue="Beverages" />
-                          <label htmlFor="Categories-1"> Organic</label>
-                        </div>
-                        <div className="mb-2">
-                          <input type="radio" className="me-2" id="Categories-2" name="Categories-1" defaultValue="Beverages" />
-                          <label htmlFor="Categories-2"> Fresh</label>
-                        </div>
-                        <div className="mb-2">
-                          <input type="radio" className="me-2" id="Categories-3" name="Categories-1" defaultValue="Beverages" />
-                          <label htmlFor="Categories-3"> Sales</label>
-                        </div>
-                        <div className="mb-2">
-                          <input type="radio" className="me-2" id="Categories-4" name="Categories-1" defaultValue="Beverages" />
-                          <label htmlFor="Categories-4"> Discount</label>
-                        </div>
-                        <div className="mb-2">
-                          <input type="radio" className="me-2" id="Categories-5" name="Categories-1" defaultValue="Beverages" />
-                          <label htmlFor="Categories-5"> Expired</label>
-                        </div>
+                        {
+                          type.map((n, i) => (
+                            <div className="mb-2">
+                              <input onChange={() => setProType(n)} type="radio" className="me-2" id="Categories-1" name="Categories-1" defaultValue="Beverages" />
+                              <label htmlFor="Categories-1">{n}</label>
+                            </div>
+                          ))
+                        }
                       </div>
                     </div>
                     <div className="col-lg-12">
@@ -215,29 +252,28 @@ function Shop(props) {
                 <div className="col-lg-9">
                   <div className="row g-4 justify-content-center">
                     {
-                      productData.map((product) => (
+                      zdata.map((v, i) => (
                         <div className="col-md-6 col-lg-6 col-xl-4">
-                          <Link to={`/shop/${product.id}`}>
+                          <Link to={`/shop/${v.id}`}>
                             <div className="rounded position-relative fruite-item">
                               <div className="fruite-img">
-                                <img src={product.img} className="img-fluid w-100 rounded-top" />
+                                <img src={v.img} className="img-fluid w-100 rounded-top" alt />
                               </div>
                               <div className="text-white bg-secondary px-3 py-1 rounded position-absolute" style={{ top: 10, left: 10 }}>Fruits</div>
                               <div className="p-4 border border-secondary border-top-0 rounded-bottom">
-                                <h4>{product.name}</h4>
-                                <p>{product.details}</p>
+                                <h4>{v.name}</h4>
+                                <p>{v.details}</p>
                                 <div className="d-flex justify-content-between flex-lg-wrap">
-                                  <p className="text-dark fs-5 fw-bold mb-0">${product.price} / kg</p>
+                                  <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
                                   <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
                                 </div>
                               </div>
                             </div>
                           </Link>
+
                         </div>
-                      ))}
-
-
-
+                      ))
+                    }
                     <div className="col-12">
                       <div className="pagination d-flex justify-content-center mt-5">
                         <a href="#" className="rounded">«</a>
