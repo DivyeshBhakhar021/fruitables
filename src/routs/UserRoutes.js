@@ -10,6 +10,8 @@ import Testimonial from '../user/container/Page/Testimonial/Testimonial';
 import Contact from '../user/container/Contact/Contact';
 import Error from '../user/container/Error/Error';
 import Footer from '../user/component/Footer/Footer'
+import Login from '../user/container/Login/Login';
+import Register from '../user/container/Register/Register';
 
 function UserRoutes(props) {
     return (
@@ -26,6 +28,8 @@ function UserRoutes(props) {
           <Route exect path='/testimonial' element={<Testimonial />} />
           <Route exect path='/error' element={<Error />} />
           <Route exect path='/contact' element={<Contact />} />
+          <Route exect path='/login' element={<Login/>}/>
+          <Route exect path='/register' element={<Register/>}/>
         </Routes>
         <Footer />
       </>

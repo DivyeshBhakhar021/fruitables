@@ -2,6 +2,7 @@ import React from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { Button } from '@mui/material';
 
 function Home(props) {
 
@@ -109,6 +110,7 @@ function Home(props) {
           </div>
         </div>
       </div>
+      {/* <Button variant="contained">Contained</Button> */}
       {/* Hero End */}
       {/* Featurs Section Start */}
       <div className="container-fluid featurs py-5">

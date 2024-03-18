@@ -5,12 +5,13 @@ function Shop_detail(props) {
 
   const [fruidetlis, setFruidetlis] = useState({});
 
-
+console.log(fruidetlis);
   const { id } = useParams();
+
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:8000/fruit");
+      const response = await fetch("http://localhost:8001/fruit");
       const data = await response.json();
      
       console.log(data,id);
@@ -19,6 +20,7 @@ function Shop_detail(props) {
       const fruidetlisdData = data.find((v) => v.id === id);
       setFruidetlis(fruidetlisdData);
 
+      console.log(fruidetlisdData);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
