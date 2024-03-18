@@ -9,8 +9,9 @@ function Shop(props) {
   const [protype, setProType] = useState('');
   const [search, setSearchData] = useState('');
   const [sorting, setSortBy] = useState('');
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(500);
+  const [price, setPrice] = useState('');
+  
+console.log(price);
 
   useEffect(() => {
     getData();
@@ -41,8 +42,10 @@ function Shop(props) {
 
     if (protype) {
       return fineldata.filter(v => v.type === protype)
-    } else {
-      return fineldata;
+    }   
+
+    if(price !== ""){
+      return fineldata.filter(v => v.price <= price)
     }
 
     fineldata = productData
@@ -106,7 +109,6 @@ function Shop(props) {
                     <div className="col-lg-12">
                       <div className="mb-3">
                         <h4>Categories</h4>
-                        <h4>Categories</h4>
                         <ul className="list-unstyled fruite-categorie">
                           <li>
                             <div className="d-flex justify-content-between fruite-name" >
@@ -132,37 +134,20 @@ function Shop(props) {
 
                       </div>
                     </div>
+               
                     <div className="col-lg-12">
-                      <div className="col-lg-12">
-                        <div className="mb-3">
-                          <h4 className="mb-2">Price</h4>
-                          <input
-                            type="range"
-                            className="form-range w-100"
-                            id="rangeInput"
-                            name="rangeInput"
-                            min={0}
-                            max={500}
-                            value={minPrice}
-                            onChange={e => setMinPrice(e.target.value)}
-                          />
-                          <input
-                            type="range"
-                            className="form-range w-100"
-                            id="rangeInput"
-                            name="rangeInput"
-                            min={0}
-                            max={500}
-                            value={maxPrice}
-                            onChange={e => setMaxPrice(e.target.value)}
-                          />
-                          <output id="amount" name="amount" htmlFor="rangeInput">
-                            {minPrice} - {maxPrice}
-                          </output>
-                        </div>
+                      <div className="mb-3">
+                        <h4 className="mb-2">Price</h4>
+                        <input type="range" 
+                        onChange={(e) => setPrice(e.target.value)}
+                        className="form-range w-100" 
+                        id="rangeInput"
+                         name="rangeInput" min={0} max={500} defaultValue={0} 
+                         oninput="amount.value=rangeInput.value" />
+                        <output id="amount" name="amount" min-velue={0} max-value={500} htmlFor="rangeInput">{price}</output>
                       </div>
+                    </div>
 
-                    </div>
                     <div className="col-lg-12">
                       <div className="mb-3">
                         <h4>Additional</h4>
@@ -263,7 +248,7 @@ function Shop(props) {
                               <div className="p-4 border border-secondary border-top-0 rounded-bottom">
                                 <h4>{v.name}</h4>
                                 <p>{v.details}</p>
-                                <div className="d-flex justify-content-between flex-lg-wrap">
+                                <div className="d-flex justify-content-between flex-lg">
                                   <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
                                   <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
                                 </div>
