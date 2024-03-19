@@ -8,7 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-function Product(props) {
+function Fruits(props) {
 
   const [open, setOpen] = React.useState(false);
 
@@ -59,7 +59,7 @@ function Product(props) {
       <div style={{ textAlign: 'end', marginRight:'50px' }}>
         <React.Fragment>
           <Button variant="outlined" onClick={handleClickOpen}>
-            Open form dialog
+            Add Product
           </Button>
           <Dialog
             open={open}
@@ -73,29 +73,16 @@ function Product(props) {
                 const email = formJson.email;
                 console.log(email);
                 handleClose();
-
-
-
-                // const formData = new FormData(event.currentTarget);
-                // const formJson = Object.fromEntries(formData.entries());
-
-                // const formDataname = new FormData(event.currentTarget);
-                // const formJsonname = Object.fromEntries(formDataname.entries());
-
-                // const email = formJson.email;
-                // const text = formJsonname.text;
-                // console.log(email);
-                // console.log(text);
               },
             }}
           >
 
-            <DialogTitle>Subscribe</DialogTitle>
+            <DialogTitle>Add The Product</DialogTitle>
             <DialogContent>
-              <DialogContentText>
-                To subscribe to this website, please enter your email address here. We
-                will send updates occasionally.
-              </DialogContentText>
+                {/* <DialogContentText>
+                  To subscribe to this website, please enter your email address here. We
+                  will send updates occasionally.
+                </DialogContentText> */}
               <TextField
                 autoFocus
                 required
@@ -154,7 +141,7 @@ function Product(props) {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
-              <Button type="submit">Subscribe</Button>
+              <Button type="submit">Add</Button>
             </DialogActions>
           </Dialog>
         </React.Fragment>
@@ -178,4 +165,4 @@ function Product(props) {
   );
 }
 
-export default Product;
+export default Fruits;

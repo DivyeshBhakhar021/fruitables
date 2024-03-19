@@ -1,17 +1,21 @@
 import React from 'react';
-import Product from '../admin/component/Product/Product';
+import Fruits from '../admin/component/Fruits/Fruits';
 import { Route, Routes } from 'react-router-dom';
+import Layout from '../admin/component/Layout/Layout';
+import Vegetables from '../admin/component/Vegetables/Vegetables';
 
 function AdminRoutes(props) {
-    return (
-       <div>
-        <h1>admin</h1>
-       
+  return (
+    <div>
+      <h1>admin</h1>
+      <Layout>
         <Routes >
-        <Route exect path='/product' element={<Product />} />
-      </Routes>
-      </div>
-    );
+          <Route exect path='/Fruits' element={<Fruits />} />
+          <Route exect path='/vegetables' element={< Vegetables />} />
+        </Routes>
+      </Layout>
+    </div>
+  );
 }
 
 export default AdminRoutes;

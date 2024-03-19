@@ -13,7 +13,6 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route exect path='/admin/*' element={<AdminRoutes />} />
         </Route>
-
       </Routes>
     </> 
   );
