@@ -21,6 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import AppleIcon from '@mui/icons-material/Apple';
 import BakeryDiningIcon from '@mui/icons-material/BakeryDining';
 import { NavLink } from 'react-router-dom';
+import CategoryIcon from '@mui/icons-material/Category';
 
 const drawerWidth = 240;
 
@@ -101,6 +102,11 @@ const adminlink =[
         to:'/admin/vegetables',
         icon:<BakeryDiningIcon/>
     },
+    {
+      title:'Category',
+      to:'/admin/category',
+      icon:<CategoryIcon/>
+  },
     
 ]
 
