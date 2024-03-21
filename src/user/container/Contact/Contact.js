@@ -19,7 +19,6 @@ function Contact(props) {
       alert(JSON.stringify(values, null, 2));
     },
   });
-
   const { handleChange, handleSubmit, handleBlur, values, touched, errors } = formik
   console.log(errors);
   return (
@@ -96,20 +95,18 @@ function Contact(props) {
                   />
                   <span style={{ color: 'red', marginBottom: '5px' }}>
                     {errors.message && touched.message && errors.message}
-                    </span>
-                    <textarea
-                      className="w-100 form-control border-0 mb-3"
-                      rows={5}
-                      cols={10}
-                      placeholder="Your Message"
-                      defaultValue={""}
-                      name='message'
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.message}
-                    />
-
-                  
+                  </span>
+                  <textarea
+                    className="w-100 form-control border-0 mb-3"
+                    rows={5}
+                    cols={10}
+                    placeholder="Your Message"
+                    defaultValue={""}
+                    name='message'
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.message}
+                  />
                   <button className="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="submit">Submit</button>
                 </form>
               </div>
