@@ -9,6 +9,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useFormik } from 'formik';
 import { object, string, number, date, InferType } from 'yup';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function Category(props) {
     const [data, setData] = useState([]);
@@ -59,7 +60,7 @@ function Category(props) {
         },
     });
 
-    const { handleChange, handleSubmit, handleBlur, values, touched, errors } = formik
+    const { handleChange, handleSubmit,onClick, handleBlur, values, touched, errors } = formik
 
     const [open, setOpen] = React.useState(false);
 
@@ -71,20 +72,32 @@ function Category(props) {
         setOpen(false);
     };
 
+    const handleDelete = (id)=>{
+        let localData = JSON.parse(localStorage.getItem("category"));
+        localData = localData.filter(item=>item.id !== id);
+        localStorage.setItem("category", JSON.stringify(localData));
+        getdata();
+    }
 
     const columns = [
         { field: 'name', headerName: 'Name', width: 130 },
         { field: 'description', headerName: 'Description', width: 130 },
+        {
+            field: 'delete',
+            headerName: 'Delete',
+            width: 100,
+            renderCell: (params) => (
+                <Button
+                    variant="outlined"
+                    onClick={() => handleDelete(params.row.id)}
+                >
+                    Delete
+                </Button>
+            ),
+        }
+          
     ];
 
-    // const rows=categorygetdata.map((v,i)=>{
-
-    //     return {
-    //         id:i+1,
-    //         name:v.name,
-    //         description:v.description
-    //     }
-    // })
 
     return (
         <>
@@ -98,7 +111,6 @@ function Category(props) {
                         open={open}
                         onClose={handleClose}
                     >
-
                         <form onSubmit={handleSubmit}>
                             <DialogTitle>Add The Product</DialogTitle>
                             <DialogContent >
