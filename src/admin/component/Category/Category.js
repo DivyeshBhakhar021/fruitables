@@ -10,9 +10,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useFormik } from 'formik';
 import { object, string, number, date, InferType } from 'yup';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { IconButton } from '@mui/material';
 
 function Category(props) {
     const [data, setData] = useState([]);
+    const [edit, setEdit] = useState(null);
+    console.log(edit);
 
     let userSchema = object({
         name: string().required().matches(/^[a-zA-Z'-\s]*$/),
@@ -25,11 +29,11 @@ function Category(props) {
         console.log(values);
 
         let localdata = JSON.parse(localStorage.getItem('category'));
-        if(localdata){
-            localdata.push({...values,id:Inu});
-            localStorage.setItem("category",JSON.stringify(localdata))
-        }else{
-            localStorage.setItem("category",JSON.stringify([{...values,id:Inu}]))
+        if (localdata) {
+            localdata.push({ ...values, id: Inu });
+            localStorage.setItem("category", JSON.stringify(localdata))
+        } else {
+            localStorage.setItem("category", JSON.stringify([{ ...values, id: Inu }]))
         }
         getdata();
     }
@@ -37,15 +41,22 @@ function Category(props) {
 
     const getdata = () => {
         const categorygetdata = JSON.parse(localStorage.getItem('category'));
-        if(categorygetdata){
+        if (categorygetdata) {
             setData(categorygetdata)
         }
     }
-    
-    
+    const handleUpdate = (data) => {
+        let localdata = JSON.parse(localStorage.getItem('category'));
+        let index = localdata.findIndex(v => v.id === data.id)
+        localdata[index] = data;
+        localStorage.setItem("category", JSON.stringify(localdata))
+        getdata();
+    }
+
+
     useEffect(() => {
         getdata();
-    },[])
+    }, [])
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -53,31 +64,46 @@ function Category(props) {
         },
         validationSchema: userSchema,
         onSubmit: values => {
-            // alert(JSON.stringify(values, null, 2));
-            handaladd(values);
+            if (edit) {
+                handleUpdate(values)
+            } else {
+                handaladd(values);
+            }
+
             formik.resetForm();
             handleClose();
+
         },
     });
 
-    const { handleChange, handleSubmit,onClick, handleBlur, values, touched, errors } = formik
+    const { handleChange, handleSubmit, onClick, handleBlur, values, touched, errors } = formik
 
     const [open, setOpen] = React.useState(false);
-
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
+        formik.resetForm();
+        setEdit(null);
+
     };
 
-    const handleDelete = (id)=>{
+    const handleDelete = (id) => {
         let localData = JSON.parse(localStorage.getItem("category"));
-        localData = localData.filter(item=>item.id !== id);
+        localData = localData.filter(v => v.id !== id);
         localStorage.setItem("category", JSON.stringify(localData));
         getdata();
     }
+    const handleEdit = (data) => {
+        console.log("abc", data);
+        formik.setValues(data);
+        setEdit(data);
+        handleClickOpen();
+
+    }
+
 
     const columns = [
         { field: 'name', headerName: 'Name', width: 130 },
@@ -87,15 +113,28 @@ function Category(props) {
             headerName: 'Delete',
             width: 100,
             renderCell: (params) => (
+                <IconButton aria-label="delete" size="large" variant="outlined"
+                    onClick={() => handleDelete(params.row.id)}>
+                    <DeleteIcon />
+                </IconButton>
+            ),
+
+        }, {
+            field: 'edit',
+            headerName: 'Edit',
+            width: 100,
+            renderCell: (params) => (
                 <Button
                     variant="outlined"
-                    onClick={() => handleDelete(params.row.id)}
+                    color="primary"
+                    onClick={() => handleEdit(params.row)}
+                    startIcon={<EditIcon color="success" />}
                 >
-                    Delete
+
                 </Button>
             ),
         }
-          
+
     ];
 
 
@@ -127,7 +166,7 @@ function Category(props) {
                                     value={values.name}
                                     error={errors.name && touched.name ? true : false}
                                     helperText={errors.name && touched.name ? errors.name : ''}
-                                    // helperText=""
+                                // helperText=""
                                 />
                                 <TextField
 
@@ -144,12 +183,12 @@ function Category(props) {
                                     error={errors.description && touched.description ? true : false}
                                     helperText={errors.description && touched.description ? errors.description : ''}
                                 />
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={handleClose}>Cancel</Button>
-                                    <Button type="submit">Add</Button>
-                                </DialogActions>
-                            
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Cancel</Button>
+                                <Button type="submit">{edit ? "Update" : "Add"}</Button>
+                            </DialogActions>
+
 
                         </form>
 
