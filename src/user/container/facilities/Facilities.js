@@ -63,12 +63,11 @@ export default function Facilities() {
                 <DialogTitle>Subscribe</DialogTitle>
 
                 <DialogContent>
-        
+                    <form onSubmit={handleSubmit}>
                         <DialogContentText>
                             To subscribe to this website, please enter your email address here. We
                             will send updates occasionally.
                         </DialogContentText>
-                        <form onSubmit={handleSubmit}>
                         <TextField
                             margin="dense"
                             id="name"
@@ -97,12 +96,11 @@ export default function Facilities() {
                             error={errors.description && touched.description ? true : false}
                             helperText={errors.description && touched.description ? errors.description : ''}
                         />
-                         </form>
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>
                             <Button type="submit">Add</Button>
                         </DialogActions>
-                   
+                    </form>
                 </DialogContent>
 
             </Dialog>
