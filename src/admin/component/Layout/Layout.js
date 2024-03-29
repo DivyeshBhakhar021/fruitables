@@ -22,6 +22,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 import BakeryDiningIcon from '@mui/icons-material/BakeryDining';
 import { NavLink } from 'react-router-dom';
 import CategoryIcon from '@mui/icons-material/Category';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 
 const drawerWidth = 240;
 
@@ -107,6 +108,11 @@ const adminlink =[
       to:'/admin/category',
       icon:<CategoryIcon/>
   },
+  {
+    title:'Facilities',
+    to:'/admin/facilities',
+    icon:<EmojiEmotionsIcon/>
+},
     
 ]
 
