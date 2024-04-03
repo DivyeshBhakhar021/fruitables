@@ -15,16 +15,14 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
-// import { CircularProgress } from '@mui/material';
 import { Spinner } from 'reactstrap';
 
 
 export default function Facilities() {
     const [open, setOpen] = useState(false);
     const [update, setupdate] = useState(false);
-    const [loading, setLoading] = useState(true);
 
-    const facilities = useSelector(state => state.facilities)
+     const facilities = useSelector(state => state.facilities)
     console.log(facilities);
 
     const dispatch = useDispatch();
@@ -128,10 +126,9 @@ export default function Facilities() {
     return (
         <>
             {
-                facilities.isLoading ? <p>
+                facilities.isLoading ?
                     <Spinner>
-                        Loading...
-                    </Spinner></p> :
+                    </Spinner> :
                     <>
                         <Button variant="outlined" onClick={handleClickOpen}>
                             Add Facilities

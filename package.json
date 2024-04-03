@@ -25,6 +25,7 @@
     "reactstrap": "^9.2.2",
     "reduct": "^3.3.1",
     "redux": "^5.0.1",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
     "styled-components": "^6.1.8",
     "web-vitals": "^2.1.4",

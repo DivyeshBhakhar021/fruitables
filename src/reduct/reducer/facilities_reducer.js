@@ -7,7 +7,7 @@ const initialState = {
 }
 
 export const facilitiesReducer = (state = initialState, action) => {
-
+console.log(action);
     switch (action.type) {
         case LODING_FACILITIES:
             return {
