@@ -113,7 +113,11 @@ const adminlink =[
     to:'/admin/facilities',
     icon:<EmojiEmotionsIcon/>
 },
-    
+{
+  title:'Product',
+  to:'/admin/product',
+  icon:<EmojiEmotionsIcon/>
+}, 
 ]
 
 export default function Layout({children}) {

@@ -1,5 +1,9 @@
-import { ADD_FACILITIES, DELETE_FACILITIES, EDIT_FACILITIES, LODING_FACILITIES } from "../reducer/action.type"
+import { ADD_FACILITIES, DELETE_FACILITIES, EDIT_FACILITIES, GET_FACILITIES, LODING_FACILITIES } from "../reducer/action.type"
 
+
+export const getdata = () => (dispatch) => {
+    dispatch({type:GET_FACILITIES})
+}
 
 export const handalisLoding = () => (dispatch) => {
     dispatch({type:LODING_FACILITIES})

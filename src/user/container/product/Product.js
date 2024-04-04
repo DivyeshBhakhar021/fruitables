@@ -17,20 +17,22 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
 import { Spinner } from 'reactstrap';
 import { useEffect } from 'react';
+import {  productdata } from '../../../reduct/action/Product.action';
 
 
-export default function Facilities() {
+export default function Product() {
     const [open, setOpen] = useState(false);
     const [update, setupdate] = useState(false);
 
-     const facilities = useSelector(state => state.facilities)
-    console.log(facilities);
+    const dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(getdata())
+        dispatch(productdata(values))
     },[])
 
-    const dispatch = useDispatch();
+    const  fruit = useSelector((state) => state.product)
+    console.log(fruit);
+   
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -54,26 +56,21 @@ export default function Facilities() {
         setupdate(false)
     };
 
-    let facilitiesSchema = object({
+    let ProductSchema = object({
         name: string().required(),
-        description: string().required()
+        description: string().required(),
+        price: number().required()
     });
 
     const formik = useFormik({
         initialValues: {
             name: '',
             description: '',
-
+            price:''
         },
-        validationSchema: facilitiesSchema,
+        validationSchema: ProductSchema,
         onSubmit: (values, { resetForm }) => {
-            if (update) {
-                dispatch(editFacilities(values))
-            } else {
-                const rfn = Math.floor(Math.random() * 1000);
-                dispatch(addfacilities({ ...values, id: rfn }))
-            }
-
+          
             resetForm()
             handleClose()
         },
@@ -84,6 +81,7 @@ export default function Facilities() {
     const columns = [
         { field: 'name', headerName: 'name', width: 70 },
         { field: 'description', headerName: 'description', width: 130 },
+        { field: 'price', headerName: 'Price', width: 130 },
         {
             field: 'Action',
             headerName: 'Action',
@@ -129,14 +127,9 @@ export default function Facilities() {
 
 
     return (
-        <>
-            {
-                facilities.isLoading ?
-                    <Spinner>
-                    </Spinner> :
                     <>
                         <Button variant="outlined" onClick={handleClickOpen}>
-                            Add Facilities
+                            Add Product
                         </Button>
                         <Dialog
                             open={open}
@@ -179,6 +172,20 @@ export default function Facilities() {
                                         error={errors.description && touched.description ? true : false}
                                         helperText={errors.description && touched.description ? errors.description : ''}
                                     />
+                                    <TextField
+                                        margin="dense"
+                                        id="price"
+                                        name="price"
+                                        label="price"
+                                        type="number"
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.price}
+                                        error={errors.price && touched.price ? true : false}
+                                        helperText={errors.price && touched.price ? errors.price : ''}
+                                    />
                                     <DialogActions>
                                         <Button onClick={handleClose}>Cancel</Button>
                                         <Button type="submit">{update ? "update" : "Add"}</Button>
@@ -188,8 +195,8 @@ export default function Facilities() {
 
                         </Dialog>
                         <div style={{ height: 400, width: '100%' }}>
-                            <DataGrid
-                                rows={facilities.facilities}
+                            {/* <DataGrid
+                                // rows={facilities.facilities}
                                 columns={columns}
                                 initialState={{
                                     pagination: {
@@ -198,10 +205,9 @@ export default function Facilities() {
                                 }}
                                 pageSizeOptions={[5, 10]}
                                 checkboxSelection
-                            />
+                            /> */}
                         </div>
                     </>
-            }
-        </>
+            
     );
 }

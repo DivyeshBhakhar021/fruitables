@@ -1,4 +1,4 @@
-import { ADD_FACILITIES, DELETE_FACILITIES, EDIT_FACILITIES, LODING_FACILITIES } from "./action.type"
+import { ADD_FACILITIES, DELETE_FACILITIES, EDIT_FACILITIES, GET_FACILITIES, LODING_FACILITIES } from "./action.type"
 
 const initialState = {
     isLoding: false,
@@ -7,12 +7,16 @@ const initialState = {
 }
 
 export const facilitiesReducer = (state = initialState, action) => {
-console.log(action);
+    console.log(action);
     switch (action.type) {
         case LODING_FACILITIES:
             return {
                 ...state,
                 isLoading: true
+            }
+        case GET_FACILITIES:
+            return {
+                ...state,
             }
         case ADD_FACILITIES:
             return {
