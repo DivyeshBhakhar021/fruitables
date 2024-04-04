@@ -27,11 +27,11 @@ export default function Product() {
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(productdata(values))
+        dispatch(productdata())
     },[])
 
-    const  fruit = useSelector((state) => state.product)
-    console.log(fruit);
+    const  product = useSelector((state) => state.product)
+    console.log(product);
    
 
     const handleClickOpen = () => {
@@ -195,8 +195,8 @@ export default function Product() {
 
                         </Dialog>
                         <div style={{ height: 400, width: '100%' }}>
-                            {/* <DataGrid
-                                // rows={facilities.facilities}
+                             <DataGrid
+                                rows={product.product}
                                 columns={columns}
                                 initialState={{
                                     pagination: {
@@ -205,7 +205,7 @@ export default function Product() {
                                 }}
                                 pageSizeOptions={[5, 10]}
                                 checkboxSelection
-                            /> */}
+                            /> 
                         </div>
                     </>
             

@@ -1,4 +1,3 @@
-import { combineReducers } from "redux"
 import { GET_PRODUCT } from "./Product.action";
 
 const product_facilities = {
@@ -12,11 +11,11 @@ export  const productReducer = (state = product_facilities, action) => {
     switch (action.type) {
         case GET_PRODUCT:
             return{
-                ...state,
-                product:state.product.concat(action.payload),
+                isLoading: false,
+                product: action.payload,
+                error:null
             }
             
-    
         default:
             return state
     }

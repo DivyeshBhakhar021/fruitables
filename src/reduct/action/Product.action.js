@@ -3,12 +3,12 @@ import axios from 'axios';
 import { GET_PRODUCT } from "../reducer/Product.action";
 
 
-export const productdata = (data) => (dispatch) => {
-    dispatch({type:GET_PRODUCT,payload:data})
+export const productdata = () => async (dispatch) => {
+    
     try {
-        axios.get( BATCH_URL +'fruit')
+       await axios.get( BATCH_URL +'fruit')
     .then((response)=>{
-        console.log(response);
+         dispatch({type:GET_PRODUCT,payload: response.data })
     })
     .catch((error)=>{
         console.log(error);
@@ -17,3 +17,5 @@ export const productdata = (data) => (dispatch) => {
        console.log(error); 
     }
 }
+
+
