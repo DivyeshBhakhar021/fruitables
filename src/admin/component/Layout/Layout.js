@@ -23,6 +23,7 @@ import BakeryDiningIcon from '@mui/icons-material/BakeryDining';
 import { NavLink } from 'react-router-dom';
 import CategoryIcon from '@mui/icons-material/Category';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const drawerWidth = 240;
 
@@ -116,7 +117,7 @@ const adminlink =[
 {
   title:'Product',
   to:'/admin/product',
-  icon:<EmojiEmotionsIcon/>
+  icon:<InventoryIcon/>
 }, 
 ]
 

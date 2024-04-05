@@ -17,7 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
 import { Spinner } from 'reactstrap';
 import { useEffect } from 'react';
-import {  productdata } from '../../../reduct/action/Product.action';
+import {  addPoduct, addaddPoduct, deleteproduct, editdata, productdata } from '../../../reduct/action/Product.action';
 
 
 export default function Product() {
@@ -39,8 +39,9 @@ export default function Product() {
     };
 
     const handleDelete = (id) => {
-        dispatch(deleteFacilities(id));
+        dispatch(deleteproduct(id));
         console.log(id);
+
     }
 
     const handleEdit = (data) => {
@@ -58,19 +59,23 @@ export default function Product() {
 
     let ProductSchema = object({
         name: string().required(),
-        description: string().required(),
+        details: string().required(),
         price: number().required()
     });
 
     const formik = useFormik({
         initialValues: {
             name: '',
-            description: '',
+            details: '',
             price:''
         },
         validationSchema: ProductSchema,
         onSubmit: (values, { resetForm }) => {
-          
+          if (update) {
+            dispatch(editdata(values))
+          } else{
+            dispatch(addPoduct(values))
+          }
             resetForm()
             handleClose()
         },
@@ -79,8 +84,8 @@ export default function Product() {
     const { handleChange, handleSubmit, handleBlur, values, touched, errors } = formik;
 
     const columns = [
-        { field: 'name', headerName: 'name', width: 70 },
-        { field: 'description', headerName: 'description', width: 130 },
+        { field: 'name', headerName: 'Name', width: 70 },
+        { field: 'details', headerName: 'Details', width: 130 },
         { field: 'price', headerName: 'Price', width: 130 },
         {
             field: 'Action',
@@ -113,17 +118,6 @@ export default function Product() {
         },
     ];
 
-    const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    ];
 
 
     return (
@@ -160,17 +154,17 @@ export default function Product() {
                                     />
                                     <TextField
                                         margin="dense"
-                                        id="description"
-                                        name="description"
-                                        label="description"
+                                        id="details"
+                                        name="details"
+                                        label="details"
                                         type="text"
                                         fullWidth
                                         variant="standard"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        value={values.description}
-                                        error={errors.description && touched.description ? true : false}
-                                        helperText={errors.description && touched.description ? errors.description : ''}
+                                        value={values.details}
+                                        error={errors.details && touched.details ? true : false}
+                                        helperText={errors.details && touched.details ? errors.details : ''}
                                     />
                                     <TextField
                                         margin="dense"
