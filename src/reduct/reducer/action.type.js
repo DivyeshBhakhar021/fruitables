@@ -10,3 +10,10 @@ export const ADD_PRODUCT = "ADD_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const EDIT_PRODUCT = "EDIT_PRODUCT";
 export const LODING_PRODUCT = "LODING_PRODUCT";
+
+
+export const GET_REVIEW = "GET_REVIEW"   
+export const ADD_REVIEW = "ADD_REVIEW";
+export const DELETE_REVIEW = "DELETE_REVIEW";
+export const EDIT_REVIEW = "EDIT_REVIEW";
+export const LODING_REVIEW = "LODING_REVIEW";

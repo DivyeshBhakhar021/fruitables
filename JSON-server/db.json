@@ -64,5 +64,23 @@
       "price": "1.99",
       "type": "Sales"
     }
+  ],
+  "review": [
+    {
+      "id": "e113",
+      "name": "hello",
+      "email": "d@gmail.com",
+      "review": "wfebi",
+      "rating": "4.5",
+      "productId": "1"
+    },
+    {
+      "id": "6287",
+      "name": "fesrbj",
+      "email": "animal@gmail.com",
+      "review": "n;okknk",
+      "rating": "4",
+      "productId": "1"
+    }
   ]
 }
