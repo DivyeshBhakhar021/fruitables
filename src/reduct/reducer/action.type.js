@@ -17,3 +17,4 @@ export const ADD_REVIEW = "ADD_REVIEW";
 export const DELETE_REVIEW = "DELETE_REVIEW";
 export const EDIT_REVIEW = "EDIT_REVIEW";
 export const LODING_REVIEW = "LODING_REVIEW";
+export const ERROR_REVIEW = "ERROR_REVIEW";
