@@ -17,7 +17,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useState } from 'react';
 import { Spinner } from 'reactstrap';
 import { useEffect } from 'react';
-import {  addPoduct, addaddPoduct, deleteproduct, editdata, productdata } from '../../../reduct/action/Product.action';
+import { addPoduct, addaddPoduct, deleteproduct, editdata, productdata } from '../../../reduct/action/Product.action';
 
 
 export default function Product() {
@@ -26,13 +26,13 @@ export default function Product() {
 
     const dispatch = useDispatch();
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(productdata())
-    },[])
+    }, [])
 
-    const  product = useSelector((state) => state.product)
+    const product = useSelector((state) => state.product)
     console.log(product);
-   
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -67,15 +67,15 @@ export default function Product() {
         initialValues: {
             name: '',
             details: '',
-            price:''
+            price: ''
         },
         validationSchema: ProductSchema,
         onSubmit: (values, { resetForm }) => {
-          if (update) {
-            dispatch(editdata(values))
-          } else{
-            dispatch(addPoduct(values))
-          }
+            if (update) {
+                dispatch(editdata(values))
+            } else {
+                dispatch(addPoduct(values))
+            }
             resetForm()
             handleClose()
         },
@@ -121,6 +121,12 @@ export default function Product() {
 
 
     return (
+
+        <>
+            {
+
+                product.isLoding ? <p>loding...</p> :
+                product.error ? <h1>{product.error}</h1> :
                     <>
                         <Button variant="outlined" onClick={handleClickOpen}>
                             Add Product
@@ -189,7 +195,7 @@ export default function Product() {
 
                         </Dialog>
                         <div style={{ height: 400, width: '100%' }}>
-                             <DataGrid
+                            <DataGrid
                                 rows={product.product}
                                 columns={columns}
                                 initialState={{
@@ -199,9 +205,11 @@ export default function Product() {
                                 }}
                                 pageSizeOptions={[5, 10]}
                                 checkboxSelection
-                            /> 
+                            />
                         </div>
                     </>
-            
+            }
+        </>
+
     );
 }

@@ -18,6 +18,8 @@ import { getreview } from "../../../reduct/action/shop_detils.action";
 function Shop_detail(props) {
   const dispatch = useDispatch();
   const [productData, setProductData] = useState({});
+  const currentDate = new Date();
+  console.log(currentDate);
 
   const data = useSelector((state) => state.review)
   console.log(data.review);

@@ -63,6 +63,30 @@
       "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
       "price": "1.99",
       "type": "Sales"
+    },
+    {
+      "id": "b6cd",
+      "name": "wd",
+      "details": "dw",
+      "price": 11
+    },
+    {
+      "id": "2517",
+      "name": "abc",
+      "details": "abc",
+      "price": 109
+    },
+    {
+      "id": "a5f7",
+      "name": "fewh",
+      "details": "byyh",
+      "price": 122
+    },
+    {
+      "id": "ce07",
+      "name": "rgeuhj",
+      "details": "ubj",
+      "price": 122
     }
   ],
   "review": [
@@ -80,6 +104,14 @@
       "email": "animal@gmail.com",
       "review": "n;okknk",
       "rating": "4",
+      "productId": "1"
+    },
+    {
+      "id": "d2a1",
+      "name": "divyesh",
+      "email": "divyeshbhakhar@gmail.com",
+      "review": "best",
+      "rating": "5",
       "productId": "1"
     }
   ]
