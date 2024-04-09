@@ -126,88 +126,88 @@ export default function Product() {
             {
 
                 product.isLoding ? <p>loding...</p> :
-                product.error ? <h1>{product.error}</h1> :
-                    <>
-                        <Button variant="outlined" onClick={handleClickOpen}>
-                            Add Product
-                        </Button>
-                        <Dialog
-                            open={open}
-                            onClose={handleClose}
+                    product.error ? <h1>{product.error}</h1> :
+                        <>
+                            <Button variant="outlined" onClick={handleClickOpen}>
+                                Add Product
+                            </Button>
+                            <Dialog
+                                open={open}
+                                onClose={handleClose}
 
-                        >
-                            <DialogTitle>Subscribe</DialogTitle>
+                            >
+                                <DialogTitle>Subscribe</DialogTitle>
 
-                            <DialogContent>
-                                <form onSubmit={handleSubmit}>
-                                    <DialogContentText>
-                                        To subscribe to this website, please enter your email address here. We
-                                        will send updates occasionally.
-                                    </DialogContentText>
-                                    <TextField
-                                        margin="dense"
-                                        id="name"
-                                        name="name"
-                                        label="name"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.name}
-                                        error={errors.name && touched.name ? true : false}
-                                        helperText={errors.name && touched.name ? errors.name : ''}
-                                    />
-                                    <TextField
-                                        margin="dense"
-                                        id="details"
-                                        name="details"
-                                        label="details"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.details}
-                                        error={errors.details && touched.details ? true : false}
-                                        helperText={errors.details && touched.details ? errors.details : ''}
-                                    />
-                                    <TextField
-                                        margin="dense"
-                                        id="price"
-                                        name="price"
-                                        label="price"
-                                        type="number"
-                                        fullWidth
-                                        variant="standard"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.price}
-                                        error={errors.price && touched.price ? true : false}
-                                        helperText={errors.price && touched.price ? errors.price : ''}
-                                    />
-                                    <DialogActions>
-                                        <Button onClick={handleClose}>Cancel</Button>
-                                        <Button type="submit">{update ? "update" : "Add"}</Button>
-                                    </DialogActions>
-                                </form>
-                            </DialogContent>
+                                <DialogContent>
+                                    <form onSubmit={handleSubmit}>
+                                        <DialogContentText>
+                                            To subscribe to this website, please enter your email address here. We
+                                            will send updates occasionally.
+                                        </DialogContentText>
+                                        <TextField
+                                            margin="dense"
+                                            id="name"
+                                            name="name"
+                                            label="name"
+                                            type="text"
+                                            fullWidth
+                                            variant="standard"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.name}
+                                            error={errors.name && touched.name ? true : false}
+                                            helperText={errors.name && touched.name ? errors.name : ''}
+                                        />
+                                        <TextField
+                                            margin="dense"
+                                            id="details"
+                                            name="details"
+                                            label="details"
+                                            type="text"
+                                            fullWidth
+                                            variant="standard"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.details}
+                                            error={errors.details && touched.details ? true : false}
+                                            helperText={errors.details && touched.details ? errors.details : ''}
+                                        />
+                                        <TextField
+                                            margin="dense"
+                                            id="price"
+                                            name="price"
+                                            label="price"
+                                            type="number"
+                                            fullWidth
+                                            variant="standard"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.price}
+                                            error={errors.price && touched.price ? true : false}
+                                            helperText={errors.price && touched.price ? errors.price : ''}
+                                        />
+                                        <DialogActions>
+                                            <Button onClick={handleClose}>Cancel</Button>
+                                            <Button type="submit">{update ? "update" : "Add"}</Button>
+                                        </DialogActions>
+                                    </form>
+                                </DialogContent>
 
-                        </Dialog>
-                        <div style={{ height: 400, width: '100%' }}>
-                            <DataGrid
-                                rows={product.product}
-                                columns={columns}
-                                initialState={{
-                                    pagination: {
-                                        paginationModel: { page: 0, pageSize: 5 },
-                                    },
-                                }}
-                                pageSizeOptions={[5, 10]}
-                                checkboxSelection
-                            />
-                        </div>
-                    </>
+                            </Dialog>
+                            <div style={{ height: 400, width: '100%' }}>
+                                <DataGrid
+                                    rows={product.product}
+                                    columns={columns}
+                                    initialState={{
+                                        pagination: {
+                                            paginationModel: { page: 0, pageSize: 5 },
+                                        },
+                                    }}
+                                    pageSizeOptions={[5, 10]}
+                                    checkboxSelection
+                                />
+                            </div>
+                        </>
             }
         </>
 
