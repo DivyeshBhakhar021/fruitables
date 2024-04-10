@@ -6,7 +6,6 @@ import Vegetables from '../admin/component/Vegetables/Vegetables';
 import Category from '../admin/component/Category/Category';
 import Facilities from '../user/container/facilities/Facilities';
 import Product from '../user/container/product/Product';
-import Revie_data from '../user/container/review/Review_data';
 
 
 function AdminRoutes(props) {
@@ -19,7 +18,6 @@ function AdminRoutes(props) {
           <Route exect path='/category'element={< Category/>}/>
           <Route exect path='/facilities'element={<Facilities />}/>
           <Route exect path='/product'element={<Product />}/>
-          <Route exect path='/review'element={<Revie_data  />}/>
         </Routes>
       </Layout>
     </>
