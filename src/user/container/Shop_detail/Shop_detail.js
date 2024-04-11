@@ -11,13 +11,14 @@ import DialogContent from "@mui/material/DialogContent";
 import { Button } from "@mui/material";
 import DialogActions from "@mui/material/DialogActions";
 import { useDispatch, useSelector } from "react-redux";
-import { addreview, getreview } from "../../../reduct/action/review.action";
+import { addreview, deletereview, editreview, getreview } from "../../../reduct/action/review.action";
 import Review from "../review/Review";
 
 
 function Shop_detail(props) {
   const dispatch = useDispatch();
   const [productData, setProductData] = useState({});
+
 
   const review = useSelector((state) => state.review)
   console.log(review);
@@ -64,7 +65,7 @@ function Shop_detail(props) {
 
   const { handleBlur, handleChange, handleSubmit, errors, values, touched } = formik
 
-
+ 
 
   return (
 
@@ -97,7 +98,7 @@ function Shop_detail(props) {
                       <div className="border rounded">
                         <a href="#">
                           <img
-                            src={`../${productData.img}`}
+                            src={`../${productData?.img}`}
                             className="img-fluid rounded"
                             alt="Image"
                           />
@@ -105,9 +106,9 @@ function Shop_detail(props) {
                       </div>
                     </div>
                     <div className="col-lg-6">
-                      <h4 className="fw-bold mb-3">{productData.name}</h4>
-                      <p className="mb-3">{productData.details}</p>
-                      <h5 className="fw-bold mb-3">{productData.price} $</h5>
+                      <h4 className="fw-bold mb-3">{productData?.name}</h4>
+                      <p className="mb-3">{productData?.details}</p>
+                      <h5 className="fw-bold mb-3">{productData?.price} $</h5>
                       <div className="d-flex mb-4">
                         <i className="fa fa-star text-secondary" />
                         <i className="fa fa-star text-secondary" />
@@ -253,27 +254,7 @@ function Shop_detail(props) {
                           aria-labelledby="nav-mission-tab"
                         >
                           <div className="d-flex">
-                            <div>
-                              {
-                                review.isLoding ? <p>loding...</p> :
-                                  review.error ? <h1>{review.error}</h1> :
-                                    review.review.map((v, index) => (
-                                      <div key={index} className="ml-3">
-                                        <p className="mb-2" style={{ fontSize: 14 }}>
-                                          {v.reviewDateing}
-                                        </p>
-                                        <div className="d-flex justify-content-between">
-                                          <h5>{v.name}</h5>
-                                          <Rating name="read-only" value={v.rating} readOnly />
-                                        </div>
-                                        <p className="text-dark">
-                                          {v.review}
-                                        </p>
-                                      </div>
-                                    ))
-                              }
-
-                            </div>
+                            
                           </div>
 
                         </div>

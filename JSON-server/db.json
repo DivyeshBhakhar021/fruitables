@@ -87,39 +87,21 @@
       "name": "rgeuhj",
       "details": "ubj",
       "price": 122
+    },
+    {
+      "id": "4623",
+      "name": "qwe",
+      "details": "br",
+      "price": 1234
     }
   ],
   "review": [
     {
-      "id": "e113",
-      "name": "hello",
-      "email": "d@gmail.com",
-      "review": "wfebi",
-      "rating": "4.5",
-      "productId": "1"
-    },
-    {
-      "id": "6287",
-      "name": "fesrbj",
-      "email": "animal@gmail.com",
-      "review": "n;okknk",
-      "rating": "4",
-      "productId": "1"
-    },
-    {
-      "id": "d2a1",
-      "name": "divyesh",
-      "email": "divyeshbhakhar@gmail.com",
-      "review": "best",
-      "rating": "5",
-      "productId": "1"
-    },
-    {
       "id": "a416",
       "name": "hello",
       "email": "d@gmail.com",
-      "review": "best of india",
-      "rating": "5",
+      "review": "best of ",
+      "rating": "0.5",
       "productId": "1"
     },
     {
@@ -245,6 +227,24 @@
       "rating": "1",
       "productId": "1",
       "reviewDateing": "2024-04-10T03:03:54.412Z"
+    },
+    {
+      "id": "c7b2",
+      "name": "divyesh",
+      "email": "hello@bhkh",
+      "review": "vgbhyih",
+      "rating": "1",
+      "productId": "1",
+      "reviewDateing": "2024-04-10T12:19:00.331Z"
+    },
+    {
+      "id": "a711",
+      "name": "hi",
+      "email": "hi@bjj",
+      "review": "hi",
+      "rating": "5",
+      "productId": "1",
+      "reviewDateing": "2024-04-11T02:19:41.991Z"
     }
   ]
 }

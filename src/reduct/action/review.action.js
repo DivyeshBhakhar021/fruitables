@@ -1,5 +1,5 @@
 import { BATCH_URL } from "../../utilites/Utilites";
-import { ADD_REVIEW, ERROR_REVIEW, GET_REVIEW, LODING_REVIEW } from "../reducer/action.type"
+import { ADD_REVIEW, DELETE_REVIEW, EDIT_REVIEW, ERROR_REVIEW, GET_REVIEW, LODING_REVIEW } from "../reducer/action.type"
 import axios from 'axios';
 
 
@@ -32,3 +32,27 @@ export const addreview = (data) => async (dispatch) =>{
     }
 }
 
+export const deletereview = (id) => async (dispatch) => {
+
+    try {
+        dispatch(lodingreview());
+        await axios.delete( BATCH_URL + 'review/'+id)
+        .then((response)=>dispatch({type:DELETE_REVIEW,payload: id}))
+        .catch((error)=>errorgreview(error.message))
+    } catch (error) {
+        errorgreview(error.message);
+    }
+}
+
+
+export const editreview = (data) => async (dispatch) => {
+
+    try {
+        dispatch(lodingreview());
+        await axios.put( BATCH_URL + 'review/'+data.id,data)
+        .then((response)=>dispatch({type:EDIT_REVIEW,payload: response.data }))
+        .catch((error)=>errorgreview(error.message))
+    } catch (error) {
+        errorgreview(error.message);
+    }
+}
