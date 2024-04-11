@@ -168,27 +168,33 @@ function Review(props) {
         </div>
       </form>
       <div>
-        {
+   {
+  review.isLoading ? (
+    <p>Loading...</p>
+  ) : review.error ? (
+    <h1>{review.error}</h1>
+  ) : (
+    review.review.map((v, index) => (
+      v.productId === id && (
+        <div key={index} className="ml-3"> {/* Ideally, use v.id or a more unique identifier as the key */}
+          <p className="mb-2" style={{ fontSize: 14 }}>
+            {v.reviewDateing} {/* Assuming there's a typo, and it should be 'reviewDating' or 'reviewDate' */}
+          </p>
+          <div className="d-flex justify-content-between">
+            <h5>{v.name}</h5>
+            <Rating name="read-only" value={v.rating} readOnly />
+          </div>
+          <p className="text-dark">
+            {v.review}
+          </p>
+          <button onClick={() => handlerdit(v)} className="btn btn-primary">Edit</button> {/* Added space between btn and btn-primary */}
+          <button onClick={() => handledelect(v.id)} className="btn btn-primary">Delete</button>
+        </div>
+      )
+    ))
+  )
+}
 
-          review.isLoding ? <p>loding...</p> :
-            review.error ? <h1>{review.error}</h1> :
-              review.review.map((v, index) => (
-                <div key={index} className="ml-3">
-                  <p className="mb-2" style={{ fontSize: 14 }}>
-                    {v.reviewDateing}
-                  </p>
-                  <div className="d-flex justify-content-between">
-                    <h5>{v.name}</h5>
-                    <Rating name="read-only" value={v.rating} readOnly />
-                  </div>
-                  <p className="text-dark">
-                    {v.review}
-                  </p>
-                  <button onClick={() => handlerdit(v)} className="btn-primary">edit</button>
-                  <button onClick={() => handledelect(v.id)} className="btn-primary">delete</button>
-                </div>
-              ))
-        }
 
       </div>
     </>
