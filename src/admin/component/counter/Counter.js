@@ -4,9 +4,10 @@ import { decrement, increment } from "../../../reduct/slice/counter.slice";
 
 function Counter(props) {
   const dispatch = useDispatch();
-  const count = useSelector((state) => state.counter);
+  const count = useSelector((state) => state.counter.count);
 
   console.log(count);
+
   const handleInc = () => {
     dispatch(increment());
   };
@@ -16,8 +17,9 @@ function Counter(props) {
   };
   return (
     <div>
+      <h1>counter</h1>
       <button onClick={handleInc}>+</button>
-      {count.Counter}
+      {count}
       <button onClick={handleDec}>-</button>
     </div>
   );

@@ -13,6 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import { useDispatch, useSelector } from "react-redux";
 import { addreview, deletereview, editreview, getreview } from "../../../reduct/action/review.action";
 import Review from "../review/Review";
+import { addToCart } from "../../../admin/component/cart/cart.slice";
 
 
 function Shop_detail(props) {
@@ -148,6 +149,7 @@ function Shop_detail(props) {
                       <a
                         href="#"
                         className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"
+                        onClick={addToCart}
                       >
                         <i className="fa fa-shopping-bag me-2 text-primary" /> Add
                         to cart
