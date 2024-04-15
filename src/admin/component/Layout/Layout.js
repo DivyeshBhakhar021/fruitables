@@ -124,6 +124,11 @@ const adminlink =[
   to:'/admin/review',
   icon:<InventoryIcon/>
 },
+{
+  title:'counter',
+  to:'/admin/counter',
+  icon:<InventoryIcon/>
+},
 ]
 
 export default function Layout({children}) {

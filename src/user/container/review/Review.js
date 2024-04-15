@@ -11,12 +11,15 @@ import { Button } from "@mui/material";
 import DialogActions from "@mui/material/DialogActions";
 import { useDispatch, useSelector } from "react-redux";
 import { addreview, deletereview, editreview, getreview } from "../../../reduct/action/review.action";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from "@mui/icons-material/Delete";
+import { IconButton } from "@mui/material";
 
 
 
 function Review(props) {
   const dispatch = useDispatch();
-  const [edit,setEdit]=useState(false);
+  const [edit, setEdit] = useState(false);
 
   const { id } = useParams();
   console.log(id);
@@ -46,7 +49,7 @@ function Review(props) {
       } else {
         dispatch(addreview({ ...values, productId: id, reviewDateing: reviewDate }));
       }
-     
+
       formik.resetForm();
     },
   });
@@ -54,11 +57,11 @@ function Review(props) {
   const { handleBlur, handleChange, handleSubmit, errors, values, touched } = formik
 
   const handlerdit = (data) => {
-   formik.setValues(data)
+    formik.setValues(data)
     setEdit(true);
   }
 
-  const handledelect = (id) =>{
+  const handledelect = (id) => {
     dispatch(deletereview(id));
 
   }
@@ -168,32 +171,32 @@ function Review(props) {
         </div>
       </form>
       <div>
-   {
-  review.isLoading ? (
-    <p>Loading...</p>
-  ) : review.error ? (
-    <h1>{review.error}</h1>
-  ) : (
-    review.review.map((v, index) => (
-      v.productId === id && (
-        <div key={index} className="ml-3"> {/* Ideally, use v.id or a more unique identifier as the key */}
-          <p className="mb-2" style={{ fontSize: 14 }}>
-            {v.reviewDateing} {/* Assuming there's a typo, and it should be 'reviewDating' or 'reviewDate' */}
-          </p>
-          <div className="d-flex justify-content-between">
-            <h5>{v.name}</h5>
-            <Rating name="read-only" value={v.rating} readOnly />
-          </div>
-          <p className="text-dark">
-            {v.review}
-          </p>
-          <button onClick={() => handlerdit(v)} className="btn btn-primary">Edit</button> {/* Added space between btn and btn-primary */}
-          <button onClick={() => handledelect(v.id)} className="btn btn-primary">Delete</button>
-        </div>
-      )
-    ))
-  )
-}
+        {
+          review.isLoading ? (
+            <p>Loading...</p>
+          ) : review.error ? (
+            <h1>{review.error}</h1>
+          ) : (
+            review.review.map((v, index) => (
+              v.productId === id && (
+                <div key={index} className="ml-3"> {/* Ideally, use v.id or a more unique identifier as the key */}
+                  <p className="mb-2" style={{ fontSize: 14 }}>
+                    {v.reviewDateing} {/* Assuming there's a typo, and it should be 'reviewDating' or 'reviewDate' */}
+                  </p>
+                  <div className="d-flex justify-content-between">
+                    <h5>{v.name}</h5>
+                    <Rating name="read-only" value={v.rating} readOnly />
+                  </div>
+                  <p className="text-dark">
+                    {v.review}
+                  </p>
+                  <IconButton onClick={() => handlerdit(v)} className="btn btn-primary"><EditIcon /></IconButton> {/* Added space between btn and btn-primary */}
+                   <IconButton onClick={() => handledelect(v.id)} className="btn btn-primary"><DeleteIcon /></IconButton>
+                </div>
+              )
+            ))
+          )
+        }
 
 
       </div>
