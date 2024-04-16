@@ -1,6 +1,6 @@
 import { VaccinesRounded } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { number, object, string } from "yup";
 import axios from "axios";
@@ -23,6 +23,10 @@ function Shop_detail(props) {
 
   const review = useSelector((state) => state.review)
   console.log(review);
+
+
+  const Cart = useSelector((state) => state.Cart)
+  console.log(Cart);
 
   const getData = async () => {
     const response = await fetch("http://localhost:8001/fruit");
@@ -67,6 +71,9 @@ function Shop_detail(props) {
   const { handleBlur, handleChange, handleSubmit, errors, values, touched } = formik
 
  
+  const handalcart = () => {
+    dispatch(addToCart(id))
+  }
 
   return (
 
@@ -146,14 +153,14 @@ function Shop_detail(props) {
                           </button>
                         </div>
                       </div>
-                      <a
-                        href="#"
+                      <NavLink
+                        // to={`/card`}
                         className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"
-                        onClick={addToCart}
+                        onClick={handalcart}
                       >
                         <i className="fa fa-shopping-bag me-2 text-primary" /> Add
                         to cart
-                      </a>
+                      </NavLink>
                     </div>
                     <div className="col-lg-12">
                       <nav>

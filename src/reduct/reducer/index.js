@@ -3,10 +3,12 @@
     import { productReducer } from "./product.reducer";
 import { reviewReducer } from "./review.reducer";
 import counterSlice from "../slice/counter.slice";
+import cartSlice from "../../admin/component/cart/cart.slice";
 
     export const rootReducer = combineReducers({    
         facilities :facilitiesReducer,
         product:productReducer,
         review:reviewReducer,
-        counter:counterSlice
+        counter:counterSlice,
+        Cart:cartSlice
     })

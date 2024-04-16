@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, NavLink, useParams } from 'react-router-dom';
 
 function Shop(props) {
 
@@ -26,7 +26,6 @@ console.log(price);
 
     let uniqtype = [...new Set(data.map(v => v.type))]
 
-
     setType(uniqtype)
     setCatagory(uniqueCategories)
     setProductData(data);
@@ -34,7 +33,7 @@ console.log(price);
 
   const Filterdata = () => {
 
-    let fineldata = productData.filter(item => item.name.toLowerCase().includes(search));
+    let fineldata = productData.filter(v => v.name.toLowerCase().includes(search));
 
     if (sorting) {
       return fineldata.filter(v => v.name === sorting)
@@ -48,7 +47,7 @@ console.log(price);
       return fineldata.filter(v => v.price <= price)
     }
 
-    fineldata = productData
+    // fineldata = productData
 
     return fineldata;
   }
@@ -250,7 +249,11 @@ console.log(price);
                                 <p>{v.details}</p>
                                 <div className="d-flex justify-content-between flex-lg">
                                   <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
-                                  <a href="#" className="btn border border-secondary rounded-pill px-3 text-primary"><i className="fa fa-shopping-bag me-2 text-primary" /> Add to cart</a>
+                                  <NavLink to={`/card`} className="btn border border-secondary rounded-pill px-3 text-primary">
+                                  Add to cart
+                                  </NavLink>
+                                  {/* <a href="#" >
+                                    card<i className="fa fa-shopping-bag me-2 text-primary" /> </a> */}
                                 </div>
                               </div>
                             </div>
