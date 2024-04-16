@@ -5,9 +5,11 @@ import { NavLink } from 'react-router-dom';
 function Header(props) {
 
 
-  const cart = useSelector((state)=>state.cart)
+  const cart = useSelector(state => state.Cart)
   console.log(cart);
 
+
+  const cartCount = cart.cart.reduce((total, item) => total + item.qty, 0)
 
 
   return (
@@ -70,7 +72,7 @@ function Header(props) {
                       left: 15,
                       height: 20,
                       minWidth: 20
-                    }}>3</span>
+                    }}>{cartCount}</span>
                 </a>
                 <NavLink to='/login' className="my-auto">
                   <i className="fas fa-user fa-2x" />
