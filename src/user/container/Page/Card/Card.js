@@ -1,7 +1,26 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 function Cart(props) {
+
+    const product = useSelector((state) => state.product)
+
+
+    const cart = useSelector((state) => state.Cart)
+    console.log(cart,product);
+
+    const productdata = cart.cart.map((v) => {
+        const data = product.product.find((val) => val.id === v.pid)
+        console.log(data);
+        return {...data,qty:v.qty}
+    })
+  
+    console.log(productdata);
     return (
+
+
+
         <div>
             {/* Single Page Header start */}
             <div className="container-fluid page-header py-5">
@@ -29,17 +48,19 @@ function Cart(props) {
                                 </tr>
                             </thead>
                              <tbody>
-                                <tr>
+                                {
+                                    productdata.map((v) => (
+                                        <tr>
                                     <th scope="row">
                                         <div className="d-flex align-items-center">
-                                            <img src="img/vegetable-item-3.png" className="img-fluid me-5 rounded-circle" style={{ width: 80, height: 80 }} alt />
+                                            <img src={v.img} className="img-fluid me-5 rounded-circle" style={{ width: 80, height: 80 }} alt />
                                         </div>
                                     </th>
                                     <td>
-                                        <p className="mb-0 mt-4">Big Banana</p>
+                                        <p className="mb-0 mt-4">{v.name}</p>
                                     </td>
                                     <td>
-                                        <p className="mb-0 mt-4">2.99 $</p>
+                                        <p className="mb-0 mt-4">{v.price}</p>
                                     </td>
                                     <td>
                                         <div className="input-group quantity mt-4" style={{ width: 100 }}>
@@ -65,78 +86,9 @@ function Cart(props) {
                                         </button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <div className="d-flex align-items-center">
-                                            <img src="img/vegetable-item-5.jpg" className="img-fluid me-5 rounded-circle" style={{ width: 80, height: 80 }} alt />
-                                        </div>
-                                    </th>
-                                    <td>
-                                        <p className="mb-0 mt-4">Potatoes</p>
-                                    </td>
-                                    <td>
-                                        <p className="mb-0 mt-4">2.99 $</p>
-                                    </td>
-                                    <td>
-                                        <div className="input-group quantity mt-4" style={{ width: 100 }}>
-                                            <div className="input-group-btn">
-                                                <button className="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                    <i className="fa fa-minus" />
-                                                </button>
-                                            </div>
-                                            <input type="text" className="form-control form-control-sm text-center border-0" defaultValue={1} />
-                                            <div className="input-group-btn">
-                                                <button className="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                    <i className="fa fa-plus" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p className="mb-0 mt-4">2.99 $</p>
-                                    </td>
-                                    <td>
-                                        <button className="btn btn-md rounded-circle bg-light border mt-4">
-                                            <i className="fa fa-times text-danger" />
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <div className="d-flex align-items-center">
-                                            <img src="img/vegetable-item-2.jpg" className="img-fluid me-5 rounded-circle" style={{ width: 80, height: 80 }} alt />
-                                        </div>
-                                    </th>
-                                    <td>
-                                        <p className="mb-0 mt-4">Awesome Brocoli</p>
-                                    </td>
-                                    <td>
-                                        <p className="mb-0 mt-4">2.99 $</p>
-                                    </td>
-                                    <td>
-                                        <div className="input-group quantity mt-4" style={{ width: 100 }}>
-                                            <div className="input-group-btn">
-                                                <button className="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                    <i className="fa fa-minus" />
-                                                </button>
-                                            </div>
-                                            <input type="text" className="form-control form-control-sm text-center border-0" defaultValue={1} />
-                                            <div className="input-group-btn">
-                                                <button className="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                    <i className="fa fa-plus" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p className="mb-0 mt-4">2.99 $</p>
-                                    </td>
-                                    <td>
-                                        <button className="btn btn-md rounded-circle bg-light border mt-4">
-                                            <i className="fa fa-times text-danger" />
-                                        </button>
-                                    </td>
-                                </tr>
+                                    ))
+                                }
+                                
                             </tbody> 
                         </table>
                     </div>

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useParams } from 'react-router-dom';
+import { productdata } from '../../../reduct/action/Product.action';
 
 function Shop(props) {
 
@@ -11,29 +13,38 @@ function Shop(props) {
   const [sorting, setSortBy] = useState('');
   const [price, setPrice] = useState('');
   
-console.log(price);
+const dispatch = useDispatch();
+
+const product = useSelector(state => state.product)
+console.log(product);
+
+const Cart = useSelector(state => state.Cart)
+console.log(Cart);
 
   useEffect(() => {
-    getData();
+    dispatch(productdata());
   }, []);
 
+  
 
-  const getData = async () => {
-    const response = await fetch("http://localhost:8001/fruit");
-    const data = await response.json();
 
-    let uniqueCategories = [...new Set(data.map(item => item.name))];
+  // const getData = async () => {
+  //   const response = await fetch("http://localhost:8001/fruit");
+  //   const data = await response.json();
 
-    let uniqtype = [...new Set(data.map(v => v.type))]
+  //   let uniqueCategories = [...new Set(data.map(item => item.name))];
 
-    setType(uniqtype)
-    setCatagory(uniqueCategories)
-    setProductData(data);
-  };
+  //   let uniqtype = [...new Set(data.map(v => v.type))]
+
+  //   setType(uniqtype)
+  //   setCatagory(uniqueCategories)
+  //   setProductData(data);
+  // };
+
 
   const Filterdata = () => {
 
-    let fineldata = productData.filter(v => v.name.toLowerCase().includes(search));
+    let fineldata = product.product.filter(v => v.name.toLowerCase().includes(search));
 
     if (sorting) {
       return fineldata.filter(v => v.name === sorting)
@@ -54,11 +65,14 @@ console.log(price);
 
   const zdata = Filterdata()
 
+  console.log(zdata);
+
   let { id } = useParams();
 
 
 
   return (
+    // <></>
     <div>
       {/* Single Page Header start */}
       <div className="container-fluid page-header py-5">
@@ -110,25 +124,25 @@ console.log(price);
                         <h4>Categories</h4>
                         <ul className="list-unstyled fruite-categorie">
                           <li>
-                            <div className="d-flex justify-content-between fruite-name" >
+                            {/* <div className="d-flex justify-content-between fruite-name" >
                               <a href="#" onClick={() => setSortBy('')} ><i className="fas fa-apple-alt me-2" />ALL</a>
-                              <span>({productData.length})</span>
-                            </div>
+                              <span>({product.product.length})</span>
+                            </div> */}
                           </li>
                         </ul>
-                        {
-                          catagory.map((n) => (
+                        {/* {
+                          product.product.map((n) => (
                             <ul className="list-unstyled fruite-categorie">
                               <li>
                                 {console.log(n)}
                                 <div className="d-flex justify-content-between fruite-name" >
                                   <a href="#" onClick={() => setSortBy(n)} ><i className="fas fa-apple-alt me-2" />{n}</a>
-                                  <span>({productData.filter(v => v.name === n).length})</span>
+                                  <span>({product.product.filter(v => v.name === n).length})</span>
                                 </div>
                               </li>
                             </ul>
                           ))
-                        }
+                        } */}
 
 
                       </div>
@@ -150,14 +164,14 @@ console.log(price);
                     <div className="col-lg-12">
                       <div className="mb-3">
                         <h4>Additional</h4>
-                        {
-                          type.map((n, i) => (
+                        {/* {
+                          product.product.map((n, i) => (
                             <div className="mb-2">
                               <input onChange={() => setProType(n)} type="radio" className="me-2" id="Categories-1" name="Categories-1" defaultValue="Beverages" />
                               <label htmlFor="Categories-1">{n}</label>
                             </div>
                           ))
-                        }
+                        } */}
                       </div>
                     </div>
                     <div className="col-lg-12">

@@ -106,7 +106,7 @@ function Shop_detail(props) {
                       <div className="border rounded">
                         <a href="#">
                           <img
-                            src={`../${productData?.img}`}
+                            src={`../${productData?.img} `}
                             className="img-fluid rounded"
                             alt="Image"
                           />

@@ -4,20 +4,17 @@ import { NavLink } from 'react-router-dom';
 
 function Header(props) {
 
-
   const cart = useSelector(state => state.Cart)
   console.log(cart);
 
-
-  const cartCount = cart.cart.reduce((total, item) => total + item.qty, 0)
-
+  const cartCount = cart.cart.reduce((acc, v) => acc + v.qty, 0)
 
   return (
     <div>
       {/* Spinner Start */}
       {/* <div id="spinner" className="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-    <div className="spinner-grow text-primary" role="status" />
-  </div> */}
+      <div className="spinner-grow text-primary" role="status" />
+      </div> */}
       {/* Spinner End */}
       {/* Navbar start */}
       <div className="container-fluid fixed-top">
