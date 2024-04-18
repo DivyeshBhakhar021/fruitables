@@ -13,7 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import { useDispatch, useSelector } from "react-redux";
 import { addreview, deletereview, editreview, getreview } from "../../../reduct/action/review.action";
 import Review from "../review/Review";
-import { addToCart } from "../../../admin/component/cart/cart.slice";
+import { addToCart, decrementQty, incrementQty } from "../../../admin/component/cart/cart.slice";
 
 
 function Shop_detail(props) {
@@ -27,6 +27,8 @@ function Shop_detail(props) {
 
   const Cart = useSelector((state) => state.Cart)
   console.log(Cart);
+
+
 
   const getData = async () => {
     const response = await fetch("http://localhost:8001/fruit");
@@ -70,9 +72,21 @@ function Shop_detail(props) {
 
   const { handleBlur, handleChange, handleSubmit, errors, values, touched } = formik
 
+
  
   const handalcart = () => {
     dispatch(addToCart(id))
+  }
+
+
+  const handalincrement = (id) => {
+      console.log(id);
+      dispatch(incrementQty(id))
+  }
+
+  const handaldecrement = (id) => {
+      console.log(id);
+      dispatch(decrementQty(id))
   }
 
   return (
@@ -138,17 +152,18 @@ function Shop_detail(props) {
                         style={{ width: 100 }}
                       >
                         <div className="input-group-btn">
-                          <button className="btn btn-sm btn-minus rounded-circle bg-light border">
+                          <button onClick={() => handaldecrement(id)} className="btn btn-sm btn-minus rounded-circle bg-light border">
                             <i className="fa fa-minus" />
                           </button>
                         </div>
-                        <input
-                          type="text"
+                        <span
                           className="form-control form-control-sm text-center border-0"
-                          defaultValue={1}
-                        />
+                        > 
+                          {Cart.cart.qty}
+                          </span>
+                       
                         <div className="input-group-btn">
-                          <button className="btn btn-sm btn-plus rounded-circle bg-light border">
+                          <button onClick={() => handalincrement(id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
                             <i className="fa fa-plus" />
                           </button>
                         </div>

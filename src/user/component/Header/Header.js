@@ -9,6 +9,9 @@ function Header(props) {
 
   const cartCount = cart.cart.reduce((acc, v) => acc + v.qty, 0)
 
+
+  
+
   return (
     <div>
       {/* Spinner Start */}

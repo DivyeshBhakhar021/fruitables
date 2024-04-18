@@ -5,7 +5,7 @@
       "img": "img/fruite-item-5.jpg",
       "name": "Grapes",
       "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": "4.99",
+      "price": 4.99,
       "type": "Organic"
     },
     {
@@ -13,7 +13,7 @@
       "img": "img/fruite-item-5.jpg",
       "name": "Grapes",
       "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": "4.99",
+      "price": 4.99,
       "type": "Fresh"
     },
     {
@@ -21,7 +21,7 @@
       "img": "img/fruite-item-2.jpg",
       "name": "Raspberries",
       "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": "3.99",
+      "price": 3.99,
       "type": "Sales"
     },
     {
@@ -29,7 +29,7 @@
       "img": "img/fruite-item-4.jpg",
       "name": "Apricots",
       "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": "2.99",
+      "price": 2.99,
       "type": "Discount"
     },
     {
@@ -37,7 +37,7 @@
       "img": "img/fruite-item-1.jpg",
       "name": "Oranges",
       "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": "5.99",
+      "price": 5.99,
       "type": "Organic"
     },
     {
@@ -45,7 +45,7 @@
       "img": "img/fruite-item-2.jpg",
       "name": "Raspberries",
       "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": "4.99",
+      "price": 4.99,
       "type": "Fresh"
     },
     {
@@ -53,7 +53,7 @@
       "img": "img/fruite-item-5.jpg",
       "name": "Grapes",
       "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": "8.99",
+      "price": 8.99,
       "type": "Discount"
     },
     {
@@ -61,7 +61,7 @@
       "img": "img/fruite-item-1.jpg",
       "name": "Oranges",
       "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt",
-      "price": "1.99",
+      "price": 1.99,
       "type": "Sales"
     },
     {

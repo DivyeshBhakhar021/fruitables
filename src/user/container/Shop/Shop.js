@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useParams } from 'react-router-dom';
 import { productdata } from '../../../reduct/action/Product.action';
+import { addToCart } from '../../../admin/component/cart/cart.slice';
 
 function Shop(props) {
 
@@ -20,6 +21,11 @@ console.log(product);
 
 const Cart = useSelector(state => state.Cart)
 console.log(Cart);
+
+const handalproduct = (id) => {
+  console.log(id);
+  dispatch(addToCart(id));
+}
 
   useEffect(() => {
     dispatch(productdata());
@@ -68,6 +74,8 @@ console.log(Cart);
   console.log(zdata);
 
   let { id } = useParams();
+
+
 
 
 
@@ -263,9 +271,10 @@ console.log(Cart);
                                 <p>{v.details}</p>
                                 <div className="d-flex justify-content-between flex-lg">
                                   <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
-                                  <NavLink to={`/card`} className="btn border border-secondary rounded-pill px-3 text-primary">
+                                  <Link href="#" onClick={()=>handalproduct(v.id)} className="btn border border-secondary rounded-pill px-3 text-primary">
                                   Add to cart
-                                  </NavLink>
+                                  </Link>
+                                
                                   {/* <a href="#" >
                                     card<i className="fa fa-shopping-bag me-2 text-primary" /> </a> */}
                                 </div>

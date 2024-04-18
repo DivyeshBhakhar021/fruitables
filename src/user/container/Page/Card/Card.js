@@ -1,6 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { decrementQty, incrementQty, removeQty } from '../../../../admin/component/cart/cart.slice';
 
 function Cart(props) {
 
@@ -8,15 +9,41 @@ function Cart(props) {
 
 
     const cart = useSelector((state) => state.Cart)
-    console.log(cart,product);
+    console.log(cart, product);
 
     const productdata = cart.cart.map((v) => {
         const data = product.product.find((val) => val.id === v.pid)
         console.log(data);
-        return {...data,qty:v.qty}
+
+
+        return { ...data, qty: v.qty }
+        
     })
-  
+
+    const subtotal = productdata.reduce((a, b) => a + b.price * b.qty, 0)
+    const Total = subtotal * 1.18
+
     console.log(productdata);
+
+
+
+
+    const dispatch = useDispatch();
+    const handalincrement = (id) => {
+        console.log(id);
+        dispatch(incrementQty(id))
+    }
+
+    const handaldecrement = (id) => {
+        console.log(id);
+        dispatch(decrementQty(id))
+    }
+
+    const handaldel = (id) => {
+        console.log(id);
+        dispatch(removeQty(id))
+    }
+
     return (
 
 
@@ -47,49 +74,53 @@ function Cart(props) {
                                     <th scope="col">Handle</th>
                                 </tr>
                             </thead>
-                             <tbody>
+                            <tbody>
                                 {
                                     productdata.map((v) => (
                                         <tr>
-                                    <th scope="row">
-                                        <div className="d-flex align-items-center">
-                                            <img src={v.img} className="img-fluid me-5 rounded-circle" style={{ width: 80, height: 80 }} alt />
-                                        </div>
-                                    </th>
-                                    <td>
-                                        <p className="mb-0 mt-4">{v.name}</p>
-                                    </td>
-                                    <td>
-                                        <p className="mb-0 mt-4">{v.price}</p>
-                                    </td>
-                                    <td>
-                                        <div className="input-group quantity mt-4" style={{ width: 100 }}>
-                                            <div className="input-group-btn">
-                                                <button className="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                    <i className="fa fa-minus" />
+                                            <th scope="row">
+                                                <div className="d-flex align-items-center">
+                                                    <img src={v.img} className="img-fluid me-5 rounded-circle" style={{ width: 80, height: 80 }} alt />
+                                                </div>
+                                            </th>
+                                            <td>
+                                                <p className="mb-0 mt-4">{v.name}</p>
+                                            </td>
+                                            <td>
+                                                <p className="mb-0 mt-4">{v.price}</p>
+                                            </td>
+                                            <td>
+                                                <div className="input-group quantity mt-4" style={{ width: 100 }}>
+                                                    <div className="input-group-btn">
+                                                        <button onClick={() => handaldecrement(v.id)} className="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                            <i className="fa fa-minus" />
+                                                        </button>
+                                                    </div>
+                                                    <span
+                                                        className="form-control form-control-sm text-center border-0"
+                                                    >
+                                                        {v.qty}
+                                                    </span>
+                                                    <div className="input-group-btn">
+                                                        <button onClick={() => handalincrement(v.id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                            <i className="fa fa-plus" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p className="mb-0 mt-4">{v.price * v.qty}</p>
+                                            </td>
+                                            <td>
+                                                <button onClick={() => handaldel(v.id)} className="btn btn-md rounded-circle bg-light border mt-4">
+                                                    <i className="fa fa-times text-danger" />
                                                 </button>
-                                            </div>
-                                            <input type="text" className="form-control form-control-sm text-center border-0" defaultValue={1} />
-                                            <div className="input-group-btn">
-                                                <button className="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                    <i className="fa fa-plus" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p className="mb-0 mt-4">2.99 $</p>
-                                    </td>
-                                    <td>
-                                        <button className="btn btn-md rounded-circle bg-light border mt-4">
-                                            <i className="fa fa-times text-danger" />
-                                        </button>
-                                    </td>
-                                </tr>
+                                            </td>
+                                        </tr>
                                     ))
                                 }
-                                
-                            </tbody> 
+
+                            </tbody>
                         </table>
                     </div>
                     <div className="mt-5">
@@ -104,19 +135,19 @@ function Cart(props) {
                                     <h1 className="display-6 mb-4">Cart <span className="fw-normal">Total</span></h1>
                                     <div className="d-flex justify-content-between mb-4">
                                         <h5 className="mb-0 me-4">Subtotal:</h5>
-                                        <p className="mb-0">$96.00</p>
+                                        <p className="mb-0">{subtotal}</p>
                                     </div>
                                     <div className="d-flex justify-content-between">
                                         <h5 className="mb-0 me-4">Shipping</h5>
                                         <div className>
-                                            <p className="mb-0">Flat rate: $3.00</p>
+                                            <p className="mb-0">flat rate :$1.18</p>
                                         </div>
                                     </div>
                                     <p className="mb-0 text-end">Shipping to Ukraine.</p>
                                 </div>
                                 <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                     <h5 className="mb-0 ps-4 me-4">Total</h5>
-                                    <p className="mb-0 pe-4">$99.00</p>
+                                    <p className="mb-0 pe-4">{Total}</p>
                                 </div>
                                 <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                             </div>
