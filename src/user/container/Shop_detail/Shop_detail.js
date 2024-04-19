@@ -21,14 +21,29 @@ function Shop_detail(props) {
   const [productData, setProductData] = useState({});
 
 
+  const { id } = useParams();
+  console.log(id);
+
   const review = useSelector((state) => state.review)
   console.log(review);
 
 
+  const product = useSelector(state => state.product)
+  console.log(product);
+
   const Cart = useSelector((state) => state.Cart)
   console.log(Cart);
 
+  const productdata = product.product.find((v) => v.id === id)
 
+  const cardata = Cart.cart.filter((v) => v.pid === id);
+  console.log(cardata);
+
+  const qtydata = cardata.map((v) => v.qty);
+  console.log(qtydata);
+
+  const fdata = { ...productdata, qty: qtydata[0] }
+  console.log(fdata);
 
   const getData = async () => {
     const response = await fetch("http://localhost:8001/fruit");
@@ -43,10 +58,6 @@ function Shop_detail(props) {
     getData();
     dispatch(getreview())
   }, []);
-
-  const { id } = useParams();
-  console.log(id);
-
 
   let ReviewSchema = object({
     name: string().required(),
@@ -65,7 +76,7 @@ function Shop_detail(props) {
     validationSchema: ReviewSchema,
     onSubmit: values => {
       const reviewDate = new Date();
-      dispatch(addreview({ ...values, productId: id,reviewDateing:reviewDate }));
+      dispatch(addreview({ ...values, productId: id, reviewDateing: reviewDate }));
       formik.resetForm();
     },
   });
@@ -73,20 +84,20 @@ function Shop_detail(props) {
   const { handleBlur, handleChange, handleSubmit, errors, values, touched } = formik
 
 
- 
+
   const handalcart = () => {
     dispatch(addToCart(id))
   }
 
 
   const handalincrement = (id) => {
-      console.log(id);
-      dispatch(incrementQty(id))
+    console.log(id);
+    dispatch(incrementQty(id))
   }
 
   const handaldecrement = (id) => {
-      console.log(id);
-      dispatch(decrementQty(id))
+    console.log(id);
+    dispatch(decrementQty(id))
   }
 
   return (
@@ -158,10 +169,10 @@ function Shop_detail(props) {
                         </div>
                         <span
                           className="form-control form-control-sm text-center border-0"
-                        > 
-                          {Cart.cart.qty}
-                          </span>
-                       
+                        >
+                          {fdata.qty !== undefined && fdata.qty !== '' ? fdata.qty:0}
+                        </span>
+        
                         <div className="input-group-btn">
                           <button onClick={() => handalincrement(id)} className="btn btn-sm btn-plus rounded-circle bg-light border">
                             <i className="fa fa-plus" />
@@ -278,7 +289,7 @@ function Shop_detail(props) {
                           aria-labelledby="nav-mission-tab"
                         >
                           <div className="d-flex">
-                            
+
                           </div>
 
                         </div>
@@ -295,7 +306,7 @@ function Shop_detail(props) {
                       </div>
                     </div>
 
-                    <Review/>
+                    <Review />
                   </div>
                 </div>
 

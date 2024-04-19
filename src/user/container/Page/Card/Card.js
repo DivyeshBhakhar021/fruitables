@@ -15,7 +15,6 @@ function Cart(props) {
         const data = product.product.find((val) => val.id === v.pid)
         console.log(data);
 
-
         return { ...data, qty: v.qty }
         
     })
@@ -24,8 +23,6 @@ function Cart(props) {
     const Total = subtotal * 1.18
 
     console.log(productdata);
-
-
 
 
     const dispatch = useDispatch();

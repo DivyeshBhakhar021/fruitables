@@ -275,8 +275,7 @@ const handalproduct = (id) => {
                                   Add to cart
                                   </Link>
                                 
-                                  {/* <a href="#" >
-                                    card<i className="fa fa-shopping-bag me-2 text-primary" /> </a> */}
+                                  
                                 </div>
                               </div>
                             </div>
