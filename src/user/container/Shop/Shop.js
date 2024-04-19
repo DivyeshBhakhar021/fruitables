@@ -24,7 +24,7 @@ console.log(Cart);
 
 const handalproduct = (id) => {
   console.log(id);
-  dispatch(addToCart(id));
+  dispatch(addToCart({id,qty: 1}));
 }
 
   useEffect(() => {

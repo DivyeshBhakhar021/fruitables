@@ -19,6 +19,7 @@ import { addToCart, decrementQty, incrementQty } from "../../../admin/component/
 function Shop_detail(props) {
   const dispatch = useDispatch();
   const [productData, setProductData] = useState({});
+  const [qty, setQty] = useState(1);
 
 
   const { id } = useParams();
@@ -57,6 +58,7 @@ function Shop_detail(props) {
   useEffect(() => {
     getData();
     dispatch(getreview())
+
   }, []);
 
   let ReviewSchema = object({
@@ -86,18 +88,25 @@ function Shop_detail(props) {
 
 
   const handalcart = () => {
-    dispatch(addToCart(id))
+    dispatch(addToCart({id, qty}))
   }
 
 
   const handalincrement = (id) => {
     console.log(id);
-    dispatch(incrementQty(id))
+    // dispatch(incrementQty(id))
+    setQty(prev => prev + 1)
+
   }
 
   const handaldecrement = (id) => {
-    console.log(id);
-    dispatch(decrementQty(id))
+    if (qty > 1) {
+      setQty(prev => prev - 1)
+      
+    }
+
+    // dispatch(decrementQty(id))
+   
   }
 
   return (
@@ -170,7 +179,8 @@ function Shop_detail(props) {
                         <span
                           className="form-control form-control-sm text-center border-0"
                         >
-                          {fdata.qty !== undefined && fdata.qty !== '' ? fdata.qty:0}
+                          {/* {fdata.qty !== undefined && fdata.qty !== '' ? fdata.qty:0} */}
+                          {qty}
                         </span>
         
                         <div className="input-group-btn">

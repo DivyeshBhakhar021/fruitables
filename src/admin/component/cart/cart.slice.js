@@ -12,12 +12,12 @@ const creatSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             console.log(action);
-            const index = state.cart.findIndex((v)=>v.pid === action.payload)
+            const index = state.cart.findIndex((v)=>v.pid === action.payload.id)
 
             if (index !== -1) {
-               state.cart[index].qty++
+               state.cart[index].qty+= action.payload.qty
             } else{
-                state.cart.push({pid:action.payload,qty:1})
+                state.cart.push({pid:action.payload.id,qty:action.payload.qty})
             }
         },
         incrementQty : (state,action) => {
