@@ -24,6 +24,7 @@ import { NavLink } from 'react-router-dom';
 import CategoryIcon from '@mui/icons-material/Category';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import DiscountIcon from '@mui/icons-material/Discount';
 
 const drawerWidth = 240;
 
@@ -100,9 +101,9 @@ const adminlink =[
         icon:<AppleIcon/>
     },
     {
-        title:'vegetables',
-        to:'/admin/vegetables',
-        icon:<BakeryDiningIcon/>
+        title:'coupon',
+        to:'/admin/coupon',
+        icon:<DiscountIcon/>
     },
     {
       title:'Category',
