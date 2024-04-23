@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from '@mui/x-data-grid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import { addCoupon, deleteCoupons, editCoupons, getCoupons } from '../../../reduct/slice/coupon.slice';
+import { addCoupon, deleteCoupon, editCoupons, getCoupon, } from '../../../reduct/slice/coupon.slice';
 
 const Coupon = () => {
 
@@ -31,10 +31,11 @@ const Coupon = () => {
 
     const handleClose = () => {
         setOpen(false);
+        setupdate(false)
     };
 
     useEffect(() => {
-        dispatch(getCoupons());
+        dispatch(getCoupon());
     }, []);
 
     let couponSchema = object({
@@ -48,19 +49,19 @@ const Coupon = () => {
             couponename: '',
             percentage: '',
             date: '',
-            // createdOn: new Date().toISOString().split('T')[0]
+            createdOn: new Date().toISOString().split('T')[0]
         },
         validationSchema: couponSchema,
-        onSubmit: (values) => {
+        onSubmit: (values, { resetForm }) => {
             console.log(values);
             if (update) {
-                dispatch(editCoupons(values));  
+                dispatch(editCoupons(values));
             } else {
                 dispatch(addCoupon(values));
             }
 
             handleClose();
-            formik.resetForm();
+            resetForm();
         }
 
     })
@@ -103,7 +104,7 @@ const Coupon = () => {
     ];
 
     const handleRemove = (id) => {
-        dispatch(deleteCoupons(id));
+        dispatch(deleteCoupon(id));
     }
 
     const handleEdit = (data) => {
