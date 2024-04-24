@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { decrementQty, incrementQty, removeQty } from '../../../../admin/component/cart/cart.slice';
@@ -8,6 +8,8 @@ import { useFormik } from 'formik';
 import { TextField } from '@mui/material';
 
 function Cart(props) {
+
+    const [discount, setdiscount] = useState(0)
 
     const product = useSelector((state) => state.product)
 
@@ -27,9 +29,10 @@ function Cart(props) {
     })
 
     const subtotal = productdata.reduce((a, b) => a + b.price * b.qty, 0)
-    const Total = subtotal * 1.18
 
-    console.log(productdata);
+    const totalDiscount = subtotal * (discount / 100);
+
+    const Total = subtotal - totalDiscount + 3;
 
     useEffect(() => {
         dispatch(getCoupon())
@@ -52,34 +55,53 @@ function Cart(props) {
     }
 
     let couponSchema = object({
-        coupone: string().required(),
+        coupon: string().required("please coupon Enter"),
     });
 
 
     const handalcoupon = (data) => {
+        let flag = 0;
         console.log(data);
-        if (data.coupon === coupon.coupon && data.date === coupon.date) {
-            
-        }
+        coupon.coupon.map((v) => {
+            if (v.coupon === data.coupon) {
+                const creenetDate = new Date();
+
+                const expriDate = new Date(v.expriy)
+
+                if (creenetDate <= expriDate) {
+                    flag = 1;
+                    setdiscount(v.percentage)
+                } else {
+                    flag = 2;
+                }
+
+            }
+
+            if (flag === 0) {
+                formik.setFieldError("coupon", " invalid couopn");
+            } else if (flag === 1) {
+                formik.setFieldError("coupon", " couopn valid");
+            } else if (flag === 2) {
+                formik.setFieldError("coupon", "expried");
+            }
+        })
     }
 
 
     const formik = useFormik({
         initialValues: {
-            coupone: '',
+            coupon: '',
 
         },
         validationSchema: couponSchema,
         onSubmit: (values) => {
-            handalcoupon({...values, date:new Date().toLocaleDateString()})
+            handalcoupon(values)
         }
 
     })
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = formik
 
     return (
-
-
 
         <div>
             {/* Single Page Header start */}
@@ -158,17 +180,20 @@ function Cart(props) {
                     </div>
                     <div className="mt-5">
                         <form onSubmit={handleSubmit}>
-                            <TextField type="text"
-                                name="coupone"
+                            <input type="text"
+                                name="coupon"
                                 className="border-0 border-bottom rounded me-5 py-3 mb-4"
                                 placeholder="Coupon Code"
-                                value={values.coupone}
+                                value={values.coupon}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                error={errors.coupone && touched.coupone ? true : false}
-                                helperText={errors.coupone && touched.coupone ? errors.coupone : ''}
+
 
                             />
+                            {errors.coupon && touched.coupon ? (
+                                <span className="error">{errors.coupon}</span>
+                            ) : null} <br></br>
+
                             <button
                                 className="btn border-secondary rounded-pill px-4 py-3 text-primary"
                                 type="submit"
@@ -185,17 +210,21 @@ function Cart(props) {
                                         <h5 className="mb-0 me-4">Subtotal:</h5>
                                         <p className="mb-0">{subtotal}</p>
                                     </div>
+                                    <div className="d-flex justify-content-between mb-4">
+                                        <h5 className="mb-0 me-4">dicount:{discount}%</h5>
+                                        <p className="mb-0">{totalDiscount}</p>
+                                    </div>
                                     <div className="d-flex justify-content-between">
                                         <h5 className="mb-0 me-4">Shipping</h5>
                                         <div className>
-                                            <p className="mb-0">flat rate :$1.18</p>
+                                            <p className="mb-0">flat rate:3</p>
                                         </div>
                                     </div>
                                     <p className="mb-0 text-end">Shipping to Ukraine.</p>
                                 </div>
                                 <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                     <h5 className="mb-0 ps-4 me-4">Total</h5>
-                                    <p className="mb-0 pe-4">{Total}</p>
+                                    <p className="mb-0 pe-4">${(Total).toFixed(2)}</p>
                                 </div>
                                 <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
                             </div>

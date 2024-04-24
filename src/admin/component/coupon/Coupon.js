@@ -39,16 +39,16 @@ const Coupon = () => {
     }, []);
 
     let couponSchema = object({
-        couponename: string().required(),
+        coupon: string().required(),
         percentage: number().required().positive().integer().min(1).max(100),
-        date: date().required(),
+        expriy: date().required(),
     });
 
     const formik = useFormik({
         initialValues: {
-            couponename: '',
+            coupon: '',
             percentage: '',
-            date: '',
+            expriy: '',
             createdOn: new Date().toISOString().split('T')[0]
         },
         validationSchema: couponSchema,
@@ -67,9 +67,9 @@ const Coupon = () => {
     })
 
     const columns = [
-        { field: 'couponename', headerName: 'Coupon Name', width: 130 },
+        { field: 'coupon', headerName: 'Coupon Name', width: 130 },
         { field: 'percentage', headerName: 'Percentage', width: 130 },
-        { field: 'date', headerName: 'Date', width: 130 },
+        { field: 'expriy', headerName: 'expriy', width: 130 },
         { field: 'createdOn', headerName: 'CreatedOn', width: 130 },
         {
             field: "remove",
@@ -128,17 +128,17 @@ const Coupon = () => {
                     <DialogContent>
                         <TextField
                             margin="dense"
-                            id="couponename"
-                            name="couponename"
+                            id="coupon"
+                            name="coupon"
                             label="Enter Coupon Name"
                             type="name"
                             fullWidth
                             variant="standard"
-                            value={values.couponename}
+                            value={values.coupon}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={errors.couponename && touched.couponename ? true : false}
-                            helperText={errors.couponename && touched.couponename ? errors.couponename : ''}
+                            error={errors.coupon && touched.coupon ? true : false}
+                            helperText={errors.coupon && touched.coupon ? errors.coupon : ''}
                         />
                         <TextField
                             margin="dense"
@@ -156,16 +156,16 @@ const Coupon = () => {
                         />
                         <TextField
                             margin="dense"
-                            id="date"
-                            name="date"
+                            id="expriy"
+                            name="expriy"
                             type="date"
                             fullWidth
                             variant="standard"
-                            value={values.date}
+                            value={values.expriy}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            error={errors.date && touched.date ? true : false}
-                            helperText={errors.date && touched.date ? errors.date : ''}
+                            error={errors.expriy && touched.expriy ? true : false}
+                            helperText={errors.expriy && touched.expriy ? errors.expriy : ''}
                         />
                         <DialogActions>
                             <Button onClick={handleClose}>Cancel</Button>

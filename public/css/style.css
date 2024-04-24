@@ -25,6 +25,13 @@
     transition: 0.5s;
     z-index: 99;
 }
+
+.error {
+    color: red;
+    font-size: 15px;
+    padding-top: 0;
+}
+
 /*** Spinner End ***/
 
 
