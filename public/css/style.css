@@ -502,3 +502,12 @@
 }
 /*** Footer End ***/
 
+.dark{
+    background: black !important;
+    color: white !important;
+}
+
+.light{
+    background: white !important;
+    color: black !important;
+}

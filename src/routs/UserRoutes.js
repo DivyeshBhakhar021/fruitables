@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../user/component/Header/Header';
 import Home from '../user/container/Home/Home';
@@ -12,10 +12,14 @@ import Error from '../user/container/Error/Error';
 import Footer from '../user/component/Footer/Footer'
 import Login from '../user/container/Login/Login';
 import Register from '../user/container/Register/Register';
+import { ThemeContext } from '../context/ThemeContext';
 
 function UserRoutes(props) {
+
+  const themecontect = useContext(ThemeContext);
+  console.log(themecontect);
     return (
-        <>
+        <div className={themecontect.theme}>
 
         <Header />
         <Routes >
@@ -32,7 +36,7 @@ function UserRoutes(props) {
           <Route exect path='/register' element={<Register/>}/>
         </Routes>
         <Footer />
-      </>
+      </div>
     );
 }
 

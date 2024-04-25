@@ -30,9 +30,11 @@ function Cart(props) {
 
     const subtotal = productdata.reduce((a, b) => a + b.price * b.qty, 0)
 
+    const Shipping = discount > 0 ? 3 : 0
+
     const totalDiscount = subtotal * (discount / 100);
 
-    const Total = subtotal - totalDiscount + 3;
+    const Total = subtotal - totalDiscount + Shipping;
 
     useEffect(() => {
         dispatch(getCoupon())
@@ -76,11 +78,13 @@ function Cart(props) {
                 }
 
             }
-
+            // if (cart.cart.length === 0) {
+            //     formik.setFieldError("coupon", " cart is emty");
+            // } else   
             if (flag === 0) {
                 formik.setFieldError("coupon", " invalid couopn");
             } else if (flag === 1) {
-                formik.setFieldError("coupon", " couopn valid");
+                formik.setFieldError("coupon", "couopn valid");
             } else if (flag === 2) {
                 formik.setFieldError("coupon", "expried");
             }
