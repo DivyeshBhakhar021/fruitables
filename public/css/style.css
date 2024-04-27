@@ -191,6 +191,14 @@
     background-size: cover;
 }
 
+.dark .hero-header {
+    background: none !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 10px;
+}
+
 .carousel-item {
     position: relative;
 }

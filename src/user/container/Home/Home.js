@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { ThemeContext } from '../../../context/ThemeContext';
 
 function Home(props) {
 
   const facilities = useSelector(state => state.facilities)
   console.log(facilities);
+
+  const themecontect = useContext(ThemeContext);
+  console.log(themecontect);
 
 
   const owlvagetable = {
@@ -146,7 +150,7 @@ function Home(props) {
         <div className="container py-5">
           <div className="tab-class text-center">
             <div className="row g-4">
-              <div className="col-lg-4 text-start">
+              <div className="col-lg-4 text-start .light">
                 <h1>Our Organic Products</h1>
               </div>
               <div className="col-lg-8 text-end">
@@ -702,7 +706,11 @@ function Home(props) {
           </div>
           <div className="row g-4">
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className={`p-4 rounded ${
+                  themecontect.theme === "dark"
+                    ? "border border-warning"
+                    : "bg-light"
+                }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-1.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -723,7 +731,11 @@ function Home(props) {
               </div>
             </div>
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className={`p-4 rounded ${
+                  themecontect.theme === "dark"
+                    ? "border border-warning"
+                    : "bg-light"
+                }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-2.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -744,7 +756,11 @@ function Home(props) {
               </div>
             </div>
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className={`p-4 rounded ${
+                  themecontect.theme === "dark"
+                    ? "border border-warning"
+                    : "bg-light"
+                }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-3.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -765,7 +781,11 @@ function Home(props) {
               </div>
             </div>
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className={`p-4 rounded ${
+                  themecontect.theme === "dark"
+                    ? "border border-warning"
+                    : "bg-light"
+                }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-4.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -786,7 +806,11 @@ function Home(props) {
               </div>
             </div>
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className={`p-4 rounded ${
+                  themecontect.theme === "dark"
+                    ? "border border-warning"
+                    : "bg-light"
+                }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-5.jpg" className="img-fluid rounded-circle w-100" alt />
@@ -807,7 +831,11 @@ function Home(props) {
               </div>
             </div>
             <div className="col-lg-6 col-xl-4">
-              <div className="p-4 rounded bg-light">
+              <div className={`p-4 rounded ${
+                  themecontect.theme === "dark"
+                    ? "border border-warning"
+                    : "bg-light"
+                }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
                     <img src="img/best-product-6.jpg" className="img-fluid rounded-circle w-100" alt />

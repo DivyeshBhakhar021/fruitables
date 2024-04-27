@@ -30,7 +30,7 @@ function Header(props) {
       </div> */}
       {/* Spinner End */}
       {/* Navbar start */}
-      <div className="container-fluid fixed-top">
+      <div className={`py-3 container-fluid fixed-top ${themecontect.theme}`}>
         <div className="container topbar bg-primary d-none d-lg-block">
           <div className="d-flex justify-content-between">
             <div className="top-info ps-2">
@@ -45,27 +45,27 @@ function Header(props) {
           </div>
         </div>
         <div className="container px-0">
-          <nav className="navbar navbar-light bg-white navbar-expand-xl">
+          <nav className="navbar navbar-light navbar-expand-xl ">
             <a href="index.html" className="navbar-brand"><h1 className="text-primary display-6">Fruitables</h1></a>
             <button className="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
               <span className="fa fa-bars text-primary" />
             </button>
-            <div className="collapse navbar-collapse bg-white" id="navbarCollapse">
+            <div className="collapse navbar-collapse" id="navbarCollapse">
               <div className="navbar-nav mx-auto">
                 <NavLink to="/" className="nav-item nav-link active">Home</NavLink>
-                <NavLink to="/shop" className="nav-item nav-link">Shop</NavLink>
-                <NavLink to="/shop_detail" className="nav-item nav-link">Shop Detail</NavLink>
+                <NavLink to="/shop" className="nav-item nav-link active">Shop</NavLink>
+                <NavLink to="/shop_detail" className="nav-item nav-link active">Shop Detail</NavLink>
                 {/* <NavLink to="/shop_detail/:fruitid" className="nav-item nav-link">Shop Detail</NavLink> */}
                 <div className="nav-item dropdown">
-                  <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                  <a href="#" className="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
                   <div className="dropdown-menu m-0 bg-secondary rounded-0">
-                    <NavLink to="/card" className="dropdown-item">Cart</NavLink>
-                    <NavLink to="/chackout" className="dropdown-item">Chackout</NavLink>
-                    <NavLink to="/testimonial" className="dropdown-item">Testimonial</NavLink>
-                    <NavLink to='/error' className="dropdown-item">404 Page</NavLink>
+                    <NavLink to="/card" className="dropdown-item active">Cart</NavLink>
+                    <NavLink to="/chackout" className="dropdown-item active">Chackout</NavLink>
+                    <NavLink to="/testimonial" className="dropdown-item active">Testimonial</NavLink>
+                    <NavLink to='/error' className="dropdown-item active">404 Page</NavLink>
                   </div>
                 </div>
-                <NavLink to="/contact" className="nav-item nav-link">Contact</NavLink>
+                <NavLink to="/contact" className="nav-item nav-link active">Contact</NavLink>
               </div>
               <div className="d-flex m-3 me-0">
                 <button className="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i className="fas fa-search text-primary" /></button>
@@ -88,7 +88,7 @@ function Header(props) {
                   <i className="fas fa-user fa-2x" />
                 </NavLink>
 
-                <IconButton  onClick={handaltheme} sx={{ ml: 1 }} color="green">
+                <IconButton  style={{ background: 'white' }}   onClick={handaltheme} sx={{ ml: 1 }} color="green">
                   {/* <Brightness7Icon /> */}
                   {themecontect.theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>

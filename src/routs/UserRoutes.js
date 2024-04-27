@@ -16,8 +16,8 @@ import { ThemeContext } from '../context/ThemeContext';
 
 function UserRoutes(props) {
 
-  const themecontect = useContext(ThemeContext);
-  console.log(themecontect);
+    const themecontect = useContext(ThemeContext);
+    console.log(themecontect);
     return (
         <div className={themecontect.theme}>
 
