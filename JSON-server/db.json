@@ -288,5 +288,75 @@
       "expriy": "2024-04-30",
       "createdOn": "2024-04-24"
     }
+  ],
+  "saleing": [
+    {
+      "id": "ac85",
+      "product": "table",
+      "price": 100,
+      "expriy": "2024-05-11",
+      "createdOn": "2024-04-27"
+    },
+    {
+      "id": "4aec",
+      "product": "aaa",
+      "price": 12,
+      "expriy": "2024-05-11",
+      "createdOn": "2024-04-27"
+    },
+    {
+      "id": "1e1a",
+      "product": "qwe",
+      "price": 89,
+      "expriy": "2024-04-27",
+      "createdOn": "2024-04-27"
+    },
+    {
+      "id": "6c23",
+      "product": "poiu",
+      "price": 8,
+      "expriy": "2024-05-18",
+      "createdOn": "2024-04-27"
+    },
+    {
+      "id": "d0e2",
+      "product": "eecuegy1",
+      "price": 56,
+      "expriy": "2024-05-18",
+      "createdOn": "2024-04-27"
+    },
+    {
+      "id": "4ed5",
+      "product": "shsxbh",
+      "price": 99,
+      "expriy": "2024-04-27",
+      "createdOn": "2024-04-27"
+    }
+  ],
+  "product": [
+    {
+      "id": "e646",
+      "name": "ii",
+      "description": "fw",
+      "price": "66"
+    },
+    {
+      "id": "d277",
+      "name": "feoi;nr",
+      "description": "23456",
+      "price": "23"
+    },
+    {
+      "id": "0f50",
+      "name": "vebh",
+      "description": "7887",
+      "price": "88"
+    },
+    {
+      "id": "3a80",
+      "name": "h",
+      "description": "yy",
+      "price": "77"
+    }
   ]
 }

@@ -25,6 +25,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import DiscountIcon from '@mui/icons-material/Discount';
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
 const drawerWidth = 240;
 
@@ -119,16 +120,21 @@ const adminlink =[
   title:'Product',
   to:'/admin/product',
   icon:<InventoryIcon/>
-}, 
-{
-  title:'review',
-  to:'/admin/review',
-  icon:<InventoryIcon/>
-},
+},  
 {
   title:'counter',
   to:'/admin/counter',
   icon:<InventoryIcon/>
+},
+{
+  title:'Favorite',
+  to:'/admin/favorite',
+  icon:<BookmarkAddIcon/>
+},
+{
+  title:'productdata',
+  to:'/admin/productdata',
+  icon:<BookmarkAddIcon/>
 },
 ]
 
