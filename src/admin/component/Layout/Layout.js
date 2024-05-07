@@ -136,6 +136,11 @@ const adminlink =[
   to:'/admin/productdata',
   icon:<BookmarkAddIcon/>
 },
+{
+  title:'Contact',
+  to:'/admin/contact',
+  icon:<BookmarkAddIcon/>
+},
 ]
 
 export default function Layout({children}) {

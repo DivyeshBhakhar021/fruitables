@@ -6,6 +6,7 @@ import { getCoupon } from '../../../../reduct/slice/coupon.slice';
 import { date, object, string } from 'yup';
 import { useFormik } from 'formik';
 import { TextField } from '@mui/material';
+import Button from '../../Ui/button/button';
 
 function Cart(props) {
 
@@ -230,7 +231,8 @@ function Cart(props) {
                                     <h5 className="mb-0 ps-4 me-4">Total</h5>
                                     <p className="mb-0 pe-4">${(Total).toFixed(2)}</p>
                                 </div>
-                                <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+                                {/* <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button> */}
+                                <Button>Proceed Checkout</Button>
                             </div>
                         </div>
                     </div>

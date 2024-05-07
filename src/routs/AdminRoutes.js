@@ -10,6 +10,7 @@ import Counter from '../admin/component/counter/Counter';
 import Favorite from '../admin/component/saleing/Saleing';
 import Productdata from '../admin/component/productdata/Productdata';
 import { ProductProvider } from '../context/reducer/salecontext';
+import Contact from '../admin/component/Contact/Contact';
 
 function AdminRoutes(props) {
   return (
@@ -25,6 +26,7 @@ function AdminRoutes(props) {
             <Route exect path='/Counter' element={<Counter />} />
             <Route exect path='/favorite' element={<Favorite />} />
             <Route exect path='/productdata' element={<Productdata />} />
+            <Route exect path='/contact' element={<Contact />} />
           </Routes>
         </Layout>
       </ProductProvider>

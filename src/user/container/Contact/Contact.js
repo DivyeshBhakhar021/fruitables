@@ -1,6 +1,7 @@
 import React from 'react';
 import { object, string, number, date, InferType } from 'yup';
 import { useFormik } from 'formik';
+import Input from '../Ui/input/Input';
 
 function Contact(props) {
   let userSchema = object({
@@ -72,8 +73,9 @@ function Contact(props) {
                   <span style={{ color: 'red', marginBottom: '5px' }}>
                     {errors.name && touched.name && errors.name}
                   </span>
-                  <input type="text"
-                    className="w-100 form-control border-0 py-3 mb-3"
+                  <Input
+                  type="text"
+                    // className="w-100 form-control border-0 py-3 mb-3"
                     placeholder="Your Name"
                     name='name'
                     onChange={handleChange}
@@ -83,9 +85,9 @@ function Contact(props) {
                   <span style={{ color: 'red', marginBottom: '5px' }} >
                     {errors.email && touched.email && errors.email}
                   </span>
-                  <input
+                  <Input
                     type="email"
-                    className="w-100 form-control border-0 py-3 mb-3"
+                    // className="w-100 form-control border-0 py-3 mb-3"
                     style={{ marginBottom: '10px' }}
                     placeholder="Enter Your Email"
                     name='email'

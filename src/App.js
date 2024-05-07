@@ -8,23 +8,26 @@ import { Provider } from 'react-redux';
 import { configestore } from './reduct/Store';
 import { PersistGate } from 'redux-persist/integration/react'
 import { ThemeProvider } from './context/ThemeContext';
+import { ContaxtProvider } from './context/Contactcantext';
 
 function App() {
   const { store, persistor } = configestore()
   return (
     <>
-    <ThemeProvider>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Routes >
-            <Route exect path='/*' element={<UserRoutes />} />
-            <Route element={<PrivateRoutes />}>
-              <Route exect path='/admin/*' element={<AdminRoutes />} />
-            </Route>
-          </Routes>
-        </PersistGate>
-      </Provider>
-      </ThemeProvider>
+      <ContaxtProvider>
+        <ThemeProvider>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <Routes >
+                <Route exect path='/*' element={<UserRoutes />} />
+                <Route element={<PrivateRoutes />}>
+                  <Route exect path='/admin/*' element={<AdminRoutes />} />
+                </Route>
+              </Routes>
+            </PersistGate>
+          </Provider>
+        </ThemeProvider>
+      </ContaxtProvider>
     </>
   );
 }
