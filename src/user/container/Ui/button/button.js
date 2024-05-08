@@ -1,14 +1,29 @@
 import React from 'react';
-import { AddButton, BaseButton } from './button.style';
+import { BaseButton, PrimaryButton, SeconderyButton } from './button.style';
 
-function Button({ children }) {
+function Button({ children, btntype = "Primary", Btndisable = false, ...props }) {
+    console.log(btntype);
+
+    const Chektype = () => {
+        switch (btntype) {
+            case 'Primary':
+                return PrimaryButton;
+            case 'Secondery':
+                return SeconderyButton;
+            default:
+                return PrimaryButton;
+        }
+    }
+
+
+    const CustomButton = Chektype();
+
+
     return (
         <>
-            <BaseButton>
-            <AddButton>
+            <CustomButton disabled={Btndisable} {...props}>
                 {children}
-                </AddButton>
-            </BaseButton>
+            </CustomButton>
         </>
     );
 }

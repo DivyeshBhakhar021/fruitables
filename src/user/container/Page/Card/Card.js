@@ -129,7 +129,7 @@ function Cart(props) {
                                     <th scope="col">Products</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Price</th>
-                                       <th scope="col">Quantity</th>
+                                    <th scope="col">Quantity</th>
                                     <th scope="col">Total</th>
                                     <th scope="col">Handle</th>
                                 </tr>
@@ -232,7 +232,12 @@ function Cart(props) {
                                     <p className="mb-0 pe-4">${(Total).toFixed(2)}</p>
                                 </div>
                                 {/* <button className="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button> */}
-                                <Button>Proceed Checkout</Button>
+                                <Button 
+                                    Btndisable={true}
+                                    onClick={(v)=> console.log("ok")}
+                                >
+                                    Proceed Checkout
+                                </Button>
                             </div>
                         </div>
                     </div>

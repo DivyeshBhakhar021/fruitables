@@ -29,6 +29,12 @@ export const ContectInput = styled.input`
         }
 `;
 
+export const SpanError = styled.span`
+color:red;
+`;
+
+
+
 // export const TextArea = styled.TextArea`
 
 //         min-height: calc(1.5em + 0.75rem + 2px);

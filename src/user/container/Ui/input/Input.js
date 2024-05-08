@@ -1,10 +1,17 @@
 import React from 'react';
-import { ContectInput, TextArea } from './Input.style';
+import { ContectInput, SpanError, TextArea } from './Input.style';
 
-function Input(props) {
+function Input({ errorText, ...props }) {
     return (
         <>
-            <ContectInput {...props} />
+            <ContectInput
+            {...props}
+            />
+                
+            <SpanError>
+                {errorText}
+            </SpanError>
+
             {/* <TextArea {...props} /> */}
         </>
     );

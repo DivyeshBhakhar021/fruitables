@@ -70,9 +70,9 @@ function Contact(props) {
               </div>
               <div className="col-lg-7">
                 <form onSubmit={handleSubmit}>
-                  <span style={{ color: 'red', marginBottom: '5px' }}>
+                  {/* <span style={{ color: 'red', marginBottom: '5px' }}>
                     {errors.name && touched.name && errors.name}
-                  </span>
+                  </span> */}
                   <Input
                   type="text"
                     // className="w-100 form-control border-0 py-3 mb-3"
@@ -81,10 +81,8 @@ function Contact(props) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.name}
+                    errorText={errors.name && touched.name ? errors.name : " "}
                   />
-                  <span style={{ color: 'red', marginBottom: '5px' }} >
-                    {errors.email && touched.email && errors.email}
-                  </span>
                   <Input
                     type="email"
                     // className="w-100 form-control border-0 py-3 mb-3"
@@ -94,10 +92,8 @@ function Contact(props) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email}
+                    errorText= {errors.email && touched.email ? errors.email : ""}
                   />
-                  <span style={{ color: 'red', marginBottom: '5px' }}>
-                    {errors.message && touched.message && errors.message}
-                  </span>
                   <textarea
                     className="w-100 form-control border-0 mb-3"
                     rows={5}
@@ -108,7 +104,11 @@ function Contact(props) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.message}
+                    // errorText={errors.message && touched.message ? errors.message : " "}  
                   />
+                  <span style={{ color: 'red', marginBottom: '5px' }}>
+                    {errors.message && touched.message && errors.message} 
+                  </span>
                   <button className="w-100 btn form-control border-secondary py-3 bg-white text-primary " type="submit">Submit</button>
                 </form>
               </div>
