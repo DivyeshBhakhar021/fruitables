@@ -5,7 +5,7 @@ import Layout from '../admin/component/Layout/Layout';
 import Vegetables from '../admin/component/coupon/Coupon';
 import Category from '../admin/component/Category/Category';
 import Facilities from '../user/container/facilities/Facilities';
-import Product from '../user/container/product/Product';
+import Product from '../admin/component/product/Product';
 import Counter from '../admin/component/counter/Counter';
 import Favorite from '../admin/component/saleing/Saleing';
 import Productdata from '../admin/component/productdata/Productdata';

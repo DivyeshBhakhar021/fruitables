@@ -1,0 +1,271 @@
+import React, { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useFormik } from 'formik';
+import { object, string, number } from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPoduct, deleteproduct, productdata, editdata } from '../../../reduct/action/Product.action';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Spinner } from 'reactstrap';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { getCategory } from '../../../reduct/action/category.action';
+import { getsubcategory } from '../../../reduct/slice/subcategory.slice';
+
+function Products(props) {
+    const [open, setOpen] = useState(false);
+    const dispatch = useDispatch();
+    const [update, setUpdate] = useState(null);
+    const [data, setData] = useState([]);
+
+    const products = useSelector(state => state.product);
+    const subcategories = useSelector(state => state.subcategory.subcategory);
+    const categories = useSelector(state => state.category.category);
+
+    useEffect(() => {
+        dispatch(productdata());
+        dispatch(getCategory());
+        dispatch(getsubcategory());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (products.product) {
+            setData(products.product);
+        }
+    }, [products]);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+        formik.resetForm();
+        setUpdate(null);
+    };
+
+    const handleDelete = (_id) => {
+        dispatch(deleteproduct(_id));
+    };
+
+    const handleEdit = (data) => {
+        formik.setValues(data);
+        setOpen(true);
+        setUpdate(data._id);
+    };
+
+    const columns = [
+        {
+            field: 'categoriesid', headerName: 'Category', width: 150,
+            renderCell: (params) => {
+                const categoryData = categories.find(v => v._id === params.row.categoriesid);
+                return categoryData ? categoryData.name : '';
+            }
+        },
+        {
+            field: 'subcategory_id', headerName: 'Subcategory Name', width: 160,
+            renderCell: (params) => {
+                const subcategoryData = subcategories.find(v => v._id === params.row.subcategory_id);
+                return subcategoryData ? subcategoryData.name : '';
+            }
+        },
+        { field: 'name', headerName: 'Products Name', width: 160 },
+        { field: 'description', headerName: 'Products Description', width: 160 },
+        { field: 'price', headerName: 'Products Price', width: 160 },
+        { field: 'stock', headerName: 'Products Stock', width: 160 },
+        {
+            field: 'action', headerName: 'Action', width: 160,
+            renderCell: (params) => (
+                <>
+                    <IconButton aria-label="edit" onClick={() => handleEdit(params.row)}>
+                        <EditIcon />
+                    </IconButton>
+                    <IconButton aria-label="delete" onClick={() => handleDelete(params.row._id)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </>
+            )
+        }
+    ];
+
+    let productSchema = object({
+        categoriesid: string().required("Please select category"),
+        subcategory_id: string().required("Please select subcategory"),
+        name: string().required("Please enter name"),
+        description: string().required("Please enter description"),
+        price: number().required("Please enter price"),
+        stock: number().required("Please enter stock"),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            categoriesid: '',
+            subcategory_id: '',
+            name: '',
+            description: '',
+            price: '',
+            stock: '',
+        },
+        validationSchema: productSchema,
+        onSubmit: (values, { resetForm }) => {
+            if (update) {
+                dispatch(editdata({ ...values, _id: update }));
+            } else {
+                dispatch(addPoduct(values));
+            }
+            resetForm();
+            handleClose();
+        }
+    });
+
+    const { handleSubmit, handleChange, handleBlur, errors, values, touched, setFieldValue } = formik;
+
+    const changeSelect = (event) => {
+        setFieldValue("categoriesid", event.target.value);
+        setFieldValue("subcategory_id", "");
+    };
+
+    return (
+        <>
+            <Button variant="outlined" onClick={handleClickOpen}>
+                Add Product
+            </Button>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>{update ? 'Edit Product' : 'Add Product'}</DialogTitle>
+                <form onSubmit={handleSubmit}>
+                    <DialogContent>
+                        <FormControl fullWidth>
+                            <InputLabel id="category-select-label">Categories</InputLabel>
+                            <Select
+                                labelId="category-select-label"
+                                id="category-select"
+                                value={values.categoriesid}
+                                label="Category"
+                                name="categoriesid"
+                                onChange={changeSelect}
+                                onBlur={handleBlur}
+                                error={Boolean(errors.categoriesid && touched.categoriesid)}
+                            >
+                                {categories.map((v) => (
+                                    <MenuItem key={v._id} value={v._id}>
+                                        {v.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {errors.categoriesid && touched.categoriesid && <span style={{ color: "red" }}>{errors.categoriesid}</span>}
+                        </FormControl>
+
+                        <FormControl fullWidth>
+                            <InputLabel id="subcategory-select-label">Select Subcategories</InputLabel>
+                            <Select
+                                labelId="subcategory-select-label"
+                                id="subcategory-select"
+                                value={values.subcategory_id}
+                                label="Subcategory"
+                                name="subcategory_id"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                error={Boolean(errors.subcategory_id && touched.subcategory_id)}
+                            >
+                                {subcategories.map((v) => (
+                                    <MenuItem key={v._id} value={v._id}>
+                                        {v.name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {errors.subcategory_id && touched.subcategory_id && <span style={{ color: "red" }}>{errors.subcategory_id}</span>}
+                        </FormControl>
+
+                        <TextField
+                            margin="dense"
+                            id="name"
+                            name="name"
+                            label="Name"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.name}
+                            error={Boolean(errors.name && touched.name)}
+                            helperText={errors.name && touched.name ? errors.name : ''}
+                        />
+
+                        <TextField
+                            margin="dense"
+                            id="description"
+                            name="description"
+                            label="Description"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.description}
+                            error={Boolean(errors.description && touched.description)}
+                            helperText={errors.description && touched.description ? errors.description : ''}
+                        />
+
+                        <TextField
+                            margin="dense"
+                            id="price"
+                            name="price"
+                            label="Price"
+                            type="number"
+                            fullWidth
+                            variant="standard"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.price}
+                            error={Boolean(errors.price && touched.price)}
+                            helperText={errors.price && touched.price ? errors.price : ''}
+                        />
+
+                        <TextField
+                            margin="dense"
+                            id="stock"
+                            name="stock"
+                            label="Stock"
+                            type="number"
+                            fullWidth
+                            variant="standard"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.stock}
+                            error={Boolean(errors.stock && touched.stock)}
+                            helperText={errors.stock && touched.stock ? errors.stock : ''}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button type="submit">{update ? 'Update' : 'Add'}</Button>
+                    </DialogActions>
+                </form>
+            </Dialog>
+
+            <br /><br />
+            <div style={{ height: 400, width: '100%' }}>
+                <DataGrid
+                    rows={data}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: { page: 0, pageSize: 5 },
+                        },
+                    }}
+                    getRowId={row => row._id}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection
+                />
+            </div>
+        </>
+    );
+}
+
+export default Products;
