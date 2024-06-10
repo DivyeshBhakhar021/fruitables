@@ -112,6 +112,11 @@ const adminlink =[
       icon:<CategoryIcon/>
   },
   {
+    title:'SubCategory',
+    to:'/admin/subcategory',
+    icon:<BookmarkAddIcon/>
+  },
+  {
     title:'Facilities',
     to:'/admin/facilities',
     icon:<EmojiEmotionsIcon/>
@@ -141,6 +146,7 @@ const adminlink =[
   to:'/admin/contact',
   icon:<BookmarkAddIcon/>
 },
+
 ]
 
 export default function Layout({children}) {

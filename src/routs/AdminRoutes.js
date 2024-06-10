@@ -11,6 +11,7 @@ import Favorite from '../admin/component/saleing/Saleing';
 import Productdata from '../admin/component/productdata/Productdata';
 import { ProductProvider } from '../context/reducer/salecontext';
 import Contact from '../admin/component/Contact/Contact';
+import Subcategory from '../admin/component/subcategory/Subcategory';
 
 function AdminRoutes(props) {
   return (
@@ -21,6 +22,7 @@ function AdminRoutes(props) {
             <Route exect path='/Fruits' element={<Fruits />} />
             <Route exect path='/coupon' element={< Vegetables />} />
             <Route exect path='/category' element={< Category />} />
+            <Route exect path='/subcategory' element={< Subcategory />} />
             <Route exect path='/facilities' element={<Facilities />} />
             <Route exect path='/product' element={<Product />} />
             <Route exect path='/Counter' element={<Counter />} />

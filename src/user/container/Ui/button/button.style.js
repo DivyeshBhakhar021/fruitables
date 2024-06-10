@@ -39,7 +39,7 @@ export const PrimaryButton = styled(BaseButton)`
     }
 `;
 
-export  const SeconderyButton = styled(BaseButton)`
+export const SeconderyButton = styled(BaseButton)`
     color: rgb(255, 255, 255) !important;
     background-color: rgb(129,196,8);
     border: 1px solid rgba(0,0,0,0);
@@ -48,7 +48,7 @@ export  const SeconderyButton = styled(BaseButton)`
     right:0px;
 
     &:hover {
-      background: var(--bs-secondary)v !important;
+      background: var(--bs-secondary) !important;
       color: var(--bs-white) !important;
     }
 
