@@ -20,13 +20,16 @@ import { getsubcategory } from '../../../reduct/slice/subcategory.slice';
 
 function Products(props) {
     const [open, setOpen] = useState(false);
-    const dispatch = useDispatch();
     const [update, setUpdate] = useState(null);
     const [data, setData] = useState([]);
+
+    const dispatch = useDispatch();
 
     const products = useSelector(state => state.product);
     const subcategories = useSelector(state => state.subcategory.subcategory);
     const categories = useSelector(state => state.category.category);
+
+    console.log(categories);
 
     useEffect(() => {
         dispatch(productdata());
@@ -64,6 +67,9 @@ function Products(props) {
         {
             field: 'categoriesid', headerName: 'Category', width: 150,
             renderCell: (params) => {
+                console.log(params.row);
+                // const categoryData1 = subcategories.find(v => v._id === params.row.subcategory_id);
+
                 const categoryData = categories.find(v => v._id === params.row.categoriesid);
                 return categoryData ? categoryData.name : '';
             }
@@ -127,8 +133,10 @@ function Products(props) {
     const { handleSubmit, handleChange, handleBlur, errors, values, touched, setFieldValue } = formik;
 
     const changeSelect = (event) => {
-        setFieldValue("categoriesid", event.target.value);
-        setFieldValue("subcategory_id", "");
+        const chngadata = event.target.value;
+        setFieldValue("categoriesid", chngadata);
+        setFieldValue("subcategory_id", '');
+        dispatch(getsubcategory({ categoriesid: chngadata }));
     };
 
     return (
@@ -165,7 +173,7 @@ function Products(props) {
                             <InputLabel id="subcategory-select-label">Select Subcategories</InputLabel>
                             <Select
                                 labelId="subcategory-select-label"
-                                id="subcategory-select"
+                                id="subcategory_id"
                                 value={values.subcategory_id}
                                 label="Subcategory"
                                 name="subcategory_id"
@@ -173,7 +181,8 @@ function Products(props) {
                                 onBlur={handleBlur}
                                 error={Boolean(errors.subcategory_id && touched.subcategory_id)}
                             >
-                                {subcategories.map((v) => (
+                                {subcategories.filter((v)=>v.categoriesid === values.categoriesid)
+                                .map((v) => (
                                     <MenuItem key={v._id} value={v._id}>
                                         {v.name}
                                     </MenuItem>

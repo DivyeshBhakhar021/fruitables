@@ -26,6 +26,7 @@ export const addPoduct = (data) => async (dispatch) => {
 
     try {
         const response = await axios.post("http://localhost:5000/api/v1/productes/addProduct", data);
+        console.log(response);
         dispatch({ type: ADD_PRODUCT, payload: response.data });
     } catch (error) {
         dispatch(errorProduct(error.message));
@@ -36,8 +37,8 @@ export const deleteproduct = (id) => async (dispatch) => {
     // dispatch(lodinProduct());
 
     try {
-        await axios.delete(`http://localhost:5000/api/v1/productes/deleteProduct/${id}`);
-        dispatch({ type: DELETE_PRODUCT, payload: id });
+        await axios.delete(`http://localhost:5000/api/v1/productes/deleteProduct/${id}`)
+        .then(dispatch({ type: DELETE_PRODUCT, payload: id }))
     } catch (error) {
         dispatch(errorProduct(error.message));
     }

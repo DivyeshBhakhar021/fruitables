@@ -35,15 +35,16 @@ export const productReducer = (state = product_facilities, action) => {
         case DELETE_PRODUCT:
             return {
                 isLoding: false,
-                product: state.product.filter(((v) => v.id !== action.payload.data)),
+                product: state.product.filter(((v) => v._id !== action.payload)),
                 error: null
             }
         case EDIT_PRODUCT:
+            console.log(action.payload._id);
             return {
                 isLoding: false,
                 product: state.product.map((v) => {
-                    if (v.id === action.payload.data.id) {
-                        return action.payload.data
+                    if (v._id === action.payload._id) {
+                        return action.payload
                     } else {
                         return v
                     }

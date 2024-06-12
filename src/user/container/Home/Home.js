@@ -21,6 +21,12 @@ function Home(props) {
   const saleing = useSelector(state => state.saleing)
   console.log(saleing);
 
+
+
+  
+  const products = useSelector(state => state.product);
+  console.log(products);
+
   const owlvagetable = {
     autoplay: true,
     smartSpeed: 1500,
