@@ -1,14 +1,19 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
-import { Button } from '@mui/material';
+import { Box, Button, Menu, MenuItem } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeContext } from '../../../context/ThemeContext';
 import { getsaleing } from '../../../reduct/slice/saleing.slice';
 import { AddButton } from '../Ui/button/button.style';
+import { productdata } from '../../../reduct/action/Product.action';
+import { getCategory } from '../../../reduct/action/category.action';
+import { getsubcategory } from '../../../reduct/slice/subcategory.slice';
+
 
 function Home(props) {
+
 
   const dispatch = useDispatch()
 
@@ -21,11 +26,18 @@ function Home(props) {
   const saleing = useSelector(state => state.saleing)
   console.log(saleing);
 
-
+  const products = useSelector(state => state.product);
+  const subcategories = useSelector(state => state.subcategory.subcategory);
+  const categories = useSelector(state => state.category.category);
+  console.log(products);
+  console.log(categories);
 
   
-  const products = useSelector(state => state.product);
-  console.log(products);
+  const [categoryAnchorEl, setCategoryAnchorEl] = useState(null);
+  const [subcategoryAnchorEl, setSubcategoryAnchorEl] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+
 
   const owlvagetable = {
     autoplay: true,
@@ -61,7 +73,26 @@ function Home(props) {
 
   useEffect(() => {
     dispatch(getsaleing());
+    dispatch(productdata());
+    dispatch(getCategory());
+    dispatch(getsubcategory());
   }, []);
+
+
+  const handleCategoryClick = (event, category) => {
+    setSelectedCategory(category);
+    setCategoryAnchorEl(event.currentTarget);
+  };
+
+  const handleSubcategoryClick = (event, subcategory) => {
+    setSelectedSubcategory(subcategory);
+    setSubcategoryAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setCategoryAnchorEl(null);
+    setSubcategoryAnchorEl(null);
+  };
 
   const owlClient = {
     autoplay: true,
@@ -94,7 +125,6 @@ function Home(props) {
       }
     }
   }
-
 
   return (
     <div>
@@ -135,6 +165,55 @@ function Home(props) {
           </div>
         </div>
       </div>
+      
+      <div>
+        <h2>Products</h2>
+        <Box sx={{ display: 'flex', padding: 2 }}>
+          {categories.map(category => (
+            <Box key={category.id} sx={{ margin: '0 10px' }}>
+              <Button
+                aria-controls="category-menu"
+                aria-haspopup="true"
+                onClick={(e) => handleCategoryClick(e, category)}
+              >
+                {category.name}
+              </Button>
+              <Menu
+                id="category-menu"
+                anchorEl={categoryAnchorEl}
+                open={selectedCategory === category && Boolean(categoryAnchorEl)}
+                onClose={handleClose}
+              >
+                {subcategories
+                  .filter(subcategory => subcategory.categoryId === category.id)
+                  .map(subcategory => (
+                    <MenuItem
+                      key={subcategory.id}
+                      onClick={(e) => handleSubcategoryClick(e, subcategory)}
+                    >
+                      {subcategory.name}
+                    </MenuItem>
+                  ))}
+              </Menu>
+            </Box>
+          ))}
+        </Box>
+
+        {selectedCategory && selectedSubcategory && (
+          <Box sx={{ margin: '20px 10px' }}>
+            <h3>{selectedSubcategory.name}</h3>
+            {products
+              .filter(product => product.subcategoryId === selectedSubcategory._id)
+              .map(product => (
+                <Box key={product.id} sx={{ margin: '10px 0' }}>
+                  <h4>{product.name}</h4>
+                </Box>
+              ))}
+          </Box>
+        )}
+      </div>
+  
+
       {/* saleproduct */}
       <div className="container-fluid fruite py-5">
         <div className="container py-5">
@@ -150,7 +229,7 @@ function Home(props) {
                 <div className="row g-4">
                   <div className="col-lg-12">
                     <div className="row g-4">
-                      {
+                      {/* {
                         saleing.saleing.map((v) => (
                           <div className="col-md-6 col-lg-4 col-xl-3">
                             <div className="rounded position-relative fruite-item">
@@ -169,7 +248,7 @@ function Home(props) {
                             </div>
                           </div>
                         ))
-                      }
+                      } */}
                     </div>
                   </div>
                 </div>
@@ -361,7 +440,7 @@ function Home(props) {
       <div className="container-fluid featurs py-5">
         <div className="container py-5">
           <div className="row g-4">
-            {
+            {/* {
               facilities.facilities.map((v) => (
                 <div className="col-md-6 col-lg-3">
                   <div className="featurs-item text-center rounded bg-light p-4">
@@ -375,7 +454,7 @@ function Home(props) {
                   </div>
                 </div>
               ))
-            }
+            } */}
 
           </div>
         </div>
@@ -943,8 +1022,8 @@ function Home(props) {
           <div className="row g-4">
             <div className="col-lg-6 col-xl-4">
               <div className={`p-4 rounded ${themecontect.theme === "dark"
-                  ? "border border-warning"
-                  : "bg-light"
+                ? "border border-warning"
+                : "bg-light"
                 }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
@@ -967,8 +1046,8 @@ function Home(props) {
             </div>
             <div className="col-lg-6 col-xl-4">
               <div className={`p-4 rounded ${themecontect.theme === "dark"
-                  ? "border border-warning"
-                  : "bg-light"
+                ? "border border-warning"
+                : "bg-light"
                 }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
@@ -991,8 +1070,8 @@ function Home(props) {
             </div>
             <div className="col-lg-6 col-xl-4">
               <div className={`p-4 rounded ${themecontect.theme === "dark"
-                  ? "border border-warning"
-                  : "bg-light"
+                ? "border border-warning"
+                : "bg-light"
                 }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
@@ -1015,8 +1094,8 @@ function Home(props) {
             </div>
             <div className="col-lg-6 col-xl-4">
               <div className={`p-4 rounded ${themecontect.theme === "dark"
-                  ? "border border-warning"
-                  : "bg-light"
+                ? "border border-warning"
+                : "bg-light"
                 }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
@@ -1039,8 +1118,8 @@ function Home(props) {
             </div>
             <div className="col-lg-6 col-xl-4">
               <div className={`p-4 rounded ${themecontect.theme === "dark"
-                  ? "border border-warning"
-                  : "bg-light"
+                ? "border border-warning"
+                : "bg-light"
                 }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
@@ -1063,8 +1142,8 @@ function Home(props) {
             </div>
             <div className="col-lg-6 col-xl-4">
               <div className={`p-4 rounded ${themecontect.theme === "dark"
-                  ? "border border-warning"
-                  : "bg-light"
+                ? "border border-warning"
+                : "bg-light"
                 }`}>
                 <div className="row align-items-center">
                   <div className="col-6">
@@ -1161,8 +1240,8 @@ function Home(props) {
       <div className="container-fluid py-5">
         <div className="container">
           <div className={`p-4 rounded ${themecontect.theme === "dark"
-              ? "border border-warning"
-              : "bg-light"
+            ? "border border-warning"
+            : "bg-light"
             }`}   >
             <div className="row g-4 justify-content-center">
               <div className="col-md-6 col-lg-6 col-xl-3">
