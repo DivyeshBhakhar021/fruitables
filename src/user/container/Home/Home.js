@@ -33,10 +33,10 @@ function Home(props) {
   console.log(categories);
 
   
-  const [categoryAnchorEl, setCategoryAnchorEl] = useState(null);
-  const [subcategoryAnchorEl, setSubcategoryAnchorEl] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [categoryAnchorEl, setCategoryAnchorEl] = useState('');
+  const [subcategoryAnchorEl, setSubcategoryAnchorEl] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('');
 
 
   const owlvagetable = {
@@ -167,7 +167,6 @@ function Home(props) {
       </div>
       
       <div>
-        <h2>Products</h2>
         <Box sx={{ display: 'flex', padding: 2 }}>
           {categories.map(category => (
             <Box key={category.id} sx={{ margin: '0 10px' }}>

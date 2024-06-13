@@ -22,6 +22,7 @@ function Products(props) {
     const [open, setOpen] = useState(false);
     const [update, setUpdate] = useState(null);
     const [data, setData] = useState([]);
+    
 
     const dispatch = useDispatch();
 
@@ -146,7 +147,7 @@ function Products(props) {
             </Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>{update ? 'Edit Product' : 'Add Product'}</DialogTitle>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} enctype="multipart/form-data">
                     <DialogContent>
                         <FormControl fullWidth>
                             <InputLabel id="category-select-label">Categories</InputLabel>
@@ -190,6 +191,8 @@ function Products(props) {
                             </Select>
                             {errors.subcategory_id && touched.subcategory_id && <span style={{ color: "red" }}>{errors.subcategory_id}</span>}
                         </FormControl>
+
+                         <input id='pro_img' name="pro_img" type="file"  />
 
                         <TextField
                             margin="dense"
