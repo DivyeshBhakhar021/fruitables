@@ -23,9 +23,14 @@ export const productdata = () => async (dispatch) => {
 
 export const addPoduct = (data) => async (dispatch) => {
     // dispatch(lodinProduct());
-
+    // console.log(data);
     try {
-        const response = await axios.post("http://localhost:5000/api/v1/productes/addProduct", data);
+        const response = await axios.post("http://localhost:5000/api/v1/productes/addProduct", data,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    
         console.log(response);
         dispatch({ type: ADD_PRODUCT, payload: response.data });
     } catch (error) {
@@ -46,7 +51,7 @@ export const deleteproduct = (id) => async (dispatch) => {
 
 export const editdata = (data) => async (dispatch) => {
     // dispatch(lodinProduct());
-
+console.log(data);
     try {
         await axios.put(`http://localhost:5000/api/v1/productes/updateProduct/${data._id}`, data);
         dispatch({ type: EDIT_PRODUCT, payload: data });

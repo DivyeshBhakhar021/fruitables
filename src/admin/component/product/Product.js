@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useFormik } from 'formik';
-import { object, string, number } from 'yup';
+import { object, string, number, mixed } from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPoduct, deleteproduct, productdata, editdata } from '../../../reduct/action/Product.action';
 import IconButton from '@mui/material/IconButton';
@@ -66,10 +66,15 @@ function Products(props) {
 
     const columns = [
         {
+            field: 'pro_img', headerName: 'Products Image', width: 160,
+            renderCell: (params) => (
+                // console.log(params.row)
+                <img src={params.row.pro_img.url} width="50" height="50" />
+            )
+        },
+        {
             field: 'categoriesid', headerName: 'Category', width: 150,
             renderCell: (params) => {
-                console.log(params.row);
-                // const categoryData1 = subcategories.find(v => v._id === params.row.subcategory_id);
 
                 const categoryData = categories.find(v => v._id === params.row.categoriesid);
                 return categoryData ? categoryData.name : '';
@@ -98,7 +103,9 @@ function Products(props) {
                     </IconButton>
                 </>
             )
-        }
+        },
+       
+
     ];
 
     let productSchema = object({
@@ -108,6 +115,17 @@ function Products(props) {
         description: string().required("Please enter description"),
         price: number().required("Please enter price"),
         stock: number().required("Please enter stock"),
+        // pro_img: mixed().required("Please upload image").test("fileSize", "The file is too large", (value) => {
+        //     if (value) {
+        //         return value.size <= 1024 * 1024;
+        //     }
+        //     return true
+        //     .test("fileType", "The file type is not supported", (value) => {
+        //         if (value) {    
+        //             return ["image/jpeg", "image/png", "image/jpg"].includes(value.type);
+        //         }
+        // })
+        // })
     });
 
     const formik = useFormik({
@@ -118,13 +136,16 @@ function Products(props) {
             description: '',
             price: '',
             stock: '',
+            pro_img: null, 
         },
         validationSchema: productSchema,
         onSubmit: (values, { resetForm }) => {
+            console.log(values);
             if (update) {
                 dispatch(editdata({ ...values, _id: update }));
             } else {
                 dispatch(addPoduct(values));
+                console.log(values);
             }
             resetForm();
             handleClose();
@@ -138,6 +159,12 @@ function Products(props) {
         setFieldValue("categoriesid", chngadata);
         setFieldValue("subcategory_id", '');
         dispatch(getsubcategory({ categoriesid: chngadata }));
+    };
+
+
+    const handalfileschnge = (event) => {
+        setFieldValue("pro_img", event.currentTarget.files[0]);
+        
     };
 
     return (
@@ -192,7 +219,13 @@ function Products(props) {
                             {errors.subcategory_id && touched.subcategory_id && <span style={{ color: "red" }}>{errors.subcategory_id}</span>}
                         </FormControl>
 
-                         <input id='pro_img' name="pro_img" type="file"  />
+                         <input 
+                         id='pro_img' 
+                         name="pro_img" 
+                         type="file"
+                         onChange={handalfileschnge}
+                         />
+                         {errors.pro_img && touched.pro_img && <span style={{ color: "red" }}>{errors.pro_img}</span>}
 
                         <TextField
                             margin="dense"

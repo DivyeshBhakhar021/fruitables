@@ -128,6 +128,7 @@ function Home(props) {
 
   return (
     <div>
+      
       {/* Hero Start */}
       <div className="container-fluid py-5 mb-5 hero-header">
         <div className="container py-5">
@@ -212,7 +213,6 @@ function Home(props) {
         )}
       </div>
   
-
       {/* saleproduct */}
       <div className="container-fluid fruite py-5">
         <div className="container py-5">
