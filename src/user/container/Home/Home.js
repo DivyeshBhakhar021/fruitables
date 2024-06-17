@@ -39,6 +39,8 @@ function Home(props) {
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
 
 
+  console.log(selectedCategory);
+
   const owlvagetable = {
     autoplay: true,
     smartSpeed: 1500,
@@ -167,13 +169,13 @@ function Home(props) {
         </div>
       </div>
       
-      <div>
+
+      {/* <div>
         <Box sx={{ display: 'flex', padding: 2 }}>
           {categories.map(category => (
             <Box key={category.id} sx={{ margin: '0 10px' }}>
               <Button
                 aria-controls="category-menu"
-                aria-haspopup="true"
                 onClick={(e) => handleCategoryClick(e, category)}
               >
                 {category.name}
@@ -182,9 +184,10 @@ function Home(props) {
                 id="category-menu"
                 anchorEl={categoryAnchorEl}
                 open={selectedCategory === category && Boolean(categoryAnchorEl)}
-                onClose={handleClose}
+                onClose={handleClose} 
               >
                 {subcategories
+                
                   .filter(subcategory => subcategory.categoryId === category.id)
                   .map(subcategory => (
                     <MenuItem
@@ -199,6 +202,7 @@ function Home(props) {
           ))}
         </Box>
 
+       
         {selectedCategory && selectedSubcategory && (
           <Box sx={{ margin: '20px 10px' }}>
             <h3>{selectedSubcategory.name}</h3>
@@ -212,7 +216,7 @@ function Home(props) {
           </Box>
         )}
       </div>
-  
+   */}
       {/* saleproduct */}
       <div className="container-fluid fruite py-5">
         <div className="container py-5">

@@ -22,13 +22,15 @@ function Products(props) {
     const [open, setOpen] = useState(false);
     const [update, setUpdate] = useState(null);
     const [data, setData] = useState([]);
-    
+
 
     const dispatch = useDispatch();
 
     const products = useSelector(state => state.product);
     const subcategories = useSelector(state => state.subcategory.subcategory);
     const categories = useSelector(state => state.category.category);
+
+
 
     console.log(categories);
 
@@ -104,7 +106,7 @@ function Products(props) {
                 </>
             )
         },
-       
+
 
     ];
 
@@ -136,7 +138,7 @@ function Products(props) {
             description: '',
             price: '',
             stock: '',
-            pro_img: null, 
+            pro_img: null,
         },
         validationSchema: productSchema,
         onSubmit: (values, { resetForm }) => {
@@ -164,153 +166,162 @@ function Products(props) {
 
     const handalfileschnge = (event) => {
         setFieldValue("pro_img", event.currentTarget.files[0]);
-        
+
     };
 
     return (
         <>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Add Product
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>{update ? 'Edit Product' : 'Add Product'}</DialogTitle>
-                <form onSubmit={handleSubmit} enctype="multipart/form-data">
-                    <DialogContent>
-                        <FormControl fullWidth>
-                            <InputLabel id="category-select-label">Categories</InputLabel>
-                            <Select
-                                labelId="category-select-label"
-                                id="category-select"
-                                value={values.categoriesid}
-                                label="Category"
-                                name="categoriesid"
-                                onChange={changeSelect}
-                                onBlur={handleBlur}
-                                error={Boolean(errors.categoriesid && touched.categoriesid)}
-                            >
-                                {categories.map((v) => (
-                                    <MenuItem key={v._id} value={v._id}>
-                                        {v.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            {errors.categoriesid && touched.categoriesid && <span style={{ color: "red" }}>{errors.categoriesid}</span>}
-                        </FormControl>
+            {
+                products.isLoding ?
+                   <Spinner>
+                   </Spinner> :
+                    <>
+                    <Button variant="outlined" onClick={handleClickOpen}>
+                            Add Product
+                        </Button>
+                        <Dialog open={open} onClose={handleClose}>
+                            <DialogTitle>{update ? 'Edit Product' : 'Add Product'}</DialogTitle>
+                            <form onSubmit={handleSubmit} enctype="multipart/form-data">
+                                <DialogContent>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="category-select-label">Categories</InputLabel>
+                                        <Select
+                                            labelId="category-select-label"
+                                            id="category-select"
+                                            value={values.categoriesid}
+                                            label="Category"
+                                            name="categoriesid"
+                                            onChange={changeSelect}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.categoriesid && touched.categoriesid)}
+                                        >
+                                            {categories.map((v) => (
+                                                <MenuItem key={v._id} value={v._id}>
+                                                    {v.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                        {errors.categoriesid && touched.categoriesid && <span style={{ color: "red" }}>{errors.categoriesid}</span>}
+                                    </FormControl>
 
-                        <FormControl fullWidth>
-                            <InputLabel id="subcategory-select-label">Select Subcategories</InputLabel>
-                            <Select
-                                labelId="subcategory-select-label"
-                                id="subcategory_id"
-                                value={values.subcategory_id}
-                                label="Subcategory"
-                                name="subcategory_id"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                error={Boolean(errors.subcategory_id && touched.subcategory_id)}
-                            >
-                                {subcategories.filter((v)=>v.categoriesid === values.categoriesid)
-                                .map((v) => (
-                                    <MenuItem key={v._id} value={v._id}>
-                                        {v.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            {errors.subcategory_id && touched.subcategory_id && <span style={{ color: "red" }}>{errors.subcategory_id}</span>}
-                        </FormControl>
+                                    <FormControl fullWidth>
+                                        <InputLabel id="subcategory-select-label">Select Subcategories</InputLabel>
+                                        <Select
+                                            labelId="subcategory-select-label"
+                                            id="subcategory_id"
+                                            value={values.subcategory_id}
+                                            label="Subcategory"
+                                            name="subcategory_id"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            error={Boolean(errors.subcategory_id && touched.subcategory_id)}
+                                        >
+                                            {subcategories.filter((v) => v.categoriesid === values.categoriesid)
+                                                .map((v) => (
+                                                    <MenuItem key={v._id} value={v._id}>
+                                                        {v.name}
+                                                    </MenuItem>
+                                                ))}
+                                        </Select>
+                                        {errors.subcategory_id && touched.subcategory_id && <span style={{ color: "red" }}>{errors.subcategory_id}</span>}
+                                    </FormControl>
 
-                         <input 
-                         id='pro_img' 
-                         name="pro_img" 
-                         type="file"
-                         onChange={handalfileschnge}
-                         />
-                         {errors.pro_img && touched.pro_img && <span style={{ color: "red" }}>{errors.pro_img}</span>}
+                                    <input
+                                        id='pro_img'
+                                        name="pro_img"
+                                        type="file"
+                                        onChange={handalfileschnge}
+                                    />
+                                    {errors.pro_img && touched.pro_img && <span style={{ color: "red" }}>{errors.pro_img}</span>}
 
-                        <TextField
-                            margin="dense"
-                            id="name"
-                            name="name"
-                            label="Name"
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.name}
-                            error={Boolean(errors.name && touched.name)}
-                            helperText={errors.name && touched.name ? errors.name : ''}
-                        />
+                                    <TextField
+                                        margin="dense"
+                                        id="name"
+                                        name="name"
+                                        label="Name"
+                                        type="text"
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.name}
+                                        error={Boolean(errors.name && touched.name)}
+                                        helperText={errors.name && touched.name ? errors.name : ''}
+                                    />
 
-                        <TextField
-                            margin="dense"
-                            id="description"
-                            name="description"
-                            label="Description"
-                            type="text"
-                            fullWidth
-                            variant="standard"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.description}
-                            error={Boolean(errors.description && touched.description)}
-                            helperText={errors.description && touched.description ? errors.description : ''}
-                        />
+                                    <TextField
+                                        margin="dense"
+                                        id="description"
+                                        name="description"
+                                        label="Description"
+                                        type="text"
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.description}
+                                        error={Boolean(errors.description && touched.description)}
+                                        helperText={errors.description && touched.description ? errors.description : ''}
+                                    />
 
-                        <TextField
-                            margin="dense"
-                            id="price"
-                            name="price"
-                            label="Price"
-                            type="number"
-                            fullWidth
-                            variant="standard"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.price}
-                            error={Boolean(errors.price && touched.price)}
-                            helperText={errors.price && touched.price ? errors.price : ''}
-                        />
+                                    <TextField
+                                        margin="dense"
+                                        id="price"
+                                        name="price"
+                                        label="Price"
+                                        type="number"
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.price}
+                                        error={Boolean(errors.price && touched.price)}
+                                        helperText={errors.price && touched.price ? errors.price : ''}
+                                    />
 
-                        <TextField
-                            margin="dense"
-                            id="stock"
-                            name="stock"
-                            label="Stock"
-                            type="number"
-                            fullWidth
-                            variant="standard"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.stock}
-                            error={Boolean(errors.stock && touched.stock)}
-                            helperText={errors.stock && touched.stock ? errors.stock : ''}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button type="submit">{update ? 'Update' : 'Add'}</Button>
-                    </DialogActions>
-                </form>
-            </Dialog>
+                                    <TextField
+                                        margin="dense"
+                                        id="stock"
+                                        name="stock"
+                                        label="Stock"
+                                        type="number"
+                                        fullWidth
+                                        variant="standard"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.stock}
+                                        error={Boolean(errors.stock && touched.stock)}
+                                        helperText={errors.stock && touched.stock ? errors.stock : ''}
+                                    />
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={handleClose}>Cancel</Button>
+                                    <Button type="submit">{update ? 'Update' : 'Add'}</Button>
+                                </DialogActions>
+                            </form>
+                        </Dialog>
 
-            <br /><br />
-            <div style={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    rows={data}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: { page: 0, pageSize: 5 },
-                        },
-                    }}
-                    getRowId={row => row._id}
-                    pageSizeOptions={[5, 10]}
-                    checkboxSelection
-                />
-            </div>
-        </>
+                        <br /><br />
+                        <div style={{ height: 400, width: '100%' }}>
+                            <DataGrid
+                                rows={data}
+                                columns={columns}
+                                initialState={{
+                                    pagination: {
+                                        paginationModel: { page: 0, pageSize: 5 },
+                                    },
+                                }}
+                                getRowId={row => row._id}
+                                pageSizeOptions={[5, 10]}
+                                checkboxSelection
+                            />
+                        </div>
+                    </>
+}
+
+
+                    </>
     );
 }
 
-export default Products;
+            export default Products;

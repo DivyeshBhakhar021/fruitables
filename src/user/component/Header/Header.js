@@ -1,12 +1,45 @@
-import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { IconButton } from '@mui/material';
+import { Box, IconButton, Menu, MenuItem } from '@mui/material';
 import { ThemeContext } from '../../../context/ThemeContext';
+import { Button } from 'reactstrap';
+import { productdata } from '../../../reduct/action/Product.action';
+import { getCategory } from '../../../reduct/action/category.action';
+import { getsubcategory } from '../../../reduct/slice/subcategory.slice';
 
 function Header(props) {
+
+  const dispatch = useDispatch()
+
+  const products = useSelector(state => state.product.product);
+  const subcategories = useSelector(state => state.subcategory.subcategory);
+  const categories = useSelector(state => state.category.category);
+  console.log(products);
+  console.log(categories);
+
+
+  const [categoryAnchorEl, setCategoryAnchorEl] = useState('');
+  const [subcategoryAnchorEl, setSubcategoryAnchorEl] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('');
+
+
+
+
+  console.log(selectedCategory, selectedSubcategory)
+
+  useEffect(() => {
+    dispatch(productdata());
+    dispatch(getCategory());
+    dispatch(getsubcategory());
+  }, []);
+
+  console.log(categoryAnchorEl);
+  console.log(selectedCategory);
+  console.log(subcategoryAnchorEl);
 
   const cart = useSelector(state => state.Cart)
   console.log(cart);
@@ -14,12 +47,29 @@ function Header(props) {
   const cartCount = cart.cart.reduce((acc, v) => acc + v.qty, 0)
 
   const themecontect = useContext(ThemeContext);
-  console.log(themecontect);
+
 
   const handaltheme = () => {
     // console.log("abv");
     themecontect.toggleTheme(themecontect.theme)
   }
+
+  const handleCategoryClick = (event, category) => {
+    setSelectedCategory(category);
+    setCategoryAnchorEl(event.currentTarget);
+  };
+
+  const handleSubcategoryClick = (event, subcategory) => {
+    setSelectedSubcategory(subcategory);
+    setSubcategoryAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setCategoryAnchorEl(null);
+    setSubcategoryAnchorEl(null);
+  };
+
+
 
 
   return (
@@ -88,7 +138,7 @@ function Header(props) {
                   <i className="fas fa-user fa-2x" />
                 </NavLink>
 
-                <IconButton  style={{ background: 'white' }}   onClick={handaltheme} sx={{ ml: 1 }} color="green">
+                <IconButton style={{ background: 'white' }} onClick={handaltheme} sx={{ ml: 1 }} color="green">
                   {/* <Brightness7Icon /> */}
                   {themecontect.theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
@@ -117,6 +167,54 @@ function Header(props) {
         </div>
       </div>
       {/* Modal Search End */}
+
+      <br /><br /><br /><br /><br /><br />
+      <br />
+      <div>
+        <Box sx={{ display: 'flex', padding: 2 }}>
+          {categories.map(category => (
+            <Box key={category.id} sx={{ margin: '0 10px' }}>
+              <Button
+                aria-controls="category-menu"
+                onClick={(e) => handleCategoryClick(e, category)}
+              >
+                {category.name}
+              </Button>
+              <Menu
+                id="category-menu"
+                anchorEl={categoryAnchorEl}
+                open={selectedCategory === category && Boolean(categoryAnchorEl)}
+                onClose={handleClose}
+              >
+                {subcategories
+                  .filter(subcategory => subcategory.categoriesid === selectedCategory._id)
+                  .map(subcategory => (
+                    <MenuItem
+                      key={subcategory.id}
+                      onClick={(e) => handleSubcategoryClick(e, subcategory)}
+                    >
+                      {subcategory.name}
+                    </MenuItem>
+                  ))}
+              </Menu>
+            </Box>
+          ))}
+        </Box>
+
+          {
+            selectedCategory && selectedSubcategory && (
+              <Box sx={{ margin: '20px 10px' }}>
+                <h3>{selectedSubcategory.name}</h3>
+                {products
+                   .filter(v =>v.subcategory_id === selectedSubcategory._id)
+                  .map(v => (
+                    <Box key={v._id} sx={{ margin: '10px 0' }}>
+                      <h4>{v.name}</h4>
+                    </Box>
+                  ))}
+              </Box>  
+            )}
+      </div>
     </div>
 
   );

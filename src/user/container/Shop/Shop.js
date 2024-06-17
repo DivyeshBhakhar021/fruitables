@@ -263,7 +263,7 @@ const handalproduct = (id) => {
                           <Link to={`/shop/${v.id}`}>
                             <div className="rounded position-relative fruite-item">
                               <div className="fruite-img">
-                                <img src={v.img} className="img-fluid w-100 rounded-top" alt />
+                                <img src={v.pro_img.url} className="img-fluid w-100 rounded-top" alt />
                               </div>
                               <div className="text-white bg-secondary px-3 py-1 rounded position-absolute" style={{ top: 10, left: 10 }}>Fruits</div>
                               <div className="p-4 border border-secondary border-top-0 rounded-bottom">
