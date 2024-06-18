@@ -201,17 +201,30 @@ function Header(props) {
           ))}
         </Box>
 
-          {
-            selectedCategory && selectedSubcategory && (
-              <Box sx={{ margin: '20px 10px' }}>
-                <h3>{selectedSubcategory.name}</h3>
-                {products
-                   .filter(v =>v.subcategory_id === selectedSubcategory._id)
-                  .map(v => (
-                    <Box key={v._id} sx={{ margin: '10px 0' }}>
-                      <h4>{v.name}</h4>
-                    </Box>
-                  ))}
+        {
+  selectedCategory && selectedSubcategory && (
+    <Box sx={{ margin: '20px 10px' }}>
+      <h3>{selectedSubcategory.name}</h3>
+      <div className="row">
+        {products
+          .filter(v => v.subcategory_id === selectedSubcategory._id)
+          .map((v) => (
+            <div key={v._id} className="col-md-4">
+              <div className="card" style={{ width: '18rem', margin: '10px 0' }}>
+                <img src={v.pro_img.url} className="card-img-top" alt={v.name} />
+                <div className="card-body">
+                  <h5 className="card-title">{v.name}</h5>
+                  <p className="card-text">{v.description}</p>
+                  <p className="card-text">Price: ${v.price}</p>
+                  <a href="#" className="btn btn-primary">Add To Card</a>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
+ 
+
+
               </Box>  
             )}
       </div>

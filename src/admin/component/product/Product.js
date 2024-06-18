@@ -117,17 +117,21 @@ function Products(props) {
         description: string().required("Please enter description"),
         price: number().required("Please enter price"),
         stock: number().required("Please enter stock"),
-        // pro_img: mixed().required("Please upload image").test("fileSize", "The file is too large", (value) => {
-        //     if (value) {
-        //         return value.size <= 1024 * 1024;
-        //     }
-        //     return true
-        //     .test("fileType", "The file type is not supported", (value) => {
-        //         if (value) {    
-        //             return ["image/jpeg", "image/png", "image/jpg"].includes(value.type);
-        //         }
-        // })
-        // })
+        pro_img: mixed().required("Please upload image")
+            .test("fileSize", "The file is too large", (value) => {
+                console.log(value);
+                if (value?.size) {
+                    return value.size <= 2 * 1024 * 1024;
+                }
+                return true
+            })
+            .test("fileType", "The file type is not supported", (value) => {
+                console.log(value);
+                if (value?.type) {
+                    return ["image/jpeg", "image/png", "image/jpg"].includes(value.type);
+                }
+                return true
+            })
     });
 
     const formik = useFormik({
@@ -169,14 +173,16 @@ function Products(props) {
 
     };
 
+    console.log(values);
+
     return (
         <>
             {
                 products.isLoding ?
-                   <Spinner>
-                   </Spinner> :
+                    <Spinner>
+                    </Spinner> :
                     <>
-                    <Button variant="outlined" onClick={handleClickOpen}>
+                        <Button variant="outlined" onClick={handleClickOpen}>
                             Add Product
                         </Button>
                         <Dialog open={open} onClose={handleClose}>
@@ -233,6 +239,16 @@ function Products(props) {
                                         onChange={handalfileschnge}
                                     />
                                     {errors.pro_img && touched.pro_img && <span style={{ color: "red" }}>{errors.pro_img}</span>}
+
+
+                                    {
+                                        values.pro_img &&
+                                        <img src={values.pro_img?.url
+                                            ? values.pro_img?.url
+                                            : URL.createObjectURL(values?.pro_img)} width="50" height="50" />
+
+                                    }
+
 
                                     <TextField
                                         margin="dense"
@@ -317,11 +333,11 @@ function Products(props) {
                             />
                         </div>
                     </>
-}
+            }
 
 
-                    </>
+        </>
     );
 }
 
-            export default Products;
+export default Products;
