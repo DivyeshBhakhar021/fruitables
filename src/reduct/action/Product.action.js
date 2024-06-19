@@ -53,9 +53,15 @@ export const editdata = (data) => async (dispatch) => {
     // dispatch(lodinProduct());
     console.log(data);
     try {
-        await axios.put(`http://localhost:5000/api/v1/productes/updateProduct/${data._id}`, data);
-        dispatch({ type: EDIT_PRODUCT, payload: data });
+        const response =  await axios.put(`http://localhost:5000/api/v1/productes/updateProduct/${data._id}`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        dispatch({ type: EDIT_PRODUCT, payload: response.data });
     } catch (error) {
+            console.log("errr", error);
         dispatch(errorProduct(error.message));
     }
 };

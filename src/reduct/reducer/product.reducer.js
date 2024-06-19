@@ -43,8 +43,8 @@ export const productReducer = (state = product_facilities, action) => {
             return {
                 isLoding: false,
                 product: state.product.map((v) => {
-                    if (v._id === action.payload._id) {
-                        return action.payload
+                    if (v._id === action.payload.data._id) {
+                        return action.payload.data
                     } else {
                         return v
                     }
