@@ -64,6 +64,7 @@ function Products(props) {
         formik.setValues(data);
         setOpen(true);
         setUpdate(data._id);
+        // isLoding(true)
     };
 
     const columns = [
