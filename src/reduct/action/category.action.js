@@ -10,7 +10,7 @@ export const getCategory = () => async (dispatch) => {
     }
 };  
 
-export const addCategory = (category) => async (dispatch) => {
+export const addCategory = (category) => async (dispatch) => {t
     try {
         const response = await fetch('http://localhost:5000/api/v1/categories/addcategories/', {
             method: 'POST',

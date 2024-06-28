@@ -95,61 +95,61 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 
-const adminlink =[
-    {
-        title:'Fruits',
-        to:'/admin/Fruits',
-        icon:<AppleIcon/>
-    },
-    {
-        title:'coupon',
-        to:'/admin/coupon',
-        icon:<DiscountIcon/>
-    },
-    {
-      title:'Category',
-      to:'/admin/category',
-      icon:<CategoryIcon/>
+const adminlink = [
+  {
+    title: 'Fruits',
+    to: '/admin/Fruits',
+    icon: <AppleIcon />
   },
   {
-    title:'SubCategory',
-    to:'/admin/subcategory',
-    icon:<BookmarkAddIcon/>
+    title: 'coupon',
+    to: '/admin/coupon',
+    icon: <DiscountIcon />
   },
   {
-    title:'Facilities',
-    to:'/admin/facilities',
-    icon:<EmojiEmotionsIcon/>
-},
-{
-  title:'Product',
-  to:'/admin/product',
-  icon:<InventoryIcon/>
-},  
-{
-  title:'counter',
-  to:'/admin/counter',
-  icon:<InventoryIcon/>
-},
-{
-  title:'Favorite',
-  to:'/admin/favorite',
-  icon:<BookmarkAddIcon/>
-},
-{
-  title:'productdata',
-  to:'/admin/productdata',
-  icon:<BookmarkAddIcon/>
-},
-{
-  title:'Contact',
-  to:'/admin/contact',
-  icon:<BookmarkAddIcon/>
-},
+    title: 'Category',
+    to: '/admin/category',
+    icon: <CategoryIcon />
+  },
+  {
+    title: 'SubCategory',
+    to: '/admin/subcategory',
+    icon: <BookmarkAddIcon />
+  },
+  {
+    title: 'Facilities',
+    to: '/admin/facilities',
+    icon: <EmojiEmotionsIcon />
+  },
+  {
+    title: 'Product',
+    to: '/admin/product',
+    icon: <InventoryIcon />
+  },
+  {
+    title: 'counter',
+    to: '/admin/counter',
+    icon: <InventoryIcon />
+  },
+  {
+    title: 'Favorite',
+    to: '/admin/favorite',
+    icon: <BookmarkAddIcon />
+  },
+  {
+    title: 'productdata',
+    to: '/admin/productdata',
+    icon: <BookmarkAddIcon />
+  },
+  {
+    title: 'Contact',
+    to: '/admin/contact',
+    icon: <BookmarkAddIcon />
+  },
 
 ]
 
-export default function Layout({children}) {
+export default function Layout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -179,7 +179,7 @@ export default function Layout({children}) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Fruitable Admin side 
+            Fruitable Admin side
           </Typography>
         </Toolbar>
       </AppBar>
@@ -214,7 +214,7 @@ export default function Layout({children}) {
             </ListItem>
           ))}
         </List>
-       
+
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />

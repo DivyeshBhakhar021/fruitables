@@ -6,10 +6,11 @@ function PrivateRoutes(props) {
     return (
         <div>
             {
-                auth ? <Outlet /> : <Navigate to="/" replace/>
+                auth ? <Outlet /> : <Navigate to="/" replace />
             }
         </div>
     );
 }
 
 export default PrivateRoutes;
+

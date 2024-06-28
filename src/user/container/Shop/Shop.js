@@ -32,8 +32,6 @@ const handalproduct = (id) => {
   }, []);
 
   
-
-
   // const getData = async () => {
   //   const response = await fetch("http://localhost:8001/fruit");
   //   const data = await response.json();

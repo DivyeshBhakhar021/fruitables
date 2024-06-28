@@ -32,7 +32,7 @@ function Home(props) {
   console.log(products);
   console.log(categories);
 
-  
+
   const [categoryAnchorEl, setCategoryAnchorEl] = useState('');
   const [subcategoryAnchorEl, setSubcategoryAnchorEl] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -130,7 +130,7 @@ function Home(props) {
 
   return (
     <div>
-      
+
       {/* Hero Start */}
       <div className="container-fluid py-5 mb-5 hero-header">
         <div className="container py-5">
@@ -168,7 +168,7 @@ function Home(props) {
           </div>
         </div>
       </div>
-      
+
 
       {/* <div>
         <Box sx={{ display: 'flex', padding: 2 }}>
@@ -1378,3 +1378,4 @@ function Home(props) {
 }
 
 export default Home;
+

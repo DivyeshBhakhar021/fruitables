@@ -63,7 +63,7 @@ function Saleing(props) {
 
     })
 
-    const columns = [
+    const columns =  [
         { field: 'product', headerName: 'product Name', width: 130 },
         { field: 'price', headerName: 'price', width: 130 },
         { field: 'expriy', headerName: 'expriy', width: 130 },

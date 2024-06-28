@@ -19,8 +19,6 @@ export const EDIT_REVIEW = "EDIT_REVIEW";
 export const LODING_REVIEW = "LODING_REVIEW";
 export const ERROR_REVIEW = "ERROR_REVIEW";
 
-
-    
 export const GET_CATEGORY = "GET_CATEGORY"
 export const ADD_CATEGORY = "ADD_CATEGORY"
 export const DELETE_CATEGORY = "DELETE_CATEGORY"
