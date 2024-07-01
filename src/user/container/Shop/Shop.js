@@ -48,7 +48,7 @@ const handalproduct = (id) => {
 
   const Filterdata = () => {
 
-    let fineldata = product.product.filter(v => v.name.toLowerCase().includes(search));
+    let fineldata = product.product.filter((v) => v.name.toLowerCase().includes(search));
 
     if (sorting) {
       return fineldata.filter(v => v.name === sorting)
@@ -269,7 +269,7 @@ const handalproduct = (id) => {
                                 <p>{v.details}</p>
                                 <div className="d-flex justify-content-between flex-lg">
                                   <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
-                                  <Link href="#" onClick={()=>handalproduct(v.id)} className="btn border border-secondary rounded-pill px-3 text-primary">
+                                  <Link href="#" onClick={()=>handalproduct(v)} className="btn border border-secondary rounded-pill px-3 text-primary">
                                   Add to cart
                                   </Link>
                                 
