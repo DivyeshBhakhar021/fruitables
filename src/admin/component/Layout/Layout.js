@@ -26,6 +26,10 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import DiscountIcon from '@mui/icons-material/Discount';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import AirIcon from '@mui/icons-material/Air';
+import AlignHorizontalRightIcon from '@mui/icons-material/AlignHorizontalRight';
+import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const drawerWidth = 240;
 
@@ -129,7 +133,7 @@ const adminlink = [
   {
     title: 'counter',
     to: '/admin/counter',
-    icon: <InventoryIcon />
+    icon: <AddCircleIcon />
   },
   {
     title: 'Favorite',
@@ -139,18 +143,18 @@ const adminlink = [
   {
     title: 'productdata',
     to: '/admin/productdata',
-    icon: <BookmarkAddIcon />
+    icon: <AlignHorizontalRightIcon />
   },
   {
     title: 'Contact',
     to: '/admin/contact',
-    icon: <BookmarkAddIcon />
+    icon: <ContactEmergencyIcon />
   },
 
   {
     title: 'Variant',
     to: '/admin/variant',
-    icon: <BookmarkAddIcon />
+    icon: <AirIcon />
   },
 ]
 

@@ -28,23 +28,11 @@ export const handleAdd = createAsyncThunk("variants/add", async (data) => {
   }
 });
 
-// export const handleAdd = createAsyncThunk("variants/add", async (data) => {
-//   console.log(data);
-//   try {
-//     const response = await axios.post("http://localhost:5000/api/v1/variants/add-variant", data);
-//     const dataAdd = response.data.data;
-//     console.log(dataAdd);
-//     return dataAdd;
-//   } catch (error) {
-//     console.error("Error adding variant:", error);
-//     throw error;
-//   }
-// });
 
 export const handleUpdateData = createAsyncThunk("variants/edit", async (data) => {
   console.log(data);
   try {
-    await axios.put(`http://localhost:5000/api/v1/variants/update-variant/${data._id}` + data._id, data);
+    await axios.put(`http://localhost:5000/api/v1/variants/update-variant/${data._id}` , data);
     return data;
   } catch (error) {
     console.error("Error adding variant:", error);
@@ -54,9 +42,8 @@ export const handleUpdateData = createAsyncThunk("variants/edit", async (data) =
 );
 
 export const handleRemove = createAsyncThunk("variants/delete", async (id) => {
-  console.log(id);
   try {
-    await axios.delete(`http://localhost:5000/api/v1/variants/delete-variant/${id}` + id);
+    await axios.delete(`http://localhost:5000/api/v1/variants/delete-variant/${id}`);
     return id;
   } catch (error) {
     console.log(error);

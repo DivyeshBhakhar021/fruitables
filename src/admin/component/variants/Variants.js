@@ -25,9 +25,9 @@ function Variants(props) {
     const categories = useSelector(state => state.category.category);
     const variants = useSelector(state => state.variants.variants);
 
-    console.log("subcategories", subcategories,);
-    console.log("categories", categories,);
-    console.log("products", products);
+    // console.log("subcategories", subcategories,);
+    // console.log("categories", categories,);
+    // console.log("products", products);
 
     useEffect(() => {
         dispatch(productdata());
@@ -83,7 +83,9 @@ function Variants(props) {
                 acc[field.key] = field.value;
                 console.log("fghjklhjk", acc, field.key, field.value);
                 return acc;
-            }, {});
+            });
+
+            console.log(attributes);
 
             const variantData = {
                 ...values,
