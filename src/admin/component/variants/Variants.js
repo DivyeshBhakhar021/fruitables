@@ -83,7 +83,7 @@ function Variants(props) {
                 acc[field.key] = field.value;
                 console.log("fghjklhjk", acc, field.key, field.value);
                 return acc;
-            });
+            },{});
 
             console.log(attributes);
 
