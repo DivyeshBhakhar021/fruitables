@@ -147,6 +147,11 @@ const adminlink = [
     icon: <BookmarkAddIcon />
   },
 
+  {
+    title: 'Variant',
+    to: '/admin/variant',
+    icon: <BookmarkAddIcon />
+  },
 ]
 
 export default function Layout({ children }) {
