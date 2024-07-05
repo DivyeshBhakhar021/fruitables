@@ -4,7 +4,7 @@ import {
     Backdrop, CircularProgress, FormControl, InputLabel, MenuItem, Select, IconButton
 } from '@mui/material';
 import { useFormik } from 'formik';
-import { object, string, boolean } from 'yup';
+import { object, string, boolean, number, array } from 'yup';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid } from '@mui/x-data-grid';
@@ -67,6 +67,18 @@ function Variants(props) {
         subcategory_id: string().required('Subcategory is required'),
         category_id: string().required('Category is required'),
         product_id: string().required('Product is required'),
+        name: string().required("Name is required"),
+        quantity: number().required("Quantity is required"),
+        price: number().required("Price is required"),
+        discount: string().required("Discount is required"),
+        additionalFields: array()
+        .of(
+          object().shape({
+            key: string().required("Key is required"),
+            value: string().required("Value is required"),
+          })
+        )
+        .min(1, "At least one attribute is required"),
     });
 
     const formik = useFormik({
@@ -76,14 +88,25 @@ function Variants(props) {
             category_id: '',
             product_id: '',
             additionalFields: [],
+            name: '',
+            quantity: '',
+            price: '',
+            discount: '',
         },
         validationSchema: variantSchema,
         onSubmit: (values, { resetForm }) => {
-            const attributes = values.additionalFields.reduce((acc, field) => {
+            const attributes = {
+                ...values.additionalFields.reduce((acc, field) => {
                 acc[field.key] = field.value;
                 console.log("fghjklhjk", acc, field.key, field.value);
                 return acc;
-            },{});
+            }, {}),
+            
+            name: values.name,
+            price: values.price,
+            discount: values.discount,
+            quantity: values.quantity,
+        };
 
             console.log(attributes);
 
@@ -118,7 +141,7 @@ function Variants(props) {
     };
 
     const handleDynamicFieldChange = (index, field) => (e) => {
-        const updatedFields = [...dynamicFields];
+        const updatedFields = [...dynamicFields,{key:'',values :''}];
         updatedFields[index][field] = e.target.value;
         setDynamicFields(updatedFields);
         setFieldValue('additionalFields', updatedFields);
@@ -247,6 +270,66 @@ function Variants(props) {
                                     <div>{errors.product_id}</div>
                                 ) : null}
                             </FormControl>
+                            <TextField
+                  margin="dense"
+                  id="name"
+                  name="name"
+                  label="Enter Variant name"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.name}
+                  error={touched.name && errors.name ? true : false}
+                  helperText={touched.name && errors.name ? errors.name : ""}
+                />
+                <TextField
+                  margin="dense"
+                  id="quantity"
+                  name="quantity"
+                  label="Add Quantity"
+                  type="number"
+                  fullWidth
+                  variant="standard"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.quantity}
+                  error={touched.quantity && errors.quantity ? true : false}
+                  helperText={
+                    touched.quantity && errors.quantity ? errors.quantity : ""
+                  }
+                />
+                <TextField
+                  margin="dense"
+                  id="price"
+                  name="price"
+                  label="Add Price"
+                  type="number"
+                  fullWidth
+                  variant="standard"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.price}
+                  error={touched.price && errors.price ? true : false}
+                  helperText={touched.price && errors.price ? errors.price : ""}
+                />
+                <TextField
+                  margin="dense"
+                  id="discount"
+                  name="discount"
+                  label="Enter Variant discount"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.discount}
+                  error={touched.discount && errors.discount ? true : false}
+                  helperText={
+                    touched.discount && errors.discount ? errors.discount : ""
+                  }
+                />
                             <div>
                                 {dynamicFields.map((f, i) => (
                                     <div key={i} >
