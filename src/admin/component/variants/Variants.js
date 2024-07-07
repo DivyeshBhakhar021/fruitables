@@ -4,7 +4,7 @@ import {
     Backdrop, CircularProgress, FormControl, InputLabel, MenuItem, Select, IconButton
 } from '@mui/material';
 import { useFormik } from 'formik';
-import { object, string, boolean, number, array } from 'yup';
+import { object, string, boolean, number, array, mixed } from 'yup';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { DataGrid } from '@mui/x-data-grid';
@@ -71,14 +71,31 @@ function Variants(props) {
         quantity: number().required("Quantity is required"),
         price: number().required("Price is required"),
         discount: string().required("Discount is required"),
+
         additionalFields: array()
-        .of(
-          object().shape({
-            key: string().required("Key is required"),
-            value: string().required("Value is required"),
-          })
-        )
-        .min(1, "At least one attribute is required"),
+            .of(
+                object().shape({
+                    key: string().required("Key is required"),
+                    value: string().required("Value is required"),
+                })
+            )
+            .min(1, "At least one attribute is required"),
+        variant_image: mixed().required("Please upload image")
+            .test("fileSize", "The file is too large", (value) => {
+                console.log(value);
+                if (value?.size) {
+                    return value.size <= 2 * 1024 * 1024;
+                }
+                return true
+            })
+            .test("fileType", "The file type is not supported", (value) => {
+                console.log(value);
+                if (value?.type) {
+                    return ["image/jpeg", "image/png", "image/jpg"].includes(value.type);
+                }
+                return true
+
+            }),
     });
 
     const formik = useFormik({
@@ -92,21 +109,17 @@ function Variants(props) {
             quantity: '',
             price: '',
             discount: '',
+            variant_image: ''
         },
         validationSchema: variantSchema,
         onSubmit: (values, { resetForm }) => {
             const attributes = {
                 ...values.additionalFields.reduce((acc, field) => {
-                acc[field.key] = field.value;
-                console.log("fghjklhjk", acc, field.key, field.value);
-                return acc;
-            }, {}),
-            
-            name: values.name,
-            price: values.price,
-            discount: values.discount,
-            quantity: values.quantity,
-        };
+                    acc[field.key] = field.value;
+                    console.log("fghjklhjk", acc, field.key, field.value);
+                    return acc;
+                }, {})
+            };
 
             console.log(attributes);
 
@@ -141,7 +154,7 @@ function Variants(props) {
     };
 
     const handleDynamicFieldChange = (index, field) => (e) => {
-        const updatedFields = [...dynamicFields,{key:'',values :''}];
+        const updatedFields = [...dynamicFields];
         updatedFields[index][field] = e.target.value;
         setDynamicFields(updatedFields);
         setFieldValue('additionalFields', updatedFields);
@@ -171,12 +184,32 @@ function Variants(props) {
             }
         },
         {
-            field: 'attributes', headerName: 'Attributes', width: 400,
+            field: 'attributes', headerName: 'Attributes', width: 100,
             renderCell: (params) => {
                 const attributes = params.row.attributes;
                 return attributes ? Object.entries(attributes).map(([key, value]) => `${key}: ${value}`).join(', ') : '';
             }
         },
+        {
+            field: 'variant_image', headerName: 'variant Image', width: 200,
+            renderCell: (params) => {
+                if (params.row.variant_image && params.row.variant_image.url) {
+                    return <img src={params.row.variant_image.url
+                    } alt={params.row.name} width={50} />;
+                } else {
+                    return null;
+                }
+            },
+        },
+        {
+            field: 'price', headerName: 'price', width: 100,
+        },
+        {
+            field: 'discount', headerName: 'discount', width: 100,
+        }, {
+            field: 'quantity', headerName: 'quantity', width: 100,
+        },
+
         {
             field: 'Action',
             headerName: 'Action',
@@ -271,72 +304,92 @@ function Variants(props) {
                                 ) : null}
                             </FormControl>
                             <TextField
-                  margin="dense"
-                  id="name"
-                  name="name"
-                  label="Enter Variant name"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.name}
-                  error={touched.name && errors.name ? true : false}
-                  helperText={touched.name && errors.name ? errors.name : ""}
-                />
-                <TextField
-                  margin="dense"
-                  id="quantity"
-                  name="quantity"
-                  label="Add Quantity"
-                  type="number"
-                  fullWidth
-                  variant="standard"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.quantity}
-                  error={touched.quantity && errors.quantity ? true : false}
-                  helperText={
-                    touched.quantity && errors.quantity ? errors.quantity : ""
-                  }
-                />
-                <TextField
-                  margin="dense"
-                  id="price"
-                  name="price"
-                  label="Add Price"
-                  type="number"
-                  fullWidth
-                  variant="standard"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.price}
-                  error={touched.price && errors.price ? true : false}
-                  helperText={touched.price && errors.price ? errors.price : ""}
-                />
-                <TextField
-                  margin="dense"
-                  id="discount"
-                  name="discount"
-                  label="Enter Variant discount"
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.discount}
-                  error={touched.discount && errors.discount ? true : false}
-                  helperText={
-                    touched.discount && errors.discount ? errors.discount : ""
-                  }
-                />
+                                margin="dense"
+                                id="name"
+                                name="name"
+                                label="Enter Variant name"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.name}
+                                error={touched.name && errors.name ? true : false}
+                                helperText={touched.name && errors.name ? errors.name : ""}
+                            />
+                            <TextField
+                                margin="dense"
+                                id="quantity"
+                                name="quantity"
+                                label="Add Quantity"
+                                type="number"
+                                fullWidth
+                                variant="standard"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.quantity}
+                                error={touched.quantity && errors.quantity ? true : false}
+                                helperText={
+                                    touched.quantity && errors.quantity ? errors.quantity : ""
+                                }
+                            />
+                            <TextField
+                                margin="dense"
+                                id="price"
+                                name="price"
+                                label="Add Price"
+                                type="number"
+                                fullWidth
+                                variant="standard"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.price}
+                                error={touched.price && errors.price ? true : false}
+                                helperText={touched.price && errors.price ? errors.price : ""}
+                            />
+                            <TextField
+                                margin="dense"
+                                id="discount"
+                                name="discount"
+                                label="Enter Variant discount"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.discount}
+                                error={touched.discount && errors.discount ? true : false}
+                                helperText={
+                                    touched.discount && errors.discount ? errors.discount : ""
+                                }
+                            />
+                            <input
+                                id="variant_image"
+                                name="variant_image"
+                                label="variant_image"
+                                type="file"
+                                fullWidth
+                                variant="standard"
+                                onChange={(event) => {
+                                    setFieldValue("variant_image", event.currentTarget.files[0]);
+                                }}
+                                onBlur={handleBlur}
+                                sx={{ marginBottom: 2 }}
+                            />
+                            <br></br><br></br>
+                            {
+                                values.variant_image &&
+                                <img src={values.variant_image.url ? values.variant_image.url : URL.createObjectURL(values.variant_image)} width={50} />
+                            }
+                            {errors.variant_image && touched.variant_image ? <span style={{ color: "red" }}>{errors.variant_image}</span> : null}
+
                             <div>
                                 {dynamicFields.map((f, i) => (
                                     <div key={i} >
                                         <TextField
                                             margin="dense"
-                                            id={`additionalFields[${i}].key`}
-                                            name={`additionalFields[${i}].key`}
+                                            id={`additionalFields[${i}]`.key}
+                                            name={`additionalFields[${i}]`.key}
                                             label="Key"
                                             type="text"
                                             fullWidth
@@ -346,8 +399,8 @@ function Variants(props) {
                                         />
                                         <TextField
                                             margin="dense"
-                                            id={`additionalFields[${i}].value`}
-                                            name={`additionalFields[${i}].value`}
+                                            id={`additionalFields[${i}]`.values}
+                                            name={`additionalFields[${i}]`.values}
                                             label="Value"
                                             type="text"
                                             fullWidth
