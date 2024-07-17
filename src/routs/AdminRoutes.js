@@ -13,6 +13,7 @@ import { ProductProvider } from '../context/reducer/salecontext';
 import Contact from '../admin/component/Contact/Contact';
 import Subcategory from '../admin/component/subcategory/Subcategory';
 import Variants from '../admin/component/variants/Variants';
+import Salespeople from '../admin/component/salespeople/Salespeople';
 
 function AdminRoutes(props) {
   return (
@@ -31,6 +32,7 @@ function AdminRoutes(props) {
             <Route exect path='/productdata' element={<Productdata />} />
             <Route exect path='/contact' element={<Contact />} />
             <Route exect path='/variant' element={<Variants />} />
+            <Route exect path='/salespeople' element={<Salespeople />} />
           </Routes>
         </Layout>
       </ProductProvider>

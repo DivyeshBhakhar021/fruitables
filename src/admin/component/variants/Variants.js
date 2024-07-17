@@ -18,6 +18,7 @@ function Variants(props) {
     const [open, setOpen] = useState(false);
     const [update, setUpdate] = useState(false);
     const [dynamicFields, setDynamicFields] = useState([]);
+    const [imageFields, setImageFields] = useState([]);
     const dispatch = useDispatch();
 
     const products = useSelector(state => state.product.product);
@@ -109,10 +110,12 @@ function Variants(props) {
             quantity: '',
             price: '',
             discount: '',
-            variant_image: ''
+            variant_image: [],
+
         },
         validationSchema: variantSchema,
         onSubmit: (values, { resetForm }) => {
+            console.log(values);
             const attributes = {
                 ...values.additionalFields.reduce((acc, field) => {
                     acc[field.key] = field.value;
@@ -193,12 +196,17 @@ function Variants(props) {
         {
             field: 'variant_image', headerName: 'variant Image', width: 200,
             renderCell: (params) => {
-                if (params.row.variant_image && params.row.variant_image.url) {
-                    return <img src={params.row.variant_image.url
-                    } alt={params.row.name} width={50} />;
-                } else {
-                    return null;
-                }
+                const image = params.row.variant_image;
+                return image
+                    ? image.map((i) => (
+                        <img
+                            key={i._id}
+                            src={i.url}
+                            alt="preview"
+                            style={{ width: "50px", height: "50px", marginRight: "10px" }}
+                        />
+                    ))
+                    : "";
             },
         },
         {
@@ -226,6 +234,25 @@ function Variants(props) {
             ),
         },
     ];
+
+    const addImageField = () => {
+        setImageFields([...imageFields, { file: null, preview: "" }]);
+    };
+
+    const removeImageField = (index) => {
+        const updatedFields = [...imageFields];
+        updatedFields.splice(index, 1);
+        setImageFields(updatedFields);
+    };
+
+    const handleImageFieldChange = (index) => (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const updatedFields = [...imageFields];
+            updatedFields[index] = { file, preview: URL.createObjectURL(file) };
+            setImageFields(updatedFields);
+        }
+    };
 
     return (
         <>
@@ -363,7 +390,8 @@ function Variants(props) {
                                     touched.discount && errors.discount ? errors.discount : ""
                                 }
                             />
-                            <input
+
+                            {/* <input
                                 id="variant_image"
                                 name="variant_image"
                                 label="variant_image"
@@ -381,7 +409,55 @@ function Variants(props) {
                                 values.variant_image &&
                                 <img src={values.variant_image.url ? values.variant_image.url : URL.createObjectURL(values.variant_image)} width={50} />
                             }
-                            {errors.variant_image && touched.variant_image ? <span style={{ color: "red" }}>{errors.variant_image}</span> : null}
+                            {errors.variant_image && touched.variant_image ? <span style={{ color: "red" }}>{errors.variant_image}</span> : null} */}
+
+                            <div>
+                                {imageFields.map((img, i) => (
+                                    <div
+                                        key={i}
+                                        style={{
+                                            display: "flex",
+                                            gap: "20px",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <input
+                                            type="file"
+                                            onChange={handleImageFieldChange(i)}
+                                            style={{ display: "none" }}
+                                            id={`variant_image[${i}].file`}
+                                            name={`variant_image[${i}].file`}
+                                            accept="variant_image/*"
+                                        />
+                                        <label htmlFor={`variant_image[${i}].file`}>
+                                            <Button variant="contained" component="span">
+                                                Upload
+                                            </Button>
+                                        </label>
+                                        {img.preview && (
+                                            <img
+                                                src={img.preview}
+                                                alt="preview"
+                                                style={{
+                                                    width: "50px",
+                                                    height: "50px",
+                                                    marginRight: "10px",
+                                                }}
+                                            />
+                                        )}
+                                        <IconButton onClick={() => removeImageField(i)}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </div>
+                                ))}
+                                <Button
+                                    variant="outlined"
+                                    onClick={addImageField}
+                                    style={{ marginTop: "20px" }}
+                                >
+                                    Add Image
+                                </Button>
+                            </div>
 
                             <div>
                                 {dynamicFields.map((f, i) => (

@@ -1,0 +1,135 @@
+CREATE TABLE employee1 (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    salary INT,
+    is_active TINYINT(1),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+INSERT INTO employee1 (name, email, phone, salary, is_active)
+VALUES ('DIVYESH', 'DIVYESH@gmail.com', '1234567890', 50000, 1);
+INSERT INTO employee1 (name, email, phone, salary, is_active)
+VALUES ('abc', 'abc@gmail.com', '345678901', 80000, 3);
+
+
+UPDATE employee1
+SET salary = 55000, is_active = 0
+WHERE id = 1;
+
+
+DELETE FROM employee1
+WHERE id = 1;
+
+
+
+CREATE TABLE student (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    phone VARCHAR(20),
+    date_of_birth DATE,
+    is_active TINYINT(1),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+INSERT INTO student (name, email, phone, date_of_birth, is_active) VALUES ('a', 'a@example.com', '1234567890', '2000-04-25', 1);
+INSERT INTO student (name, email, phone, date_of_birth, is_active) VALUES ('b', 'b@example.com', '0987654321', '2000-03-21', 2);
+
+
+UPDATE student
+SET email = 'abc@example.com', is_active = 0
+WHERE id = 1;
+
+
+DELETE FROM student
+WHERE id = 1;
+
+
+
+
+CREATE TABLE customer(
+id INT NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    addres TEXT NOT NULL,
+   	mobile_no VARCHAR(11)
+);
+
+INSERT INTO customer (id, name, addres, moblie_no) VALUES ( 'dew', 'wede', 1234567898);
+
+UPDATE customer SET name = 'hellll' WHERE id = 1;
+
+DELETE FROM customer WHERE id=3;
+
+
+CREATE TABLE odres(
+id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    coustomer_id INT(11),
+    amount INT(11),
+    status VARCHAR(255),
+    FOREIGN KEY (coustomer_id) REFERENCES customer(id)
+)
+
+INSERT INTO odres (id, coustomer_id, amount, status) VALUES ( 2, 111, 'dqede');
+
+                                              PRACTICAL
+
+
+CREATE TABLE SALESPEOPLE (
+    SNUM INT(10) PRIMARY KEY,
+    SNAME VARCHAR(255),
+    CITY VARCHAR(255),
+    COMM Decimal(5,2)
+);
+INSERT INTO SALESPEOPLE (SNUM,SNAME, CITY, COMM)VALUES (1001 ,'Peel', 'London', 0.12);
+INSERT INTO SALESPEOPLE (SNUM,SNAME, CITY, COMM)VALUES (1002 ,'Serres', 'San Jose', 0.13);
+INSERT INTO SALESPEOPLE (SNUM,SNAME, CITY, COMM)VALUES (1003 ,'Axelord', 'New York', 0.01);
+INSERT INTO SALESPEOPLE (SNUM,SNAME, CITY, COMM)VALUES (1004 ,'Motika', 'London', 0.11);
+INSERT INTO SALESPEOPLE (SNUM,SNAME, CITY, COMM)VALUES (1007 ,'Rifkin', 'Barcelona', 0.15);
+
+
+CREATE TABLE Orders (
+    ONUM INT(10) PRIMARY KEY,
+    AMT Decimal(5,2),
+    ODATE VARCHAR(7),
+    CNUM INT(11),
+    SNUM INT(11),
+    FOREIGN KEY (CNUM) REFERENCES customer(id)
+);
+
+
+CREATE TABLE Customer (
+    CNUM INT(10) PRIMARY KEY,
+    CNAME VARCHAR(255),
+    CITY VARCHAR(255),
+    RATING INT(11),
+    SNUM INT(11),
+    FOREIGN KEY (SNUM) REFERENCES SALESPEOPLE(SNUM)
+);  
+
+INSERT INTO customer(CNUM, CNAME, CITY, RATING, SNUM) VALUES (2002,'Giovanne','Rome',200);
+INSERT INTO customer(CNUM, CNAME, CITY, RATING, SNUM) VALUES (2003,'Liu','san jose',300);
+INSERT INTO customer(CNUM, CNAME, CITY, RATING, SNUM) VALUES (2004,'Grass','Berlin',100);
+INSERT INTO customer(CNUM, CNAME, CITY, RATING, SNUM) VALUES (2001,'Hoffman','London',100);
+INSERT INTO customer(CNUM, CNAME, CITY, RATING, SNUM) VALUES (2007,'Pereira','ROme',100);
+INSERT INTO customer(CNUM, CNAME, CITY, RATING, SNUM) VALUES (2006,'Clemens','Lond',300);
+
+
+CREATE TABLE Orders (
+    ONUM INT(10) PRIMARY KEY,
+    AMT Decimal(5,2),
+    ODATE VARCHAR(7),
+    CNUM INT(11),
+    SNUM INT(11),
+    FOREIGN KEY (CNUM) REFERENCES customer(CNUM),
+    FOREIGN KEY (SNUM) REFERENCES salespeople(SNUM)
+);
+
+INSERT INTO orders(ONUM, AMT, ODATE) VALUES (3001,1800.96,"10-MAR-94")
+
+UPDATE `orders` SET `CNUM` = '2002', `SNUM` = '1002' WHERE `orders`.`ONUM` = 3001;

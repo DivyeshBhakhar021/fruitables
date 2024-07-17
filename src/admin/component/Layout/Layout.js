@@ -30,6 +30,7 @@ import AirIcon from '@mui/icons-material/Air';
 import AlignHorizontalRightIcon from '@mui/icons-material/AlignHorizontalRight';
 import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import PeopleIcon from '@mui/icons-material/People';
 
 const drawerWidth = 240;
 
@@ -155,6 +156,11 @@ const adminlink = [
     title: 'Variant',
     to: '/admin/variant',
     icon: <AirIcon />
+  },
+  {
+    title: 'Salespeople',
+    to: '/admin/salespeople',
+    icon: <PeopleIcon />
   },
 ]
 
