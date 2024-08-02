@@ -104,7 +104,9 @@ function Header(props) {
               <div className="navbar-nav mx-auto">
                 <NavLink to="/" className="nav-item nav-link active">Home</NavLink>
                 <NavLink to="/shop" className="nav-item nav-link active">Shop</NavLink>
+                <NavLink to="/chat" className="nav-item nav-link active">Chat</NavLink>
                 <NavLink to="/shop_detail" className="nav-item nav-link active">Shop Detail</NavLink>
+                
                 {/* <NavLink to="/shop_detail/:fruitid" className="nav-item nav-link">Shop Detail</NavLink> */}
                 <div className="nav-item dropdown">
                   <a href="#" className="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>

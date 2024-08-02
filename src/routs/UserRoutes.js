@@ -13,6 +13,7 @@ import Footer from '../user/component/Footer/Footer'
 import Login from '../user/container/Login/Login';
 import Register from '../user/container/Register/Register';
 import { ThemeContext } from '../context/ThemeContext';
+import Chat from '../user/container/Chat/Chat';
 
 function UserRoutes(props) {
 
@@ -34,6 +35,7 @@ function UserRoutes(props) {
           <Route exect path='/contact' element={<Contact />} />
           <Route exect path='/login' element={<Login/>}/>
           <Route exect path='/register' element={<Register/>}/>
+          <Route exect path='/chat' element={<Chat/>}/>
         </Routes>
         <Footer />
       </div>

@@ -13,25 +13,25 @@ function Shop(props) {
   const [search, setSearchData] = useState('');
   const [sorting, setSortBy] = useState('');
   const [price, setPrice] = useState('');
-  
-const dispatch = useDispatch();
 
-const product = useSelector(state => state.product)
-console.log(product);
+  const dispatch = useDispatch();
 
-const Cart = useSelector(state => state.Cart)
-console.log(Cart);
+  const product = useSelector(state => state.product)
+  console.log(product);
 
-const handalproduct = (id) => {
-  console.log(id);
-  dispatch(addToCart({id,qty: 1}));
-}
+  const Cart = useSelector(state => state.Cart)
+  console.log(Cart);
+
+  const handalproduct = (id) => {
+    console.log(id);
+    dispatch(addToCart({ id, qty: 1 }));
+  }
 
   useEffect(() => {
     dispatch(productdata());
   }, []);
 
-  
+
   // const getData = async () => {
   //   const response = await fetch("http://localhost:8001/fruit");
   //   const data = await response.json();
@@ -56,9 +56,9 @@ const handalproduct = (id) => {
 
     if (protype) {
       return fineldata.filter(v => v.type === protype)
-    }   
+    }
 
-    if(price !== ""){
+    if (price !== "") {
       return fineldata.filter(v => v.price <= price)
     }
 
@@ -153,19 +153,19 @@ const handalproduct = (id) => {
 
                       </div>
                     </div>
-               
+
                     <div className="col-lg-12">
                       <div className="mb-3">
                         <h4 className="mb-2">Price</h4>
-                        <input type="range" 
-                        onChange={(e) => setPrice(e.target.value)}
-                        className="form-range w-100" 
-                        id="rangeInput"
-                         name="rangeInput" min={0} max={500} defaultValue={0} 
-                         oninput="amount.value=rangeInput.value" />
+                        <input type="range"
+                          onChange={(e) => setPrice(e.target.value)}
+                          className="form-range w-100"
+                          id="rangeInput"
+                          name="rangeInput" min={0} max={500} defaultValue={0}
+                          oninput="amount.value=rangeInput.value" />
                         <output id="amount" name="amount" min-velue={0} max-value={500} htmlFor="rangeInput">{price}</output>
                       </div>
-                    </div>
+                    </div>
 
                     <div className="col-lg-12">
                       <div className="mb-3">
@@ -255,13 +255,15 @@ const handalproduct = (id) => {
                 </div>
                 <div className="col-lg-9">
                   <div className="row g-4 justify-content-center">
-                    {
+
+
+                    {/* {
                       zdata.map((v, i) => (
                         <div className="col-md-6 col-lg-6 col-xl-4">
                           <Link to={`/shop/${v.id}`}>
                             <div className="rounded position-relative fruite-item">
                               <div className="fruite-img">
-                                <img src={v.pro_img.url} className="img-fluid w-100 rounded-top" alt />
+                                <img src={v.pro_img.url} className="img-fluid w-100 rounded-top"  alt />
                               </div>
                               <div className="text-white bg-secondary px-3 py-1 rounded position-absolute" style={{ top: 10, left: 10 }}>Fruits</div>
                               <div className="p-4 border border-secondary border-top-0 rounded-bottom">
@@ -271,14 +273,53 @@ const handalproduct = (id) => {
                                   <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
                                   <Link href="#" onClick={()=>handalproduct(v)} className="btn border border-secondary rounded-pill px-3 text-primary">
                                   Add to cart
+                                  </Link> 
+                                </div>
+                              </div>
+                            </div>    
+                          </Link>
+                        </div>
+                      ))
+                    } */}
+
+                    {
+                      zdata.map((v, i) => (
+                        <div className="col-md-6 col-lg-6 col-xl-4" key={i}>
+                          <Link to={`/shop/${v.id}`}>
+                            <div className="rounded position-relative fruite-item">
+                              <div
+                                className="fruite-img-container"
+                                style={{ width: '100%', height: '200px', overflow: 'hidden', position: 'relative' }}
+                              >
+                                <img
+                                  src={v.pro_img.url}
+                                  className="img-fluid w-100 rounded-top"
+                                  alt={v.name}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                              </div>
+                              <div
+                                className="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                style={{ top: 10, left: 10 }}
+                              >
+                                Fruits
+                              </div>
+                              <div className="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4>{v.name}</h4>
+                                <p>{v.details}</p>
+                                <div className="d-flex justify-content-between flex-lg">
+                                  <p className="text-dark fs-5 fw-bold mb-0">${v.price} / kg</p>
+                                  <Link
+                                    to="#"
+                                    onClick={() => handalproduct(v)}
+                                    className="btn border border-secondary rounded-pill px-3 text-primary"
+                                  >
+                                    Add to cart
                                   </Link>
-                                
-                                  
                                 </div>
                               </div>
                             </div>
                           </Link>
-
                         </div>
                       ))
                     }
