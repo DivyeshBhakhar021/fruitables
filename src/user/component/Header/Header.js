@@ -20,14 +20,10 @@ function Header(props) {
   console.log(products);
   console.log(categories);
 
-
   const [categoryAnchorEl, setCategoryAnchorEl] = useState('');
   const [subcategoryAnchorEl, setSubcategoryAnchorEl] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
-
-
-
 
   console.log(selectedCategory, selectedSubcategory)
 
@@ -45,9 +41,7 @@ function Header(props) {
   console.log(cart);
 
   const cartCount = cart.cart.reduce((acc, v) => acc + v.qty, 0)
-
   const themecontect = useContext(ThemeContext);
-
 
   const handaltheme = () => {
     // console.log("abv");
@@ -68,9 +62,6 @@ function Header(props) {
     setCategoryAnchorEl(null);
     setSubcategoryAnchorEl(null);
   };
-
-
-
 
   return (
     <div>
@@ -174,7 +165,7 @@ function Header(props) {
       <br />
       <div>
         <Box sx={{ display: 'flex', padding: 2 }}>
-          {categories.map(category => (
+          {categories?.map(category => (
             <Box key={category.id} sx={{ margin: '0 10px' }}>
               <Button
                 aria-controls="category-menu"

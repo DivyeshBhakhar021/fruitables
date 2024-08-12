@@ -1,111 +1,187 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from 'react';
+import { object, string } from 'yup';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { ThemeContext } from '../../../context/ThemeContext';
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { Input } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { register } from '../../../reduct/slice/auth.slice';
 
-function Login(props) {
+function Login() {
+    const themeContext = useContext(ThemeContext);
+    const [showPassword, setShowPassword] = useState(false);
+    const [formMode, setFormMode] = useState('login'); // 'signIn', 'login', 'forgotPassword'
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    const dispatch = useDispatch()
+
+    // Define the validation schema based on the form mode
+    const getValidationSchema = () => {
+        switch (formMode) {
+            case 'signIn':
+                return object({
+                    name: string().required("Please enter your name"),
+                    email: string().required("Please enter your email").email("Please enter a valid email"),
+                    password: string().required("Please enter your password")
+                });
+            case 'login':
+                return object({
+                    email: string().required("Please enter your email").email("Please enter a valid email"),
+                    password: string().required("Please enter your password")
+                });
+            case 'forgotPassword':
+                return object({
+                    email: string().required("Please enter your email").email("Please enter a valid email")
+                });
+            default:
+                return object();
+        }
+    };
+
     const formik = useFormik({
         initialValues: {
-            email: "",
-            password: "",
+            name: '',
+            email: '',
+            password: ''
         },
-        validationSchema: Yup.object({
-            email: Yup.string().email("Invalid email format").required("Email is required"),
-            password: Yup.string().min(8, "Password must be at least 8 characters long").required("Password is required"),
-        }),
+        validationSchema: getValidationSchema(),
         onSubmit: (values) => {
-            // handle login logic here
             console.log(values);
+
+            if (formMode === 'login') {
+            } else if (formMode === 'signIn') {
+                dispatch(register({ ...values, 'role': 'user' }))
+
+            }
         },
     });
+
+    const { handleSubmit, handleChange, handleBlur, values, errors, touched } = formik;
+
+
+    console.log(errors);
 
     return (
         <div>
             {/* <div className="container-fluid page-header py-5">
-                <h1 className="text-center text-white display-6">Shop</h1>
+                <h1 className="text-center text-white display-6">Login</h1>
                 <ol className="breadcrumb justify-content-center mb-0">
                     <li className="breadcrumb-item"><a href="#">Home</a></li>
                     <li className="breadcrumb-item"><a href="#">Pages</a></li>
-                    <li className="breadcrumb-item active text-white">Shop</li>
+                    <li className="breadcrumb-item active text-white">Login</li>
                 </ol>
             </div> */}
-            <div className="container-fluid p-0">
-                <div className="row g-0">
-                    <div className="d-none d-lg-flex col-lg-4 col-xl-6 align-items-center justify-content-center bg-primary p-5">
-                        <div className="p-5 w-75">
-                            <h1 className="text-white mb-4">Welcome To Fruitable</h1>
-                            <h4 className="text-white mb-4">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet
-                                lacus et eros commodo dapibus.
-                            </h4>
-                            <img
-                                src="img/login.jpg"
-                                className="img-fluid w-100 mb-4 p-4"
-                                alt=""
-                            />
-                        </div>
+            <div className={`login-container ${themeContext.theme}`}>
+                <div className="login-form-container" style={{ 'marginTop': '100px' }}>
+                    <div className="login-form-header">
+                        <h1>{formMode === 'forgotPassword' ? 'Forgot Password' :
+                            formMode === 'signIn' ? 'Sign In' : 'Login'}</h1>
                     </div>
-                    <div className="col-lg-8 col-xl-6">
-                        <div className="position-relative overflow-hidden">
-                            <div className="container">
-                                <div className="row justify-content-center">
-                                    <div className="col-12 col-md-10 col-lg-8 col-xl-6">
-                                        <div className="bg-light rounded p-4 p-sm-5 my-4 mx-3">
-                                            <div className="d-flex align-items-center mb-3">
-                                                <h3 className="font-weight-semi-bold">Login</h3>
-                                            </div>
-                                            <form onSubmit={formik.handleSubmit}>
-                                                <div className="form-group">
-                                                    <input
-                                                        type="email"
-                                                        className="form-control bg-light border-0 p-4"
-                                                        placeholder="Email Address"
-                                                        name="email"
-                                                        onChange={formik.handleChange}
-                                                        onBlur={formik.handleBlur}
-                                                        value={formik.values.email}
-                                                    />
-                                                    {formik.touched.email && formik.errors.email ? (
-                                                        <div className="text-danger">{formik.errors.email}</div>
-                                                    ) : null}
-                                                </div>
-                                                <br />
-                                                <div className="form-group">
-                                                    <input
-                                                        type="password"
-                                                        className="form-control bg-light border-0 p-4"
-                                                        placeholder="Password"
-                                                        name="password"
-                                                        onChange={formik.handleChange}
-                                                        onBlur={formik.handleBlur}
-                                                        value={formik.values.password}
-                                                    />
-                                                    {formik.touched.password && formik.errors.password ? (
-                                                        <div className="text-danger">{formik.errors.password}</div>
-                                                    ) : null}
-                                                </div>
-                                                <br />
-                                                <div className="form-group">
-                                                    <button
-                                                        type="submit"
-                                                        className="btn btn-primary btn-block border-0 py-3"
-                                                    >
-                                                        Login
-                                                    </button>
-                                                </div>
-                                            </form>
-                                            <div className="d-flex align-items-center my-3">
-                                                <p className="mb-0">
-                                                    Don't have an Account?{" "}
-                                                    <Link to="/register" className="text-primary">
-                                                        Register
-                                                    </Link>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div className="login-form-body">
+                        <form onSubmit={handleSubmit}>
+                            {formMode === 'signIn' && (
+                                <Input
+                                    type="text"
+                                    placeholder="Your Name"
+                                    name='name'
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.name}
+                                    errorText={errors.name && touched.name ? errors.name : ''}
+                                />
+                            )}
+
+                            {(formMode === 'login' || formMode === 'signIn') && (
+                                <Input
+                                    type="email"
+                                    placeholder="Enter Your Email"
+                                    name='email'
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.email}
+                                    errorText={errors.email && touched.email ? errors.email : ''}
+                                />
+                            )}
+
+                            {(formMode === 'login' || formMode === 'signIn') && (
+                                <FormControl variant="outlined" fullWidth margin="normal">
+                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                    <OutlinedInput
+                                        id="outlined-adornment-password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }
+                                        label="Password"
+                                        name='password'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        value={values.password}
+                                        error={Boolean(errors.password && touched.password)}
+                                        helperText={errors.password && touched.password ? errors.password : ''}
+                                    />
+                                </FormControl>
+                            )}
+
+                            {formMode === 'forgotPassword' && (
+                                <Input
+                                    type="email"
+                                    placeholder="Enter Your Email"
+                                    name='email'
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.email}
+                                    errorText={errors.email && touched.email ? errors.email : ''}
+                                />
+                            )}
+
+                            {formMode !== 'forgotPassword' && (
+                                <FormControlLabel
+                                    control={<Checkbox />}
+                                    label="Remember me"
+                                />
+                            )}
+
+                            {formMode !== 'forgotPassword' && (
+                                <button className="submit-button" type="submit">
+                                    {formMode === 'signIn' ? 'Sign In' : 'Login'}
+                                </button>
+                            )}
+                        </form>
+                        <div className="form-footer">
+                            {formMode === 'login' && (
+                                <>
+                                    <button onClick={() => setFormMode('signIn')} className="form-toggle-button">Sign In</button>
+                                    <button onClick={() => setFormMode('forgotPassword')} className="form-toggle-button">Forgot Password?</button>
+                                </>
+                            )}
+                            {formMode === 'signIn' && (
+                                <button onClick={() => setFormMode('login')} className="form-toggle-button">Login</button>
+                            )}
+                            {formMode === 'forgotPassword' && (
+                                <button onClick={() => setFormMode('login')} className="form-toggle-button">Back to Login</button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -115,3 +191,4 @@ function Login(props) {
 }
 
 export default Login;
+
