@@ -13,7 +13,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Input } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { register } from '../../../reduct/slice/auth.slice';
+import { login, register } from '../../../reduct/slice/auth.slice';
 
 function Login() {
     const themeContext = useContext(ThemeContext);
@@ -61,6 +61,7 @@ function Login() {
             console.log(values);
 
             if (formMode === 'login') {
+                dispatch(login(values))
             } else if (formMode === 'signIn') {
                 dispatch(register({ ...values, 'role': 'user' }))
 
