@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice, isRejectedWithValue } from "@reduxjs/toolkit"
-import { BATCH_URL } from "../../utilites/Utilites"
-import axios from "axios"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import axiosInstance from "../../utilites/axiosInstance"
 
 const initialstate = {
     isAuthanticated: false,
@@ -14,7 +13,9 @@ export const register = createAsyncThunk(
     'auth/register',
     async (data, { rejectWithValue }) => {
         try {
-            const resaopns = await axios.post(BATCH_URL + 'users/useradd', data)
+            console.log(data);
+            
+            const resaopns = await axiosInstance.post('users/useradd', data)
             // return resaopns.data
             console.log(resaopns);
 
@@ -30,15 +31,36 @@ export const login = createAsyncThunk(
     async (data, { rejectWithValue }) => {
         try {
             console.log(data);
-            const response = await axios.post(BATCH_URL + 'users/login', data);
-            console.log(response);
+            const response = await axiosInstance.post('users/login', data);
+            console.log(response.data);
 
-            // if (response.data === 200) {
-            //     return response.data
-            // }
+                return response.data
+            
         } catch (error) {
             console.log(error);
-            return rejectWithValue('registration erorr.' + error.response.data.message)
+            return rejectWithValue('login erorr.' + error.response.data.message)
+        }
+
+    }
+
+)
+
+export const logout = createAsyncThunk(
+    'auth/logout',
+    async (_id, { rejectWithValue }) => {
+        console.log(_id, "aaaa");
+        
+        try {
+            
+            const response = await axiosInstance.post('users/logout', {_id});
+            console.log(response);
+
+            if (response._id === 200) {
+                return response._id
+            }
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue('logout erorr.' + error.response.data.message)
         }
 
     }
@@ -53,22 +75,22 @@ const authSlice = createSlice({
             state.isAuthanticated = false
             state.isLoding = false
             state.isLogout = true
-            state.error = action.payload
-            state.data = null
+            state.error = null
+            state.data = action.payload.data
         })
         bulider.addCase(register.rejected, (state, action) => {
             state.isAuthanticated = false
-            state.isLoding = false
-            state.isLogout = true
+            state.isLoding = true
+            state.isLogout = false
             state.error = action.payload
             state.data = null
         })
         bulider.addCase(login.fulfilled, (state, action) => {
-            state.isAuthanticated = false
+            state.isAuthanticated = true
             state.isLoding = false
             state.isLogout = true
-            state.error = action.payload
-            state.data = null
+            state.error = null
+            state.data = action.payload
         })
         bulider.addCase(login.rejected, (state, action) => {
             state.isAuthanticated = false
@@ -76,6 +98,20 @@ const authSlice = createSlice({
             state.isLogout = true
             state.error = action.payload
             state.data = null
+        })
+        bulider.addCase(logout.fulfilled, (state, action) => {
+            console.log(state);
+            state.isAuthanticated = false    
+            state.isLoding = false
+            state.isLogout = true
+            state.error = null
+            state.data = null
+        })
+        bulider.addCase(logout.rejected, (state, action) => {
+            state.isAuthanticated = true
+            state.isLoding = false
+            state.isLogout = true
+            state.error = null
         })
     }
 })

@@ -1,195 +1,181 @@
-import React, { useState, useContext } from 'react';
-import { object, string } from 'yup';
+import React, { useState } from 'react';
+import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { ThemeContext } from '../../../context/ThemeContext';
-import IconButton from '@mui/material/IconButton';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import { Input } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login, register } from '../../../reduct/slice/auth.slice';
+import { Navigate } from 'react-router-dom';
 
-function Login() {
-    const themeContext = useContext(ThemeContext);
-    const [showPassword, setShowPassword] = useState(false);
-    const [formMode, setFormMode] = useState('login'); // 'signIn', 'login', 'forgotPassword'
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+function Auth(props) {
+    const [type, setType] = useState('login');
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    // Define the validation schema based on the form mode
-    const getValidationSchema = () => {
-        switch (formMode) {
-            case 'signIn':
-                return object({
-                    name: string().required("Please enter your name"),
-                    email: string().required("Please enter your email").email("Please enter a valid email"),
-                    password: string().required("Please enter your password")
-                });
-            case 'login':
-                return object({
-                    email: string().required("Please enter your email").email("Please enter a valid email"),
-                    password: string().required("Please enter your password")
-                });
-            case 'forgotPassword':
-                return object({
-                    email: string().required("Please enter your email").email("Please enter a valid email")
-                });
-            default:
-                return object();
-        }
-    };
+    const auth = useSelector((state) => state.auth);
 
-    const formik = useFormik({
-        initialValues: {
+    console.log(auth);
+    
+    
+    let authSchema = {}, initialVal = {};
+
+    if (type === 'signup') {
+        authSchema = yup.object({
+            name: yup.string().required("Enter your name"),
+            email: yup.string().required("Enter your email").email("Enter valid email"),
+            password: yup.string().required().min(5, 'Password must be 5 characters long')
+        });
+
+        initialVal = {
             name: '',
             email: '',
             password: ''
-        },
-        validationSchema: getValidationSchema(),
-        onSubmit: (values) => {
-            console.log(values);
+        }
+    } else if (type === 'login') {
+        authSchema = yup.object({
+            email: yup.string().required("Enter your email").email("Enter valid email"),
+            password: yup.string().required().min(5, 'Password must be 5 characters long')
+        });
 
-            if (formMode === 'login') {
-                dispatch(login(values))
-            } else if (formMode === 'signIn') {
-                dispatch(register({ ...values, 'role': 'user' }))
+        initialVal = {
+            email: '',
+            password: '',
+        }
+    } else {
+        authSchema = yup.object({
+            email: yup.string().required("Enter your email").email("Enter valid email"),
+        });
+
+        initialVal = {
+            email: '',
+        }
+    }
+
+    let formikObj = useFormik({
+        initialValues: initialVal,
+        validationSchema: authSchema,
+        onSubmit: values => {
+            if (type === 'signup') {
+                dispatch(register({...values, 'role': 'user'}))
+            } else if (type === 'login') {
+                console.log(values);
+                dispatch(login(values));
+            } else {
 
             }
         },
-    });
+    })
 
-    const { handleSubmit, handleChange, handleBlur, values, errors, touched } = formik;
+    let { handleSubmit, handleChange, handleBlur, touched, errors, values } = formikObj;
+
+    console.log(authSchema);
+
+    console.log(initialVal);
 
 
-    console.log(errors);
+    // if (auth.isAuthanticated) {
+    //     return <Navigate to="/" />
+    // }
 
+    if(auth.isAuthanticated) {
+        return <Navigate to="/" />
+    }
+    
+    console.log(errors, touched);
     return (
         <div>
-            {/* <div className="container-fluid page-header py-5">
-                <h1 className="text-center text-white display-6">Login</h1>
+            {/* Single Page Header start */}
+            <div className="container-fluid page-header py-5">
+                <h1 className="text-center text-white display-6">
+                    {
+                        type === 'login' ? "Login" :
+                            type === 'signup' ? "Signup" : "Forgot Password?"
+                    }
+                </h1>
                 <ol className="breadcrumb justify-content-center mb-0">
                     <li className="breadcrumb-item"><a href="#">Home</a></li>
                     <li className="breadcrumb-item"><a href="#">Pages</a></li>
-                    <li className="breadcrumb-item active text-white">Login</li>
+                    <li className="breadcrumb-item active text-white">
+                        {
+                            type === 'login' ? "Login" :
+                                type === 'signup' ? "Signup" : "Forgot Password?"
+                        }
+                    </li>
                 </ol>
-            </div> */}
-            <div className={`login-container ${themeContext.theme}`}>
-                <div className="login-form-container" style={{ 'marginTop': '100px' }}>
-                    <div className="login-form-header">
-                        <h1>{formMode === 'forgotPassword' ? 'Forgot Password' :
-                            formMode === 'signIn' ? 'Sign In' : 'Login'}</h1>
-                    </div>
-                    <div className="login-form-body">
-                        <form onSubmit={handleSubmit}>
-                            {formMode === 'signIn' && (
-                                <Input
-                                    type="text"
-                                    placeholder="Your Name"
-                                    name='name'
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.name}
-                                    errorText={errors.name && touched.name ? errors.name : ''}
-                                />
-                            )}
+            </div>
+            <div className="container-fluid fruite py-5">
+                <div className="container py-5">
+                    <form onSubmit={handleSubmit} method='post'>
+                        <div>
+                            {
+                                type === 'signup' ?
+                                    <div className="mb-3">
+                                        <label htmlFor="name" className="form-label">Name</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            name='name'
+                                            id='name'
+                                            placeholder="Please enter your name"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.name}
+                                        />
+                                        <span>{errors.name && touched.name ? errors.name : null}</span>
+                                    </div>
+                                    : null
+                            }
 
-                            {(formMode === 'login' || formMode === 'signIn') && (
-                                <Input
+                            <div className="mb-3">
+                                <label htmlFor="email" className="form-label">Email address</label>
+                                <input
                                     type="email"
-                                    placeholder="Enter Your Email"
+                                    className="form-control"
                                     name='email'
+                                    id='email'
+                                    placeholder="Please enter your name"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.email}
-                                    errorText={errors.email && touched.email ? errors.email : ''}
                                 />
-                            )}
+                                <span>{errors.email && touched.email ? errors.email : null}</span>
+                            </div>
+                            {
+                                type !== 'forgot' ?
+                                    <div className="mb-3">
+                                        <label htmlFor="password" className="form-label">Password</label>
 
-                            {(formMode === 'login' || formMode === 'signIn') && (
-                                <FormControl variant="outlined" fullWidth margin="normal">
-                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                    <OutlinedInput
-                                        id="outlined-adornment-password"
-                                        type={showPassword ? 'text' : 'password'}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={handleClickShowPassword}
-                                                    onMouseDown={handleMouseDownPassword}
-                                                    edge="end"
-                                                >
-                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        }
-                                        label="Password"
-                                        name='password'
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.password}
-                                        error={Boolean(errors.password && touched.password)}
-                                        helperText={errors.password && touched.password ? errors.password : ''}
-                                    />
-                                </FormControl>
-                            )}
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            name='password'
+                                            id='password'
+                                            placeholder="Please enter your name"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            value={values.password}
+                                        />
+                                        <span>{errors.password && touched.password ? errors.password : null}</span>
+                                    </div>
+                                    : null
+                            }
 
-                            {formMode === 'forgotPassword' && (
-                                <Input
-                                    type="email"
-                                    placeholder="Enter Your Email"
-                                    name='email'
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.email}
-                                    errorText={errors.email && touched.email ? errors.email : ''}
-                                />
-                            )}
+                            {
+                                type === 'signup' ?
+                                    <p>Already have an account? <a href="#" class="link-primary" onClick={() => setType('login')}>Login</a></p>
+                                    :
+                                    <>
+                                        <a href="#" class="link-primary" onClick={() => setType('forgot')}>Forgot Password?</a>
+                                        <p>Don't have an account? <a href="#" class="link-primary" onClick={() => setType('signup')}>Signup</a></p>
+                                    </>
+                            }
 
-                            {formMode !== 'forgotPassword' && (
-                                <FormControlLabel
-                                    control={<Checkbox />}
-                                    label="Remember me"
-                                />
-                            )}
-
-                            {formMode !== 'forgotPassword' && (
-                                <button className="submit-button" type="submit">
-                                    {formMode === 'signIn' ? 'Sign In' : 'Login'}
-                                </button>
-                            )}
-                        </form>
-                        <div className="form-footer">
-                            {formMode === 'login' && (
-                                <>
-                                    <button onClick={() => setFormMode('signIn')} className="form-toggle-button">Sign In</button>
-                                    <button onClick={() => setFormMode('forgotPassword')} className="form-toggle-button">Forgot Password?</button>
-                                </>
-                            )}
-                            {formMode === 'signIn' && (
-                                <button onClick={() => setFormMode('login')} className="form-toggle-button">Login</button>
-                            )}
-                            {formMode === 'forgotPassword' && (
-                                <button onClick={() => setFormMode('login')} className="form-toggle-button">Back to Login</button>
-                            )}
                         </div>
-                    </div>
+                        <button type="submit" className="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
     );
 }
 
-export default Login;
-
+export default Auth;

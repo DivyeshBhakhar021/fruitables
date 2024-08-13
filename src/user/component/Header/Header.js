@@ -9,6 +9,9 @@ import { Button } from 'reactstrap';
 import { productdata } from '../../../reduct/action/Product.action';
 import { getCategory } from '../../../reduct/action/category.action';
 import { getsubcategory } from '../../../reduct/slice/subcategory.slice';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Logout } from '@mui/icons-material';
+import { logout } from '../../../reduct/slice/auth.slice';
 
 function Header(props) {
 
@@ -40,6 +43,10 @@ function Header(props) {
   const cart = useSelector(state => state.Cart)
   console.log(cart);
 
+    const { isAuthanticated, data } = useSelector(state => state.auth)
+  console.log(data);
+  
+
   const cartCount = cart.cart.reduce((acc, v) => acc + v.qty, 0)
   const themecontect = useContext(ThemeContext);
 
@@ -62,6 +69,12 @@ function Header(props) {
     setCategoryAnchorEl(null);
     setSubcategoryAnchorEl(null);
   };
+
+
+
+  const handleLogout = () => {
+    dispatch(logout(data.data._id))
+  }
 
   return (
     <div>
@@ -97,7 +110,7 @@ function Header(props) {
                 <NavLink to="/shop" className="nav-item nav-link active">Shop</NavLink>
                 <NavLink to="/chat" className="nav-item nav-link active">Chat</NavLink>
                 <NavLink to="/shop_detail" className="nav-item nav-link active">Shop Detail</NavLink>
-                
+
                 {/* <NavLink to="/shop_detail/:fruitid" className="nav-item nav-link">Shop Detail</NavLink> */}
                 <div className="nav-item dropdown">
                   <a href="#" className="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
@@ -127,14 +140,21 @@ function Header(props) {
                       minWidth: 20
                     }}>{cartCount}</span>
                 </a>
-                <NavLink to='/login' className="my-auto">
-                  <i className="fas fa-user fa-2x" />
-                </NavLink>
+
 
                 <IconButton style={{ background: 'white' }} onClick={handaltheme} sx={{ ml: 1 }} color="green">
                   {/* <Brightness7Icon /> */}
                   {themecontect.theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
+                {
+                  isAuthanticated ?
+                    <LogoutIcon onClick={handleLogout}></LogoutIcon> :
+                    <NavLink to='/login' className="my-auto">
+                      <i className="fas fa-user fa-2x" />
+                    </NavLink>
+
+                }
+
 
               </div>
             </div>
@@ -195,31 +215,31 @@ function Header(props) {
         </Box>
 
         {
-  selectedCategory && selectedSubcategory && (
-    <Box sx={{ margin: '20px 10px' }}>
-      <h3>{selectedSubcategory.name}</h3>
-      <div className="row">
-        {products
-          .filter(v => v.subcategory_id === selectedSubcategory._id)
-          .map((v) => (
-            <div key={v._id} className="col-md-4">
-              <div className="card" style={{ width: '18rem', margin: '10px 0' }}>
-                <img src={v.pro_img.url} className="card-img-top" alt={v.name} />
-                <div className="card-body">
-                  <h5 className="card-title">{v.name}</h5>
-                  <p className="card-text">{v.description}</p>
-                  <p className="card-text">Price: ${v.price}</p>
-                  <a href="#" className="btn btn-primary">Add To Card</a>
-                </div>
+          selectedCategory && selectedSubcategory && (
+            <Box sx={{ margin: '20px 10px' }}>
+              <h3>{selectedSubcategory.name}</h3>
+              <div className="row">
+                {products
+                  .filter(v => v.subcategory_id === selectedSubcategory._id)
+                  .map((v) => (
+                    <div key={v._id} className="col-md-4">
+                      <div className="card" style={{ width: '18rem', margin: '10px 0' }}>
+                        <img src={v.pro_img.url} className="card-img-top" alt={v.name} />
+                        <div className="card-body">
+                          <h5 className="card-title">{v.name}</h5>
+                          <p className="card-text">{v.description}</p>
+                          <p className="card-text">Price: ${v.price}</p>
+                          <a href="#" className="btn btn-primary">Add To Card</a>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
               </div>
-            </div>
-          ))}
-      </div>
- 
 
 
-              </Box>  
-            )}
+
+            </Box>
+          )}
       </div>
     </div>
 
