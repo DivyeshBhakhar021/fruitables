@@ -10,7 +10,6 @@ import { productdata } from '../../../reduct/action/Product.action';
 import { getCategory } from '../../../reduct/action/category.action';
 import { getsubcategory } from '../../../reduct/slice/subcategory.slice';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Logout } from '@mui/icons-material';
 import { logout } from '../../../reduct/slice/auth.slice';
 
 function Header(props) {
@@ -43,9 +42,7 @@ function Header(props) {
   const cart = useSelector(state => state.Cart)
   console.log(cart);
 
-    const { isAuthanticated, data } = useSelector(state => state.auth)
-  console.log(data);
-  
+   
 
   const cartCount = cart.cart.reduce((acc, v) => acc + v.qty, 0)
   const themecontect = useContext(ThemeContext);
@@ -70,10 +67,14 @@ function Header(props) {
     setSubcategoryAnchorEl(null);
   };
 
-
+  const { isAuthanticated, data } = useSelector(state => state.auth)
+  console.log("data",data);
+  
 
   const handleLogout = () => {
-    dispatch(logout(data.data._id))
+    console.log(data._id);
+    
+    dispatch(logout(data._id))
   }
 
   return (
@@ -141,21 +142,22 @@ function Header(props) {
                     }}>{cartCount}</span>
                 </a>
 
-
-                <IconButton style={{ background: 'white' }} onClick={handaltheme} sx={{ ml: 1 }} color="green">
+                <IconButton style={{ background: 'white', left: -12,
+                      minWidth: 20 }} onClick={handaltheme} sx={{ ml: 1 }} color="green">
                   {/* <Brightness7Icon /> */}
                   {themecontect.theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
                 {
                   isAuthanticated ?
                     <LogoutIcon onClick={handleLogout}></LogoutIcon> :
-                    <NavLink to='/login' className="my-auto">
+                    <NavLink style={{
+                      left: 15,
+                      minWidth: 20
+                    }} to='/login' className="my-auto">
                       <i className="fas fa-user fa-2x" />
                     </NavLink>
 
                 }
-
-
               </div>
             </div>
           </nav>

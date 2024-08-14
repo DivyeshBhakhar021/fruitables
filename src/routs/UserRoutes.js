@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Header from '../user/component/Header/Header';
 import Home from '../user/container/Home/Home';
@@ -14,32 +14,41 @@ import Login from '../user/container/Login/Login';
 import Register from '../user/container/Register/Register';
 import { ThemeContext } from '../context/ThemeContext';
 import Chat from '../user/container/Chat/Chat';
+import { useDispatch } from 'react-redux';
+import { chekauth } from '../reduct/slice/auth.slice';
 
 function UserRoutes(props) {
 
-    const themecontect = useContext(ThemeContext);
-    console.log(themecontect);
-    return (
-        <div className={themecontect.theme}>
+  const themecontect = useContext(ThemeContext);
+  console.log(themecontect);
 
-        <Header />
-        <Routes >
-          <Route exect path='/' element={<Home />} />
-          <Route exect path='/shop' element={<Shop />} />
-          <Route exect path='/shop_detail' element={<Shop_detail />} />
-          <Route exect path='/shop/:id' element={<Shop_detail />} />          
-          <Route exect path='/card' element={<Card />} />
-          <Route exect path='/chackout' element={<Chackout />} />
-          <Route exect path='/testimonial' element={<Testimonial />} />
-          <Route exect path='/error' element={<Error />} />
-          <Route exect path='/contact' element={<Contact />} />
-          <Route exect path='/login' element={<Login/>}/>
-          <Route exect path='/register' element={<Register/>}/>
-          <Route exect path='/chat' element={<Chat/>}/>
-        </Routes>
-        <Footer />
-      </div>
-    );
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(chekauth())
+  })
+
+  return (
+    <div className={themecontect.theme}>
+
+      <Header />
+      <Routes >
+        <Route exect path='/' element={<Home />} />
+        <Route exect path='/shop' element={<Shop />} />
+        <Route exect path='/shop_detail' element={<Shop_detail />} />
+        <Route exect path='/shop/:id' element={<Shop_detail />} />
+        <Route exect path='/card' element={<Card />} />
+        <Route exect path='/chackout' element={<Chackout />} />
+        <Route exect path='/testimonial' element={<Testimonial />} />
+        <Route exect path='/error' element={<Error />} />
+        <Route exect path='/contact' element={<Contact />} />
+        <Route exect path='/login' element={<Login />} />
+        <Route exect path='/register' element={<Register />} />
+        <Route exect path='/chat' element={<Chat />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
 }
 
 export default UserRoutes;

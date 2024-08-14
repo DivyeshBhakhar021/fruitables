@@ -14,7 +14,7 @@ export const register = createAsyncThunk(
     async (data, { rejectWithValue }) => {
         try {
             console.log(data);
-            
+
             const resaopns = await axiosInstance.post('users/useradd', data)
             // return resaopns.data
             console.log(resaopns);
@@ -34,8 +34,8 @@ export const login = createAsyncThunk(
             const response = await axiosInstance.post('users/login', data);
             console.log(response.data);
 
-                return response.data
-            
+            return response.data
+
         } catch (error) {
             console.log(error);
             return rejectWithValue('login erorr.' + error.response.data.message)
@@ -48,11 +48,12 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk(
     'auth/logout',
     async (_id, { rejectWithValue }) => {
-        console.log(_id, "aaaa");
+        
+        console.log(_id);
         
         try {
-            
-            const response = await axiosInstance.post('users/logout', {_id});
+
+            const response = await axiosInstance.post('users/logout', { _id });
             console.log(response);
 
             if (response._id === 200) {
@@ -61,6 +62,29 @@ export const logout = createAsyncThunk(
         } catch (error) {
             console.log(error);
             return rejectWithValue('logout erorr.' + error.response.data.message)
+        }
+
+    }
+
+)
+
+export const chekauth = createAsyncThunk(
+    'auth/chekauth',
+    async (_, { rejectWithValue }) => {
+
+        try {
+
+            const response = await axiosInstance.post('users/chekhlogin');
+            console.log(response);
+            
+
+            if (response.status == 200) {
+                return response.data
+            }
+            
+        } catch (error) {
+            console.log(error);
+            return rejectWithValue('chekhlogin erorr.' + error.response.data.message)
         }
 
     }
@@ -90,7 +114,7 @@ const authSlice = createSlice({
             state.isLoding = false
             state.isLogout = true
             state.error = null
-            state.data = action.payload
+            state.data = action.payload.data
         })
         bulider.addCase(login.rejected, (state, action) => {
             state.isAuthanticated = false
@@ -100,18 +124,27 @@ const authSlice = createSlice({
             state.data = null
         })
         bulider.addCase(logout.fulfilled, (state, action) => {
-            console.log(state);
-            state.isAuthanticated = false    
+            console.log(action.payload);
+            state.isAuthanticated = false
             state.isLoding = false
             state.isLogout = true
             state.error = null
-            state.data = null
+            state.data = action.payload
         })
-        bulider.addCase(logout.rejected, (state, action) => {
+        bulider.addCase(chekauth.fulfilled, (state, action) => {
+            console.log(action.payload.data);
             state.isAuthanticated = true
             state.isLoding = false
-            state.isLogout = true
+            state.isLogout = false
             state.error = null
+            state.data = action.payload.data
+        })
+        bulider.addCase(chekauth.rejected, (state, action) => {
+            state.isAuthanticated = false
+            state.isLoding = false
+            state.isLogout = true
+            state.error = action.payload
+            state.data = null
         })
     }
 })
