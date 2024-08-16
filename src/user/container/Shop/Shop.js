@@ -69,12 +69,7 @@ function Shop(props) {
 
   const zdata = Filterdata()
 
-  console.log(zdata);
-
   let { id } = useParams();
-
-
-
 
 
   return (

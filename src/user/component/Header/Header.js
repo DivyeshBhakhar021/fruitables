@@ -42,7 +42,7 @@ function Header(props) {
   const cart = useSelector(state => state.Cart)
   console.log(cart);
 
-   
+
 
   const cartCount = cart.cart.reduce((acc, v) => acc + v.qty, 0)
   const themecontect = useContext(ThemeContext);
@@ -68,12 +68,12 @@ function Header(props) {
   };
 
   const { isAuthanticated, data } = useSelector(state => state.auth)
-  console.log("data",data);
-  
+  console.log("data", data);
+
 
   const handleLogout = () => {
     console.log(data._id);
-    
+
     dispatch(logout(data._id))
   }
 
@@ -101,7 +101,7 @@ function Header(props) {
         </div>
         <div className="container px-0">
           <nav className="navbar navbar-light navbar-expand-xl ">
-            <a href="index.html" className="navbar-brand"><h1 className="text-primary display-6">Fruitables</h1></a>
+            <NavLink to="/" className="navbar-brand"><h1 className="text-primary display-6">Fruitables</h1></NavLink>
             <button className="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
               <span className="fa fa-bars text-primary" />
             </button>
@@ -142,8 +142,10 @@ function Header(props) {
                     }}>{cartCount}</span>
                 </a>
 
-                <IconButton style={{ background: 'white', left: -12,
-                      minWidth: 20 }} onClick={handaltheme} sx={{ ml: 1 }} color="green">
+                <IconButton style={{
+                  background: 'white', left: -12,
+                  minWidth: 20
+                }} onClick={handaltheme} sx={{ ml: 1 }} color="green">
                   {/* <Brightness7Icon /> */}
                   {themecontect.theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>

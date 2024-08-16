@@ -14,8 +14,8 @@ function Auth(props) {
     const auth = useSelector((state) => state.auth);
 
     console.log(auth);
-    
-    
+
+
     let authSchema = {}, initialVal = {};
 
     if (type === 'signup') {
@@ -55,11 +55,10 @@ function Auth(props) {
         validationSchema: authSchema,
         onSubmit: values => {
             if (type === 'signup') {
-                dispatch(register({...values, 'role': 'user'}))
+                dispatch(register({ ...values, 'role': 'user' }))
             } else if (type === 'login') {
                 console.log(values);
                 dispatch(login(values));
-            } else {
 
             }
         },
@@ -72,14 +71,12 @@ function Auth(props) {
     console.log(initialVal);
 
 
-    // if (auth.isAuthanticated) {
-    //     return <Navigate to="/" />
-    // }
+   
 
-    if(auth.isAuthanticated) {
+    if (auth.isAuthanticated) {
         return <Navigate to="/" />
     }
-    
+
     console.log(errors, touched);
     return (
         <div>

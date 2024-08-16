@@ -16,6 +16,7 @@ import { ThemeContext } from '../context/ThemeContext';
 import Chat from '../user/container/Chat/Chat';
 import { useDispatch } from 'react-redux';
 import { chekauth } from '../reduct/slice/auth.slice';
+import PrivateRoutes from './PrivateRoutes';
 
 function UserRoutes(props) {
 
@@ -34,7 +35,9 @@ function UserRoutes(props) {
       <Header />
       <Routes >
         <Route exect path='/' element={<Home />} />
-        <Route exect path='/shop' element={<Shop />} />
+        <Route element={<PrivateRoutes />}>
+          <Route exect path='/shop' element={<Shop />} />
+        </Route>
         <Route exect path='/shop_detail' element={<Shop_detail />} />
         <Route exect path='/shop/:id' element={<Shop_detail />} />
         <Route exect path='/card' element={<Card />} />

@@ -32,9 +32,12 @@ export const login = createAsyncThunk(
         try {
             console.log(data);
             const response = await axiosInstance.post('users/login', data);
-            console.log(response.data);
+            console.log(response.data.data._id);
 
-            return response.data
+            if (response.status === 200) {
+                localStorage.setItem("_id",response.data.data._id)
+                return response.data
+            }
 
         } catch (error) {
             console.log(error);
@@ -48,9 +51,9 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk(
     'auth/logout',
     async (_id, { rejectWithValue }) => {
-        
+
         console.log(_id);
-        
+
         try {
 
             const response = await axiosInstance.post('users/logout', { _id });
@@ -76,12 +79,12 @@ export const chekauth = createAsyncThunk(
 
             const response = await axiosInstance.post('users/chekhlogin');
             console.log(response);
-            
+
 
             if (response.status == 200) {
                 return response.data
             }
-            
+
         } catch (error) {
             console.log(error);
             return rejectWithValue('chekhlogin erorr.' + error.response.data.message)
