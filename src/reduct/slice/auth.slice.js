@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axiosInstance from "../../utilites/axiosInstance"
+import { setAlert } from "./alert.slice";
+
 
 const initialstate = {
     isAuthanticated: false,
@@ -28,7 +30,7 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
     'auth/login',
-    async (data, { rejectWithValue }) => {
+    async (data, {dispatch, rejectWithValue }) => {
         try {
             console.log(data);
             const response = await axiosInstance.post('users/login', data);
@@ -36,6 +38,7 @@ export const login = createAsyncThunk(
 
             if (response.status === 200) {
                 localStorage.setItem("_id",response.data.data._id)
+                dispatch(setAlert({color:'success',message:response.data.message}))
                 return response.data
             }
 
@@ -78,7 +81,7 @@ export const chekauth = createAsyncThunk(
         try {
 
             const response = await axiosInstance.post('users/chekhlogin');
-            console.log(response);
+            console.log("response",response);
 
 
             if (response.status == 200) {
@@ -103,7 +106,7 @@ const authSlice = createSlice({
             state.isLoding = false
             state.isLogout = true
             state.error = null
-            state.data = action.payload.data
+            state.data = action.payload
         })
         bulider.addCase(register.rejected, (state, action) => {
             state.isAuthanticated = false
@@ -113,6 +116,7 @@ const authSlice = createSlice({
             state.data = null
         })
         bulider.addCase(login.fulfilled, (state, action) => {
+            console.log("login",state.isAuthanticated);
             state.isAuthanticated = true
             state.isLoding = false
             state.isLogout = true

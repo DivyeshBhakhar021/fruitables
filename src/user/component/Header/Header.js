@@ -19,8 +19,8 @@ function Header(props) {
   const products = useSelector(state => state.product.product);
   const subcategories = useSelector(state => state.subcategory.subcategory);
   const categories = useSelector(state => state.category.category);
-  console.log(products);
-  console.log(categories);
+  // console.log(products);
+  // console.log(categories);
 
   const [categoryAnchorEl, setCategoryAnchorEl] = useState('');
   const [subcategoryAnchorEl, setSubcategoryAnchorEl] = useState('');
@@ -52,7 +52,7 @@ function Header(props) {
     themecontect.toggleTheme(themecontect.theme)
   }
 
-  const handleCategoryClick = (event, category) => {
+  const handleCategoryClick = (event, category) => {  
     setSelectedCategory(category);
     setCategoryAnchorEl(event.currentTarget);
   };
@@ -69,6 +69,8 @@ function Header(props) {
 
   const { isAuthanticated, data } = useSelector(state => state.auth)
   console.log("data", data);
+  console.log("isAuthanticated",isAuthanticated);
+  
 
 
   const handleLogout = () => {

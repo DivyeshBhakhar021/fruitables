@@ -9,15 +9,19 @@ import { configestore } from './reduct/Store';
 import { PersistGate } from 'redux-persist/integration/react'
 import { ThemeProvider } from './context/ThemeContext';
 import { ContaxtProvider } from './context/Contactcantext';
+import { SnackbarProvider } from 'notistack';
+import Alert from './user/component/Alert/Alert';
 
 function App() {
   const { store, persistor } = configestore()
   return (
     <>
+    <SnackbarProvider>
       <ContaxtProvider>
         <ThemeProvider>
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
+              <Alert /> 
               <Routes >
                 <Route exect path='/*' element={<UserRoutes />} />
                 <Route element={<PrivateRoutes />}>
@@ -28,6 +32,7 @@ function App() {
           </Provider>
         </ThemeProvider>
       </ContaxtProvider>
+      </SnackbarProvider>
     </>
   );
 }

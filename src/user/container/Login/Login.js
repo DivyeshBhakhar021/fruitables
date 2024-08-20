@@ -7,13 +7,15 @@ import { Navigate } from 'react-router-dom';
 
 
 function Auth(props) {
+    console.log("authhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+    
     const [type, setType] = useState('login');
 
     const dispatch = useDispatch();
 
     const auth = useSelector((state) => state.auth);
 
-    console.log(auth);
+    console.log("auth",auth);
 
 
     let authSchema = {}, initialVal = {};
@@ -71,6 +73,9 @@ function Auth(props) {
     console.log(initialVal);
 
 
+    const handalgoogle = () => {
+        window.location.href = 'http://localhost:5000/api/v1/users/googlelogin'
+    }
    
 
     if (auth.isAuthanticated) {
@@ -168,8 +173,10 @@ function Auth(props) {
 
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
-                    </form>
+                    </form> <br /><br />
+                    <button onClick={handalgoogle}>sing with google</button>
                 </div>
+                
             </div>
         </div>
     );
