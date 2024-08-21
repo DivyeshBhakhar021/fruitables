@@ -89,7 +89,7 @@ export const chekauth = createAsyncThunk(
             }
 
         } catch (error) {
-            console.log(error);
+            console.log(error); 
             return rejectWithValue('chekhlogin erorr.' + error.response.data.message)
         }
 
