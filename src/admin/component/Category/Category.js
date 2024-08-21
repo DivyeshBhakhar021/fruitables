@@ -19,7 +19,7 @@ function Category(props) {
     const [open, setOpen] = useState(false);
 
     const dispatch = useDispatch();
-    const categories = useSelector(state => state.category.category ||[]);
+    const categories = useSelector(state => state.category.category || []);
     console.log("categories",categories);
     
 
@@ -39,6 +39,7 @@ function Category(props) {
         },
         validationSchema: userSchema,
         onSubmit: (values) => {
+            console.log(values);
             if (edit) {
                 dispatch(updateCategory({ ...values, _id: edit }));
             } else {
