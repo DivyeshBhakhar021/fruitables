@@ -23,7 +23,7 @@ export const productdata = () => async (dispatch) => {
 
 export const addPoduct = (data) => async (dispatch) => {
     dispatch(lodinProduct());
-    // console.log(data);
+    console.log(data);
     try {
         const response = await axios.post("http://localhost:5000/api/v1/productes/addProduct", data, {
             headers: {
