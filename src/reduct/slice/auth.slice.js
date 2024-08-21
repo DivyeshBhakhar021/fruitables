@@ -82,7 +82,7 @@ export const chekauth = createAsyncThunk(
             console.log("response", response);
 
 
-            if (response.status == 200) {
+            if (response.status === 200) {
                 return response.data
             }
 
