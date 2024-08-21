@@ -40,7 +40,7 @@ export const deleteCategory = (id) => async (dispatch) => {
 };
 
 export const updateCategory = (category) => async (dispatch) => {
-    console.log("category",category);
+    console.log("category",category._id);
     
     try {
      const response =  await fetch(`http://localhost:5000/api/v1/categories/updateCategories/${category._id}`, {
