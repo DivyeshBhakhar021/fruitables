@@ -20,6 +20,8 @@ function Category(props) {
 
     const dispatch = useDispatch();
     const categories = useSelector(state => state.category.category);
+    console.log("categories",categories);
+    
 
     useEffect(() => {
         dispatch(getCategory());
@@ -147,7 +149,7 @@ function Category(props) {
                     pageSize={5}
                     rowsPerPageOptions={[5, 10]}
                     checkboxSelection
-                    getRowId={(row) => row._id} // Specify custom ID field
+                    getRowId={(row) => row?._id} // Specify custom ID field
                 />
             </div>
         </>

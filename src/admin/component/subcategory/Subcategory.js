@@ -165,7 +165,7 @@ export default function Subcategory() {
                 </form>
             </Dialog>
             <div style={{ height: 400, width: '100%' }}>
-                {subcategories && subcategories.length > 0 ? (
+                {subcategories && subcategories?.length > 0 ? (
                     <DataGrid
                         rows={subcategories.filter(subcategory => subcategory && subcategory._id)}
                         columns={columns}
