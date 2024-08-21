@@ -129,7 +129,7 @@ const authSlice = createSlice({
             state.data = null
         })
         bulider.addCase(logout.fulfilled, (state, action) => {
-            console.log("isAuthenticated",isAuthenticated);
+            // console.log("isAuthenticated",isAuthenticated);
             state.isAuthanticated = false;
             state.isLoding = false;
             state.isLogout = true;
