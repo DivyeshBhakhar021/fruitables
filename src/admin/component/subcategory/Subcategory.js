@@ -22,7 +22,7 @@ export default function Subcategory() {
     const [category, setCategory] = useState([]);
 
     const dispatch = useDispatch();
-    const subcategories = useSelector(state => state.subcategory.subcategory);
+    const subcategories = useSelector(state => state.subcategory?.subcategory);
     console.log(subcategories, "subcategories");
 
     const handleClickOpen = () => setOpen(true);
