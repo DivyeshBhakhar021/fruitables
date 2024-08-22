@@ -22,8 +22,11 @@ export default function Subcategory() {
     const [category, setCategory] = useState([]);
 
     const dispatch = useDispatch();
-    const subcategories = useSelector(state => state.subcategory.subcategory || []);
-    console.log(subcategories, "subcategories");
+    const subcategories = useSelector(state => state.subcategory.subcategory);
+    console.log("subcategories", subcategories);
+
+    // const category = useSelector(state => state.category.category);
+    // console.log("category", category)
 
     const handleClickOpen = () => setOpen(true);
     const handleClose = () => {
@@ -60,8 +63,10 @@ export default function Subcategory() {
 
     const getCategoryData = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/v1/categories/list-categories");
+            const response = await fetch("http://localhost:5000/api/v1/categories/get-categorie");
             const categories = await response.json();
+            console.log(categories.data);
+            
             setCategory(categories.data);
         } catch (error) {
             console.log(error);
@@ -84,7 +89,7 @@ export default function Subcategory() {
         {
             field: 'categoriesid', headerName: 'Category', width: 150,
             renderCell: (params) => {
-                const categoryData = category.find(v => v._id === params.row.categoriesid);
+                const categoryData = category?.find(v => v._id === params.row.categoriesid);
                 return categoryData ? categoryData.name : '';
             }
         },
@@ -123,7 +128,7 @@ export default function Subcategory() {
                                 onChange={handleChange}
                                 input={<OutlinedInput label="Select Category" />}
                             >
-                                {category.map((v) => (
+                                {category?.map((v) => (
                                     <MenuItem key={v._id} value={v._id}>{v.name}</MenuItem>
                                 ))}
                             </Select>
