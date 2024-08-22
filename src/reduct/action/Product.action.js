@@ -33,7 +33,7 @@ export const addPoduct = (data) => async (dispatch) => {
             }
         });
 
-        console.log(response);
+        console.log("response",response);
         dispatch({ type: ADD_PRODUCT, payload: response.data });
     } catch (error) {
         dispatch(errorProduct(error.message));
