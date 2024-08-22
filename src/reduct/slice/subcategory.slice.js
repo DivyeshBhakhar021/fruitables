@@ -12,8 +12,8 @@ export const getsubcategory = createAsyncThunk(
     'subcategory/get',
     async () => {
         try {
-            // const response = await axiosInstance.get("subcategories/list-subcategories");
-            const response = await axios.get("http://localhost:5000/api/v1/subcategories/list-subcategories");
+            const response = await axiosInstance.get("subcategories/list-subcategories");
+            // const response = await axios.get("http://localhost:5000/api/v1/subcategories/list-subcategories");
             console.log(response.data.data);
             return response.data.data; 
             
