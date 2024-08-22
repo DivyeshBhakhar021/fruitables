@@ -174,7 +174,6 @@ function Products(props) {
 
     };
 
-    console.log(values);
 
     return (
         <>
