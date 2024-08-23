@@ -1,6 +1,6 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { ADD_PRODUCT, DELETE_PRODUCT, EDIT_PRODUCT, ERROR_PRODUCT, GET_PRODUCT, LODING_PRODUCT } from "../reducer/action.type";
-import { BATCH_URL } from '../../utilites/Utilites';
+// import { BATCH_URL } from '../../utilites/Utilites';
 import axiosInstance from '../../utilites/axiosInstance';
 
 const lodinProduct = () => ({
@@ -26,7 +26,7 @@ export const productdata = () => async (dispatch) => {
 export const addPoduct = (data) => async (dispatch) => {
     dispatch(lodinProduct());
     console.log(data);
-    try {
+    try {   
         const response = await axiosInstance.post("productes/addProduct", data, {
             headers: {
                 'Content-Type': 'multipart/form-data'
